@@ -28,7 +28,7 @@ const ALL_POSES = ['idle', 'portrait', 'attack', 'hurt', 'ult', 'down', 'happy']
 const BOSS_PET = ['idle', 'portrait', 'attack', 'hurt', 'down']; // pet thu phục: ảnh boss lật ngang (pets.json → files); ult/happy dùng idle
 const PET_HAS = { rockmane: ALL_POSES, tidewisp: ALL_POSES, leafkit: ALL_POSES, blazefang: ALL_POSES, steelclaw: ALL_POSES,
   gearhorn: BOSS_PET, elderoot: BOSS_PET, pearlwyrm: BOSS_PET, magmaw: BOSS_PET, duneshell: BOSS_PET };
-export function petImg(p, pose = 'idle', big = false) {
+export function petImg(p, pose = 'idle', big = true) {
   const has = PET_HAS[p && p.id]; if (!has) return null;
   if (!has.includes(pose)) pose = 'idle';
   return `assets/pets/pet_${p.id}_${pose}${big && pose !== 'portrait' ? '_L' : ''}.webp`;

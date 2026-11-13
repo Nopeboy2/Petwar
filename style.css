@@ -490,7 +490,7 @@ table.st td{padding:2px 10px;text-align:left}
 .bc-fx{position:absolute;z-index:3;left:-10%;top:-40%;width:120%;height:120%;pointer-events:none;animation:bc-up .9s ease-out forwards}
 @keyframes bc-up{from{transform:translateY(20px);opacity:1}to{transform:translateY(-16px);opacity:0}}
 .bc-empty{width:64px;height:64px}
-.bs{display:grid;height:100%;grid-template-columns:repeat(5,64px);grid-template-rows:24px repeat(3,64px);justify-content:space-evenly;align-content:space-evenly;align-items:center}
+.bg-stones{display:grid;height:100%;grid-template-columns:repeat(5,64px);grid-template-rows:24px repeat(3,64px);justify-content:space-evenly;align-content:space-evenly;align-items:center}
 .bs-h{position:relative;display:grid;place-items:center}
 .bs-h>img:first-child{width:24px;height:24px}
 .bs-ar{position:absolute;right:-11px;top:6px;width:16px;height:12px}
@@ -608,6 +608,7 @@ table.st td{padding:2px 10px;text-align:left}
 .mg-in::-webkit-inner-spin-button,.mg-in::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 .mg-in:focus{outline:none;border-color:#e8a81a;box-shadow:0 0 0 2px #ffd24a80}
 /* 12 Cửa hàng — dùng lại bố cục Túi đồ (.bg-main/.bg-tabs/.bg-grid/.bd) */
+.bg-grid.sh-grid{background-image:url(assets/bag-ui/panel_shop_grid.png)}
 .sh-cells{height:100%;box-sizing:border-box;padding:6px;overflow-y:auto;scrollbar-width:none;touch-action:pan-y;display:grid;grid-template-columns:repeat(auto-fill,92px);grid-auto-rows:118px;gap:8px;justify-content:center;align-content:start}
 .sh-cells::-webkit-scrollbar{display:none}
 .pg .sc{position:relative;width:92px;height:118px;border-radius:10px;background:#fff6e8aa;box-shadow:inset 0 0 0 2px #e0b27a;display:flex;flex-direction:column;align-items:center;padding-top:6px;box-sizing:border-box;gap:2px}

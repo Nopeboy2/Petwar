@@ -489,7 +489,7 @@ screens.bag = () => {
       ${fx === it.id ? `<img class="bc-fx" src="${uui('fx_stat_up')}" alt="">` : ''}</button>`; };
   let body;
   if (bagUI.tab === 'stone') { // bảng 5 hệ (vòng Sinh) × 3 cấp
-    body = `<div class="bs">${EL_ORDER.map((el, c) => `<span class="bs-h"><img src="${pui('icon_el_' + el)}" alt="${ELEM[el].n}" title="Hệ ${ELEM[el].n}">${c < 4 ? `<img class="bs-ar" src="${uui('arrow_sinh')}" alt="sinh">` : ''}</span>`).join('')}
+    body = `<div class="bg-stones">${EL_ORDER.map((el, c) => `<span class="bs-h"><img src="${pui('icon_el_' + el)}" alt="${ELEM[el].n}" title="Hệ ${ELEM[el].n}">${c < 4 ? `<img class="bs-ar" src="${uui('arrow_sinh')}" alt="sinh">` : ''}</span>`).join('')}
       ${TIER.map((r, t) => EL_ORDER.map(el => cell(list.find(it => it.el === el && it.t === t))).join('')).join('')}</div>`;
   } else { // lưới: lấp ô trống cho đủ ít nhất 4 hàng; số cột theo bề ngang màn (2 cột bên 210 + khe 6 + viền lưới 16)
     const sw = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--sw')) || 844;
@@ -603,7 +603,7 @@ screens.shop = () => {
     ${coin(save.gold, atR(128, 12, 112, 32))}${gem(save.gem, atR(12, 12, 104, 32))}
     <div class="bg-main" style="left:calc(12px + env(safe-area-inset-left));right:calc(12px + env(safe-area-inset-right));top:calc(56px + (var(--sh, 390px) - 390px) / 2);height:calc(322px - env(safe-area-inset-bottom))">
       <nav class="bg-tabs sh-tabs">${SHOP_TABS.map(tab).join('')}</nav>
-      <div class="bg-grid">${list.length ? `<div class="sh-cells">${list.map(card).join('')}</div>` : `<div class="sh-empty"><img src="${bui('empty_bag')}" alt="">Sắp có hàng mới</div>`}</div>
+      <div class="bg-grid sh-grid">${list.length ? `<div class="sh-cells">${list.map(card).join('')}</div>` : `<div class="sh-empty"><img src="${bui('empty_bag')}" alt="">Sắp có hàng mới</div>`}</div>
       ${sel ? shopDetail(sel) : '<div class="bd"><span class="bd-desc bd-none" style="margin:130px 14px 0;text-align:center;justify-content:center">Chưa có hàng<br>Quay lại sau nhé</span></div>'}
     </div>
   </div></div>`;

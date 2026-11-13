@@ -79,7 +79,7 @@ img.onload = () => {
     og.drawImage(c, dx, GROUND * S - y1 * k, w * k, h * k);
     out[key] = o.toDataURL('image/webp', 0.9);
   };
-  render(560, 'idle_L'); render(256, 'idle');
+  render(560, 'idle_L');
   const pb = (q.get('portrait') || '').split(',').map(Number);
   if (pb.length === 3) { const o = document.createElement('canvas'); o.width = o.height = 144; const og = o.getContext('2d'); og.imageSmoothingQuality = 'high'; og.drawImage(c, pb[0], pb[1], pb[2], pb[2], 0, 0, 144, 144); out.portrait = o.toDataURL('image/webp', 0.9); }
   document.getElementById('out').textContent = JSON.stringify(out);
