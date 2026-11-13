@@ -66,8 +66,7 @@ const BLOCK = 'left:calc(50% - 422px);top:calc((var(--sh, 390px) - 390px) / 2);w
 const params = new URLSearchParams(location.search);
 let bossIdx = 0, islIdx = 0, bossSel = null, pick = save.lastTeam.map(n => PETS.findIndex(p => p.n === n)).filter(i => i >= 0 && owned(PETS[i])).slice(0, 3);
 if (pick.length < 3) pick = [0, 1, 3]; // dữ liệu lưu cũ (tên pet cũ) → đội mặc định
-let battle = null, installEvt = null;
-addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; });
+let battle = null;
 
 const STAR_MOVES = 30; // sao thứ 2: thắng trong ≤ số nước này
 const statRow = p => `❤️${p.hp} ⚔️${p.atk} 🛡${p.def}`;
@@ -100,7 +99,6 @@ const screens = {
       <div class="h-plv" style="${atL(76, 44, 146, 14)}"><b>Lv ${save.plv}</b><i><s style="width:${save.plv >= CFG.player.maxLv ? 100 : Math.round(100 * save.xp / xpNeed(CFG, save.plv))}%"></s></i><small>+${(plBonus(CFG, save.plv) * 100).toFixed(1)}%</small></div>
       ${coin(save.gold, atR(184, 12, 112, 32))}
       ${gem(save.gem, atR(60, 12, 104, 32))}
-      ${installEvt ? `<button class="h-icon" style="${atR(308, 8, 40, 40)}" data-act="install" aria-label="Cài app" title="Cài app"><img src="${ART.icon_shop}" alt=""></button>` : ''}
       <button class="h-icon" style="${atR(12, 8, 40, 40)}" data-act="settings" aria-label="Cài đặt"><img src="${ART.icon_gear}" alt=""></button>
       ${slot(0, 80)}${slot(1, 216)}${slot(2, 352)}
       <button class="h-team" style="${atM(80, 282, 392, 20)}" data-act="formation">Đội hình hiện tại · chạm để sửa</button>
@@ -720,7 +718,6 @@ const acts = {
     if (same >= 0) pick[same] = i; else if (pick.length < 3) pick.push(i); else pick[2] = i;
     save.lastTeam = pick.map(j => PETS[j].n); persist(); go('pet', i);
   },
-  install() { if (installEvt) { installEvt.prompt(); installEvt = null; go('home'); } },
   reset() { if (confirm('Xoá toàn bộ tiến độ?')) { try { localStorage.removeItem(KEY); } catch { /* bỏ qua */ } save = load(); go('home'); } },
 };
 // ô nhập số: đổi giá trị (Enter / rời ô) → gọi act với { v: 'set', n }

@@ -4,7 +4,7 @@ const UI = 'assets/ui/';
 export const ART = {
   bg_sanh: UI + 'bg_sanh.webp',
   btn_gold: UI + 'btn_gold.webp', btn_purple: UI + 'btn_purple.webp', badge_lv: UI + 'badge_lv.webp', bar_track: UI + 'bar_track.webp', bar_fill: UI + 'bar_fill.webp',
-  chip_bar: UI + 'chip_bar.webp', icon_coin: UI + 'icon_coin.webp', icon_gem: 'assets/bag-ui/item_gem.webp',
+  chip_bar: UI + 'chip_bar.webp', icon_coin: UI + 'icon_coin.webp', icon_gem: 'assets/upgrade-ui/icon_gem.webp',
   panel_leaf: UI + 'panel_leaf.webp',
   avatar_frame: UI + 'avatar_frame.webp', pedestal: UI + 'pedestal.png',
   icon_gear: UI + 'icon_gear.webp', icon_swords: UI + 'icon_swords.png',

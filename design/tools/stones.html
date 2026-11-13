@@ -5,7 +5,7 @@
      Thêm cấp mới: chép ảnh vào design/source/stones/ rồi thêm tên vào LIST. -->
 <pre id="out"></pre>
 <script>
-const LIST = ['stone_moc_1', 'stone_thuy_1', 'stone_hoa_1', 'stone_kim_1', 'stone_tho_1', 'stone_moc_2', 'stone_thuy_2', 'stone_hoa_2', 'stone_kim_2', 'stone_tho_2', 'stone_moc_3', 'stone_thuy_3', 'stone_hoa_3', 'stone_kim_3', 'stone_tho_3'];
+const LIST = ['stone_moc_1', 'stone_thuy_1', 'stone_hoa_1', 'stone_kim_1', 'stone_tho_1', 'stone_moc_2', 'stone_thuy_2', 'stone_hoa_2', 'stone_kim_2', 'stone_tho_2', 'stone_moc_3', 'stone_thuy_3', 'stone_hoa_3', 'stone_kim_3', 'stone_tho_3', 'icon_gem'];
 const load = n => new Promise(ok => { const i = new Image(); i.onload = () => ok(i); i.src = `../source/stones/${n}.png`; });
 (async () => {
   const out = {};
