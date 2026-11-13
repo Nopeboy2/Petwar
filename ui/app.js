@@ -391,7 +391,7 @@ function upDialog(i) {
   const p0 = PETS[i], lv = lvOf(p0), maxed = lv >= CFG.up.maxLv, a = lvPet(CFG, p0, lv), b = lvPet(CFG, p0, Math.min(lv + 1, CFG.up.maxLv));
   upClamp(p0); // đá có thể đã đổi trong Túi đồ
   const fails = save.fail[p0.id] || 0, gold = upGold(CFG, lv), picks = upPicks(), total = upPct(p0, picks), full = total >= 1;
-  const row = (icon, lab, x, y) => `<div class="up-row"><img src="${pui(icon)}" alt=""><span class="up-l">${lab}</span><b class="up-a">${x}</b>${maxed ? '' : `<img class="up-ar" src="${uui('arrow_upgrade')}" alt="→"><b class="up-b">${y}</b><small>(+${y - x})</small>`}</div>`;
+  const row = (icon, lab, x, y) => `<div class="up-row${maxed ? ' maxed' : ''}"><img src="${pui(icon)}" alt=""><span class="up-l">${lab}</span><b class="up-a">${x}</b>${maxed ? '' : `<img class="up-ar" src="${uui('arrow_upgrade')}" alt="→"><b class="up-b">${y}</b><small>(+${y - x})</small>`}</div>`;
   const nuke = q => Math.round(q.atk * q.ult.v);
   const slot = k => { const s = upUI.slots[k];
     return s ? `<button class="up-slot" data-act="upSlot" data-k="${k}" style="background-image:url(${uui('slot_stone_' + (s.t + 1))})" aria-label="Ô ${k + 1}: ${s.n} đá ${TIER[s.t]}">${stoneImg(p0.el, s.t)}<b>×${s.n}</b></button>`
@@ -410,14 +410,15 @@ function upDialog(i) {
     <button class="up-bagbtn" style="left:176px;top:272px;width:128px;height:36px" data-act="bagOpen"><img src="${uui('icon_bag_stone')}" alt="">Túi đồ</button>
     ${coin(save.gold, 'left:176px;top:317px;width:128px;height:32px')}
     <div class="up-rows" style="left:330px;top:80px;width:348px">${row('icon_stat_hp', 'HP', a.hp, b.hp)}${row('icon_stat_atk', 'ATK', a.atk, b.atk)}${row('icon_stat_def', 'DEF', a.def, b.def)}
-      ${p0.ult.k === 'nuke' ? row('icon_ult', 'ULT', nuke(a), nuke(b)) : `<div class="up-row"><img src="${pui('icon_ult')}" alt=""><span class="up-l">ULT</span><span class="up-note">${ULT_TEXT[p0.ult.k](p0.ult.v)} · theo HP từng pet</span></div>`}</div>
+      ${p0.ult.k === 'nuke' ? row('icon_ult', 'ULT', nuke(a), nuke(b)) : `<div class="up-row up-row-note"><img src="${pui('icon_ult')}" alt=""><span class="up-l">ULT</span><span class="up-note">${ULT_TEXT[p0.ult.k](p0.ult.v)} · theo HP từng pet</span></div>`}</div>
     ${maxed ? '' : `<div class="up-pick" style="left:330px;top:236px;width:348px;height:48px">${[0, 1, 2].map(slot).join('')}
       <span class="up-rate"><small>Đá ${ELEM[p0.el].n}</small><b>Tỉ lệ ${Math.round(100 * total)}%</b>${fails && picks.length && !full ? `<i>+${Math.round(CFG.up.pity * fails * 100)}% may mắn</i>` : ''}</span>
       ${coin(gold, 'width:96px;height:30px;position:static;flex:none', save.gold < gold)}</div>`}
     <div class="up-info" style="left:330px;top:290px;width:348px;height:16px">${info}</div>
-    ${maxed ? `<div class="up-maxed" style="left:330px;top:310px;width:184px;height:46px;background-image:url(${uui('plate_maxed')})">Đạt cấp tối đa</div>`
-      : `<button class="rs-btn main up-go" style="left:330px;top:310px;width:184px;height:46px" data-act="upDo" ${!picks.length || save.gold < gold ? 'disabled' : ''}><img src="${uui('icon_upgrade')}" alt="">NÂNG CẤP</button>`}
-    <button class="rs-btn" style="left:528px;top:310px;width:150px;height:46px" data-act="upClose">Đóng</button>`;
+    <div class="up-actions" style="left:330px;top:310px;width:348px;height:46px">
+      ${maxed ? `<div class="up-maxed" style="background-image:url(${uui('plate_maxed')})">Đạt cấp tối đa</div>`
+        : `<button class="rs-btn main up-go" data-act="upDo" ${!picks.length || save.gold < gold ? 'disabled' : ''}><img src="${uui('icon_upgrade')}" alt="">NÂNG CẤP</button>`}
+      <button class="rs-btn up-close" data-act="upClose">Đóng</button></div>`;
 }
 // Hộp thông báo nâng cấp thành công: quầng sáng xoay sau khung · Lv cũ → Lv mới · chỉ số tăng
 function okDialog(p0) {
