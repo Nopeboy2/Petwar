@@ -1,0 +1,16 @@
+<!doctype html><meta charset="utf-8">
+<!-- Viền chọn ô túi đồ: ảnh gốc assets/upgrade-ui/slot_stone_sel KHÔNG đối xứng (dải trái 36px, phải 26px → lỗ trong lệch phải 4px).
+     Lấy nửa phải lật sang trái → đối xứng, lỗ trong x 30–162 (rộng 132) khớp mặt ô (x 28–164 của slot_item_*).
+     Chạy: node design/tools/extract.mjs sel.html assets/bag-ui -->
+<pre id="out"></pre>
+<script>
+const img = new Image();
+img.onload = () => {
+  const S = img.width, c = document.createElement('canvas'); c.width = c.height = S;
+  const g = c.getContext('2d');
+  g.drawImage(img, S / 2, 0, S / 2, S, S / 2, 0, S / 2, S);           // nửa phải giữ nguyên
+  g.translate(S, 0); g.scale(-1, 1); g.drawImage(img, S / 2, 0, S / 2, S, S / 2, 0, S / 2, S); // nửa phải lật → nửa trái
+  document.getElementById('out').textContent = JSON.stringify({ slot_sel: c.toDataURL('image/webp', 0.95) });
+};
+img.src = '../../assets/upgrade-ui/slot_stone_sel.webp';
+</script>

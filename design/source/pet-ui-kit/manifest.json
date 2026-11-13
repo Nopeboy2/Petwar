@@ -1,0 +1,346 @@
+{
+  "version": "1.0.0",
+  "designResolution": {
+    "width": 844,
+    "height": 390
+  },
+  "scale": "Use art PNG as image; size in layout.json is logical px, not asset px.",
+  "assets": {
+    "card_pet": {
+      "path": "assets/ui/card_pet.png",
+      "width": 272,
+      "height": 416,
+      "transparent": true
+    },
+    "card_pet_selected": {
+      "path": "assets/ui/card_pet_selected.png",
+      "width": 272,
+      "height": 416,
+      "transparent": true
+    },
+    "card_pet_pressed": {
+      "path": "assets/ui/card_pet_pressed.png",
+      "width": 272,
+      "height": 416,
+      "transparent": true
+    },
+    "card_pet_locked": {
+      "path": "assets/ui/card_pet_locked.png",
+      "width": 272,
+      "height": 416,
+      "transparent": true
+    },
+    "title_pet": {
+      "path": "assets/ui/title_pet.png",
+      "width": 520,
+      "height": 80,
+      "transparent": true
+    },
+    "panel_info_wide": {
+      "path": "assets/ui/panel_info_wide.png",
+      "width": 880,
+      "height": 528,
+      "transparent": true
+    },
+    "panel_info_mid": {
+      "path": "assets/ui/panel_info_mid.png",
+      "width": 880,
+      "height": 112,
+      "transparent": true
+    },
+    "panel_title_row": {
+      "path": "assets/ui/panel_title_row.png",
+      "width": 880,
+      "height": 88,
+      "transparent": true
+    },
+    "panel_stat": {
+      "path": "assets/ui/panel_stat.png",
+      "width": 880,
+      "height": 200,
+      "transparent": true
+    },
+    "panel_ult": {
+      "path": "assets/ui/panel_ult.png",
+      "width": 880,
+      "height": 112,
+      "transparent": true
+    },
+    "panel_ngu_hanh": {
+      "path": "assets/ui/panel_ngu_hanh.png",
+      "width": 880,
+      "height": 88,
+      "transparent": true
+    },
+    "panel_detail_back": {
+      "path": "assets/ui/panel_detail_back.png",
+      "width": 880,
+      "height": 528,
+      "transparent": true
+    },
+    "pedestal": {
+      "path": "assets/ui/pedestal.png",
+      "width": 240,
+      "height": 100,
+      "transparent": true
+    },
+    "pedestal_large": {
+      "path": "assets/ui/pedestal_large.png",
+      "width": 536,
+      "height": 176,
+      "transparent": true
+    },
+    "btn_pose_stand": {
+      "path": "assets/ui/btn_pose_stand.png",
+      "width": 80,
+      "height": 80,
+      "transparent": true
+    },
+    "btn_pose_attack": {
+      "path": "assets/ui/btn_pose_attack.png",
+      "width": 80,
+      "height": 80,
+      "transparent": true
+    },
+    "btn_pose_hit": {
+      "path": "assets/ui/btn_pose_hit.png",
+      "width": 80,
+      "height": 80,
+      "transparent": true
+    },
+    "btn_pose_ult": {
+      "path": "assets/ui/btn_pose_ult.png",
+      "width": 80,
+      "height": 80,
+      "transparent": true
+    },
+    "btn_pose_die": {
+      "path": "assets/ui/btn_pose_die.png",
+      "width": 80,
+      "height": 80,
+      "transparent": true
+    },
+    "btn_pose_happy": {
+      "path": "assets/ui/btn_pose_happy.png",
+      "width": 80,
+      "height": 80,
+      "transparent": true
+    },
+    "icon_el_kim": {
+      "path": "assets/ui/icon_el_kim.png",
+      "width": 112,
+      "height": 112,
+      "transparent": true
+    },
+    "icon_el_moc": {
+      "path": "assets/ui/icon_el_moc.png",
+      "width": 112,
+      "height": 112,
+      "transparent": true
+    },
+    "icon_el_thuy": {
+      "path": "assets/ui/icon_el_thuy.png",
+      "width": 112,
+      "height": 112,
+      "transparent": true
+    },
+    "icon_el_hoa": {
+      "path": "assets/ui/icon_el_hoa.png",
+      "width": 112,
+      "height": 112,
+      "transparent": true
+    },
+    "icon_el_tho": {
+      "path": "assets/ui/icon_el_tho.png",
+      "width": 112,
+      "height": 112,
+      "transparent": true
+    },
+    "icon_role_t": {
+      "path": "assets/ui/icon_role_t.png",
+      "width": 176,
+      "height": 56,
+      "transparent": true
+    },
+    "icon_role_s": {
+      "path": "assets/ui/icon_role_s.png",
+      "width": 176,
+      "height": 56,
+      "transparent": true
+    },
+    "icon_role_d": {
+      "path": "assets/ui/icon_role_d.png",
+      "width": 176,
+      "height": 56,
+      "transparent": true
+    },
+    "icon_stat_hp": {
+      "path": "assets/ui/icon_stat_hp.png",
+      "width": 80,
+      "height": 80,
+      "transparent": true
+    },
+    "icon_stat_atk": {
+      "path": "assets/ui/icon_stat_atk.png",
+      "width": 80,
+      "height": 80,
+      "transparent": true
+    },
+    "icon_stat_def": {
+      "path": "assets/ui/icon_stat_def.png",
+      "width": 80,
+      "height": 80,
+      "transparent": true
+    },
+    "icon_stat_aggro": {
+      "path": "assets/ui/icon_stat_aggro.png",
+      "width": 80,
+      "height": 80,
+      "transparent": true
+    },
+    "bar_hp": {
+      "path": "assets/ui/bar_hp.png",
+      "width": 568,
+      "height": 28,
+      "transparent": true
+    },
+    "bar_atk": {
+      "path": "assets/ui/bar_atk.png",
+      "width": 568,
+      "height": 28,
+      "transparent": true
+    },
+    "bar_def": {
+      "path": "assets/ui/bar_def.png",
+      "width": 568,
+      "height": 28,
+      "transparent": true
+    },
+    "bar_aggro": {
+      "path": "assets/ui/bar_aggro.png",
+      "width": 568,
+      "height": 28,
+      "transparent": true
+    },
+    "bar_exp": {
+      "path": "assets/ui/bar_exp.png",
+      "width": 240,
+      "height": 20,
+      "transparent": true
+    },
+    "btn_back": {
+      "path": "assets/ui/btn_back.png",
+      "width": 88,
+      "height": 80,
+      "transparent": true
+    },
+    "btn_primary": {
+      "path": "assets/ui/btn_primary.png",
+      "width": 360,
+      "height": 72,
+      "transparent": true
+    },
+    "btn_secondary": {
+      "path": "assets/ui/btn_secondary.png",
+      "width": 280,
+      "height": 72,
+      "transparent": true
+    },
+    "chip_coin": {
+      "path": "assets/ui/chip_coin.png",
+      "width": 224,
+      "height": 64,
+      "transparent": true
+    },
+    "chip_role": {
+      "path": "assets/ui/chip_role.png",
+      "width": 176,
+      "height": 56,
+      "transparent": true
+    },
+    "chip_element": {
+      "path": "assets/ui/chip_element.png",
+      "width": 176,
+      "height": 56,
+      "transparent": true
+    },
+    "chip_level": {
+      "path": "assets/ui/chip_level.png",
+      "width": 192,
+      "height": 64,
+      "transparent": true
+    },
+    "dot_notify": {
+      "path": "assets/ui/dot_notify.png",
+      "width": 44,
+      "height": 44,
+      "transparent": true
+    },
+    "badge_team_1": {
+      "path": "assets/ui/badge_team_1.png",
+      "width": 72,
+      "height": 72,
+      "transparent": true
+    },
+    "badge_team_2": {
+      "path": "assets/ui/badge_team_2.png",
+      "width": 72,
+      "height": 72,
+      "transparent": true
+    },
+    "badge_team_3": {
+      "path": "assets/ui/badge_team_3.png",
+      "width": 72,
+      "height": 72,
+      "transparent": true
+    },
+    "icon_lock": {
+      "path": "assets/ui/icon_lock.png",
+      "width": 80,
+      "height": 80,
+      "transparent": true
+    },
+    "icon_ult": {
+      "path": "assets/ui/icon_ult.png",
+      "width": 112,
+      "height": 112,
+      "transparent": true
+    },
+    "fx_circle": {
+      "path": "assets/fx/fx_circle.png",
+      "width": 536,
+      "height": 536,
+      "transparent": true
+    },
+    "fx_light": {
+      "path": "assets/fx/fx_light.png",
+      "width": 536,
+      "height": 536,
+      "transparent": true
+    },
+    "fx_floor": {
+      "path": "assets/fx/fx_floor.png",
+      "width": 536,
+      "height": 144,
+      "transparent": true
+    },
+    "bg_pet": {
+      "path": "assets/backgrounds/bg_pet.png",
+      "width": 1920,
+      "height": 880,
+      "transparent": false
+    },
+    "bg_pet_detail": {
+      "path": "assets/backgrounds/bg_pet_detail.png",
+      "width": 1920,
+      "height": 880,
+      "transparent": false
+    }
+  },
+  "notes": [
+    "Sprite art extracted from generated asset sheets, transparent exterior with soft shadow.",
+    "The supplied original pet idle/pose images are not included. Plug in your assets/pets/pet_<id>_<pose>_L.webp.",
+    "Text, stats, level, pet name, elemental interaction are displayed through live HTML/CSS.",
+    "A small number of panels have baked decorative pictograms; use blank panels for changing data."
+  ]
+}

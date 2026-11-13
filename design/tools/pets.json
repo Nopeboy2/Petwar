@@ -1,0 +1,174 @@
+{
+  "_ghi_chu": "Thông số chuẩn hoá ảnh pet. Chạy lại tất cả: node design/tools/pet.mjs --all  (hoặc --all <id>). portrait/crop theo px ảnh gốc; ref = chiều cao chung để các tư thế cùng cỡ; iso = 1 khi các tư thế chồng nhau. scale = hệ số riêng để mọi pet có cùng diện tích nhìn thấy (~37% ảnh idle_L), đo lại khi thêm pet.",
+  "pets": [
+    {
+      "id": "rockmane",
+      "role": "T",
+      "scale": 0.948,
+      "idle": {
+        "src": "design/source/pet_rockmane_idle.png",
+        "portrait": "270,140,740"
+      },
+      "poses": {
+        "src": "design/source/pet_rockmane_poses.png",
+        "ref": 415,
+        "iso": 0,
+        "cells": {
+          "attack": "0,0,525,490",
+          "hurt": "535,0,465,480",
+          "ult": "1010,0,526,505",
+          "down": "110,570,580,370",
+          "happy": "760,505,440,519"
+        }
+      }
+    },
+    {
+      "id": "tidewisp",
+      "role": "S",
+      "scale": 0.987,
+      "idle": {
+        "src": "design/source/pet_tidewisp_idle.png",
+        "portrait": "320,110,700",
+        "ref": 840
+      },
+      "poses": {
+        "src": "design/source/pet_tidewisp_poses.png",
+        "ref": 399,
+        "iso": 1,
+        "cells": {
+          "attack": "15,0,500,724",
+          "hurt": "470,0,345,724",
+          "ult": "828,0,575,724",
+          "down": "1340,0,445,724",
+          "happy": "1700,0,454,724"
+        }
+      }
+    },
+    {
+      "id": "leafkit",
+      "role": "S",
+      "scale": 0.962,
+      "idle": {
+        "src": "design/source/pet_leafkit_idle.png",
+        "portrait": "390,180,720",
+        "ref": 800
+      },
+      "poses": {
+        "src": "design/source/pet_leafkit_poses.png",
+        "ref": 373,
+        "iso": 1,
+        "cells": {
+          "attack": "20,0,500,724",
+          "hurt": "470,0,395,724",
+          "ult": "860,0,535,724",
+          "down": "1370,0,385,724",
+          "happy": "1770,0,395,724"
+        }
+      }
+    },
+    {
+      "id": "blazefang",
+      "role": "D",
+      "scale": 1.101,
+      "idle": {
+        "src": "design/source/pet_blazefang_idle.png",
+        "portrait": "400,170,700"
+      },
+      "poses": {
+        "src": "design/source/pet_blazefang_poses.png",
+        "ref": 441,
+        "iso": 0,
+        "cells": {
+          "attack": "0,20,520,480",
+          "hurt": "540,20,460,470",
+          "ult": "1025,0,511,495",
+          "down": "0,545,520,380",
+          "happy": "525,505,490,519"
+        }
+      }
+    },
+    {
+      "id": "steelclaw",
+      "role": "D",
+      "scale": 1.021,
+      "idle": {
+        "src": "design/source/pet_steelclaw_idle.png",
+        "portrait": "250,80,740",
+        "ref": 1120
+      },
+      "poses": {
+        "src": "design/source/pet_steelclaw_poses.png",
+        "ref": 359,
+        "iso": 1,
+        "cells": {
+          "attack": "15,0,450,682",
+          "hurt": "470,0,330,682",
+          "ult": "805,0,520,682",
+          "down": "1270,0,410,682",
+          "happy": "1660,0,375,682"
+        }
+      }
+    },
+    {
+      "id": "gearhorn",
+      "role": "T",
+      "scale": 1,
+      "portrait": "222,210,220",
+      "files": {
+        "idle": "design/source/boss_concepts/bosses/boss_gearhorn_idle.png",
+        "attack": "design/source/boss_concepts/bosses/boss_gearhorn_attack.png",
+        "hurt": "design/source/boss_concepts/bosses/boss_gearhorn_hurt.png",
+        "down": "design/source/boss_concepts/bosses/boss_gearhorn_down.png"
+      }
+    },
+    {
+      "id": "elderoot",
+      "role": "S",
+      "scale": 1.25,
+      "portrait": "212,180,170",
+      "files": {
+        "idle": "design/source/boss_concepts/bosses/boss_elderoot_idle.png",
+        "attack": "design/source/boss_concepts/bosses/boss_elderoot_attack.png",
+        "hurt": "design/source/boss_concepts/bosses/boss_elderoot_hurt.png",
+        "down": "design/source/boss_concepts/bosses/boss_elderoot_down.png"
+      }
+    },
+    {
+      "id": "pearlwyrm",
+      "role": "S",
+      "scale": 1,
+      "portrait": "232,115,200",
+      "files": {
+        "idle": "design/source/boss_concepts/bosses/boss_pearlwyrm_idle.png",
+        "attack": "design/source/boss_concepts/bosses/boss_pearlwyrm_attack.png",
+        "hurt": "design/source/boss_concepts/bosses/boss_pearlwyrm_hurt.png",
+        "down": "design/source/boss_concepts/bosses/boss_pearlwyrm_down.png"
+      }
+    },
+    {
+      "id": "magmaw",
+      "role": "D",
+      "scale": 1,
+      "portrait": "250,220,190",
+      "files": {
+        "idle": "design/source/boss_concepts/bosses/boss_magmaw_idle.png",
+        "attack": "design/source/boss_concepts/bosses/boss_magmaw_attack.png",
+        "hurt": "design/source/boss_concepts/bosses/boss_magmaw_hurt.png",
+        "down": "design/source/boss_concepts/bosses/boss_magmaw_down.png"
+      }
+    },
+    {
+      "id": "duneshell",
+      "role": "T",
+      "scale": 1,
+      "portrait": "297,225,160",
+      "files": {
+        "idle": "design/source/boss_concepts/bosses/boss_duneshell_idle.png",
+        "attack": "design/source/boss_concepts/bosses/boss_duneshell_attack.png",
+        "hurt": "design/source/boss_concepts/bosses/boss_duneshell_hurt.png",
+        "down": "design/source/boss_concepts/bosses/boss_duneshell_down.png"
+      }
+    }
+  ],
+  "_ghi_chu_boss": "Pet thu phục từ boss (files = ảnh boss quay trái, tự lật ngang). portrait = x,y,cạnh tính trên ảnh ĐÃ lật (512 px)."
+}

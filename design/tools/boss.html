@@ -1,0 +1,29 @@
+<!doctype html><meta charset="utf-8">
+<!-- Ảnh boss: design/source/boss_concepts/bosses/boss_<id>_<tư thế>.png (quay TRÁI, nền trong suốt) → assets/bosses/boss_<id>_<tư thế>.webp
+     Cắt theo vùng có alpha rồi đặt vào ô vuông 512, CHÂN chạm vạch 96%. Mọi tư thế của 1 boss dùng CÙNG tỉ lệ
+     (khung lớn nhất trong 5 tư thế vừa rộng ≤ 96%, cao ≤ 94%) để boss không phình/co khi đổi tư thế.
+     Chạy: node design/tools/extract.mjs boss.html assets/bosses -->
+<pre id="out"></pre>
+<script>
+const IDS = ['gearhorn', 'elderoot', 'pearlwyrm', 'magmaw', 'duneshell'], POSES = ['idle', 'attack', 'hurt', 'stun', 'down'], S = 512, out = {};
+const load = src => new Promise((ok, no) => { const i = new Image(); i.onload = () => ok(i); i.onerror = no; i.src = src; });
+function bbox(img) {
+  const c = document.createElement('canvas'); c.width = img.width; c.height = img.height;
+  const g = c.getContext('2d'); g.drawImage(img, 0, 0);
+  const d = g.getImageData(0, 0, c.width, c.height).data; let x0 = 1e9, y0 = 1e9, x1 = 0, y1 = 0;
+  for (let y = 0; y < c.height; y++) for (let x = 0; x < c.width; x++) if (d[(y * c.width + x) * 4 + 3] > 40) { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
+  return { img, x0, y0, w: x1 - x0 + 1, h: y1 - y0 + 1 };
+}
+(async () => {
+  for (const id of IDS) {
+    const fr = (await Promise.all(POSES.map(p => load('../source/boss_concepts/bosses/boss_' + id + '_' + p + '.png')))).map(bbox);
+    const k = Math.min(S * 0.96 / Math.max(...fr.map(f => f.w)), S * 0.94 / Math.max(...fr.map(f => f.h)));
+    fr.forEach((f, i) => {
+      const o = document.createElement('canvas'); o.width = o.height = S; const og = o.getContext('2d'); og.imageSmoothingQuality = 'high';
+      og.drawImage(f.img, f.x0, f.y0, f.w, f.h, (S - f.w * k) / 2, S * 0.96 - f.h * k, f.w * k, f.h * k);
+      out['boss_' + id + '_' + POSES[i]] = o.toDataURL('image/webp', 0.9);
+    });
+  }
+  document.getElementById('out').textContent = JSON.stringify(out);
+})();
+</script>

@@ -1,0 +1,64 @@
+{
+  "baseViewport": {
+    "width": 844,
+    "height": 390
+  },
+  "assetDirectory": "assets/ui/upgrade",
+  "nineSlice": {
+    "panel_upgrade": [
+      72,
+      72,
+      72,
+      72
+    ],
+    "row_compare": [
+      66,
+      24,
+      66,
+      24
+    ]
+  },
+  "assetUsage": {
+    "panel_upgrade": "Full 560x336 popup background; 9-slice.",
+    "frame_upgrade": "Place 112x112 pet portrait image behind frame; inner center transparent.",
+    "badge_level": "Draw actual LV in DOM/canvas; image has blank center.",
+    "badge_level_new": "Draw actual LV in DOM/canvas; glowing target state.",
+    "row_compare": "9-slice for stat rows, draw icon and labels in code.",
+    "plate_maxed": "Use when pet reaches current level cap, draw label in code.",
+    "fx_levelup": "Transparent particles on upgrade, lasts 800ms.",
+    "fx_levelup_screen": "Black-backed alternative, CSS mix-blend-mode:screen.",
+    "fx_stat_up": "Transparent green arrow effect.",
+    "fx_stat_up_screen": "Black-backed alternative, CSS mix-blend-mode:screen."
+  },
+  "stoneIds": [
+    "stone_moc_1",
+    "stone_hoa_1",
+    "stone_tho_1",
+    "stone_kim_1",
+    "stone_thuy_1",
+    "stone_moc_2",
+    "stone_hoa_2",
+    "stone_tho_2",
+    "stone_kim_2",
+    "stone_thuy_2",
+    "stone_moc_3",
+    "stone_hoa_3",
+    "stone_tho_3",
+    "stone_kim_3",
+    "stone_thuy_3"
+  ],
+  "reuseExisting": [
+    "title_island",
+    "btn_primary",
+    "btn_secondary",
+    "chip_coin",
+    "icon_stat_hp",
+    "icon_stat_atk",
+    "icon_stat_def",
+    "icon_ult",
+    "icon_lock_gold",
+    "dot_notify",
+    "pet_<id>_portrait"
+  ],
+  "note": "Assets contain no dynamic text. Text, counts, prices, levels and state are rendered by code."
+}

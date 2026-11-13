@@ -1,0 +1,37 @@
+<!doctype html><meta charset="utf-8">
+<!-- Đá nâng cấp vẽ lại (nền trắng) → WebP nền trong suốt, dời hình vào giữa khung như upgrade.html (mode 'center').
+     Nền trắng nối từ mép → trong suốt kiểu "color to alpha" (mép mịn), điểm xám/trắng ít bão hoà ở mép → bỏ hẳn; mặt sáng bên trong viên đá giữ nguyên.
+     Gốc: design/source/stones/stone_<hệ>_<cấp>.png · Chạy: node design/tools/extract.mjs stones.html assets/upgrade-ui
+     Thêm cấp mới: chép ảnh vào design/source/stones/ rồi thêm tên vào LIST. -->
+<pre id="out"></pre>
+<script>
+const LIST = ['stone_moc_1', 'stone_thuy_1', 'stone_hoa_1', 'stone_kim_1', 'stone_tho_1'];
+const load = n => new Promise(ok => { const i = new Image(); i.onload = () => ok(i); i.src = `../source/stones/${n}.png`; });
+(async () => {
+  const out = {};
+  for (const name of LIST) {
+    const img = await load(name), w = img.width, h = img.height, c = document.createElement('canvas'); c.width = w; c.height = h;
+    const g = c.getContext('2d'); g.drawImage(img, 0, 0);
+    const d = g.getImageData(0, 0, w, h), p = d.data, seen = new Uint8Array(w * h), st = [];
+    const al = i => Math.max(255 - p[i * 4], 255 - p[i * 4 + 1], 255 - p[i * 4 + 2]) / 255;
+    for (let i = 0; i < w; i++) st.push(i, (h - 1) * w + i);
+    for (let j = 0; j < h; j++) st.push(j * w, j * w + w - 1);
+    while (st.length) { const i = st.pop(); if (seen[i] || al(i) > 0.75) continue; seen[i] = 1;
+      const x = i % w, y = (i / w) | 0; if (x > 0) st.push(i - 1); if (x < w - 1) st.push(i + 1); if (y > 0) st.push(i - w); if (y < h - 1) st.push(i + w); }
+    for (let i = 0; i < w * h; i++) {
+      if (!seen[i]) continue;
+      const k = i * 4, a = al(i);
+      if (Math.max(p[k], p[k + 1], p[k + 2]) - Math.min(p[k], p[k + 1], p[k + 2]) < 25 || a < 0.02) { p[k + 3] = 0; continue; }
+      for (let j = 0; j < 3; j++) p[k + j] = Math.max(0, Math.min(255, Math.round((p[k + j] - 255 * (1 - a)) / a)));
+      p[k + 3] = Math.round(255 * a);
+    }
+    let x0 = w, y0 = h, x1 = 0, y1 = 0;
+    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) if (p[(y * w + x) * 4 + 3] > 40) { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
+    g.putImageData(d, 0, 0);
+    const o = document.createElement('canvas'); o.width = w; o.height = h;
+    o.getContext('2d').drawImage(c, Math.round(w / 2 - (x0 + x1 + 1) / 2), Math.round(h / 2 - (y0 + y1 + 1) / 2));
+    out[name] = o.toDataURL('image/webp', 0.92);
+  }
+  document.getElementById('out').textContent = JSON.stringify(out);
+})();
+</script>

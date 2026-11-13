@@ -1,0 +1,65 @@
+<!doctype html><meta charset="utf-8">
+<!-- Cắt icon hệ (vòng tròn, bỏ nhãn chữ) + 5 rương từ design/source/element-chest-kit.png (nền SÁNG).
+     Chạy: node design/tools/extract.mjs elchest.html assets/_elchest, rồi chép icon_el_* sang assets/pet-ui và item_chest_* sang assets/bag-ui -->
+<body>
+<pre id="out"></pre>
+<script>
+// [tên, x, y, w, h, kiểu, cạnh ra]  'circle' = mặt nạ tròn nội tiếp (bỏ nhãn) · 'light' = xoá nền sáng nối mép rồi căn giữa vào ô vuông
+const EL = [['moc', 94], ['hoa', 234], ['tho', 374], ['kim', 512], ['thuy', 651]];
+const RECTS = [
+  ...EL.map(([e, cx]) => ['icon_el_' + e, cx - 63, 71, 126, 126, 'circle', 112]),
+  ['item_chest_1', 86, 330, 252, 186, 'light', 192],
+  ['item_chest_2', 400, 330, 266, 186, 'light', 192],
+  ['item_chest_3', 720, 330, 266, 186, 'light', 192],
+  ['item_chest_5', 1374, 280, 368, 236, 'c2a', 192],
+];
+const img = new Image();
+img.onload = () => {
+  const out = {};
+  for (const [name, x, y, w, h, mode, S] of RECTS) {
+    const c = document.createElement('canvas'); c.width = w; c.height = h;
+    const g = c.getContext('2d');
+    if (mode === 'circle') {
+      g.beginPath(); g.arc(w / 2, h / 2, w / 2 - 1, 0, Math.PI * 2); g.clip(); g.drawImage(img, x, y, w, h, 0, 0, w, h);
+    } else if (mode === 'c2a') {
+      // nền sáng + quầng sáng loang từ mép: xoá hẳn cả quầng (mọi điểm sáng nối mép), viền 1px bán trong suốt
+      g.drawImage(img, x, y, w, h, 0, 0, w, h);
+      const d = g.getImageData(0, 0, w, h), p = d.data, seen = new Uint8Array(w * h), st = [];
+      const lite = i => Math.min(p[i * 4], p[i * 4 + 1], p[i * 4 + 2]) > 140;
+      for (let i = 0; i < w; i++) st.push(i, (h - 1) * w + i);
+      for (let j = 0; j < h; j++) st.push(j * w, j * w + w - 1);
+      while (st.length) { const i = st.pop(); if (seen[i] || !lite(i)) continue; seen[i] = 1;
+        p[i * 4 + 3] = 0;
+        const xx = i % w, yy = (i / w) | 0; if (xx > 0) st.push(i - 1); if (xx < w - 1) st.push(i + 1); if (yy > 0) st.push(i - w); if (yy < h - 1) st.push(i + w); }
+      for (let i = 0; i < w * h; i++) if (!seen[i]) { const xx = i % w, yy = (i / w) | 0; // viền 1px bán trong suốt
+        if ((xx > 0 && seen[i - 1]) || (xx < w - 1 && seen[i + 1]) || (yy > 0 && seen[i - w]) || (yy < h - 1 && seen[i + w])) p[i * 4 + 3] = 150; }
+      g.putImageData(d, 0, 0);
+    } else {
+      g.drawImage(img, x, y, w, h, 0, 0, w, h);
+      const d = g.getImageData(0, 0, w, h), p = d.data, seen = new Uint8Array(w * h), st = [];
+      // nền: sáng + ít màu (xám/xanh nhạt). Loang từ mép.
+      const bg = i => { const r = p[i * 4], gg = p[i * 4 + 1], b = p[i * 4 + 2], mx = Math.max(r, gg, b), mn = Math.min(r, gg, b); return mn > 205 && mx - mn < 40; };
+      for (let i = 0; i < w; i++) st.push(i, (h - 1) * w + i);
+      for (let j = 0; j < h; j++) st.push(j * w, j * w + w - 1);
+      while (st.length) { const i = st.pop(); if (seen[i] || !bg(i)) continue; seen[i] = 1; p[i * 4 + 3] = 0;
+        const xx = i % w, yy = (i / w) | 0; if (xx > 0) st.push(i - 1); if (xx < w - 1) st.push(i + 1); if (yy > 0) st.push(i - w); if (yy < h - 1) st.push(i + w); }
+      for (let i = 0; i < w * h; i++) if (!seen[i]) { // làm mềm viền sát nền
+        const xx = i % w, yy = (i / w) | 0;
+        if ((xx > 0 && seen[i - 1]) || (xx < w - 1 && seen[i + 1]) || (yy > 0 && seen[i - w]) || (yy < h - 1 && seen[i + w])) {
+          const mn = Math.min(p[i * 4], p[i * 4 + 1], p[i * 4 + 2]); if (mn > 170) p[i * 4 + 3] = Math.round(255 * (255 - mn) / 85); }
+      }
+      g.putImageData(d, 0, 0);
+    }
+    // căn giữa theo vùng có alpha vào ô vuông S (chừa 4%)
+    const d2 = g.getImageData(0, 0, w, h).data; let x0 = w, y0 = h, x1 = 0, y1 = 0;
+    for (let yy = 0; yy < h; yy++) for (let xx = 0; xx < w; xx++) if (d2[(yy * w + xx) * 4 + 3] > 20) { x0 = Math.min(x0, xx); x1 = Math.max(x1, xx); y0 = Math.min(y0, yy); y1 = Math.max(y1, yy); }
+    const bw = x1 - x0 + 1, bh = y1 - y0 + 1, k = name.startsWith('item_chest') ? Math.min(S * 0.99 / bw, S * 0.64 / bh) // rương: cùng CHIỀU CAO (rương có cánh được rộng hơn) để 4 rương đồng cỡ
+      : (S * (mode === 'circle' ? 1 : 0.92)) / Math.max(bw, bh);
+    const o = document.createElement('canvas'); o.width = o.height = S; const og = o.getContext('2d'); og.imageSmoothingQuality = 'high';
+    og.drawImage(c, x0, y0, bw, bh, (S - bw * k) / 2, (S - bh * k) / 2, bw * k, bh * k);
+    out[name] = o.toDataURL('image/webp', 0.92);
+  }
+  document.getElementById('out').textContent = JSON.stringify(out);
+};
+img.src = '../source/element-chest-kit.png';
+</script>

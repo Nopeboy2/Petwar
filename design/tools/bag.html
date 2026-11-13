@@ -1,0 +1,27 @@
+<!doctype html><meta charset="utf-8">
+<!-- Chuyển bộ asset Túi đồ (design/source/bag-ui-kit) → WebP. Chạy: node design/tools/extract.mjs bag.html assets/bag-ui -->
+<body>
+<pre id="out"></pre>
+<script>
+const SRC = '../source/bag-ui-kit/assets/ui/bag/';
+const LIST = [
+  ...['tab_bag','tab_bag_active','icon_tab_all','icon_tab_currency','icon_tab_stone','icon_tab_item','icon_tab_chest','slot_item_empty',
+    'panel_item_detail','item_gold','item_gem','tag_new','icon_source','empty_bag','item_shard','item_ticket'].map(n => [n, n, 'copy']),
+  ['fx_rarity', 'fx_rarity', 'copy'],
+];
+const load = src => new Promise((ok, err) => { const i = new Image(); i.onload = () => ok(i); i.onerror = err; i.src = SRC + src + '.png'; });
+(async () => {
+  const out = {};
+  for (const [name, src, mode] of LIST) {
+    const img = await load(src), c = document.createElement('canvas'); c.width = img.width; c.height = img.height;
+    const g = c.getContext('2d'); g.drawImage(img, 0, 0);
+    if (mode === 'screen') {
+      const d = g.getImageData(0, 0, c.width, c.height), p = d.data;
+      for (let i = 0; i < p.length; i += 4) { const a = Math.max(p[i], p[i + 1], p[i + 2]) / 255; if (a) for (let k = 0; k < 3; k++) p[i + k] = Math.min(255, p[i + k] / a); p[i + 3] = Math.round(255 * a); }
+      g.putImageData(d, 0, 0);
+    }
+    out[name] = c.toDataURL('image/webp', 0.9);
+  }
+  document.getElementById('out').textContent = JSON.stringify(out);
+})();
+</script>

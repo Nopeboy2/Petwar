@@ -1,0 +1,21 @@
+<!doctype html><meta charset="utf-8">
+<!-- Đá Kim: bạc → vàng kim cho khớp icon hệ Kim (icon_el_kim). Giữ sáng/tối, chỉ ánh xạ độ sáng → dải màu vàng.
+     Gốc bạc: design/source/stone_kim_raw/ · Chạy: node design/tools/extract.mjs kim.html assets/upgrade-ui -->
+<pre id="out"></pre>
+<script>
+// [độ sáng 0–1, r, g, b]: tối = nâu vàng đậm (viền), giữa = vàng kim, sáng = vàng nhạt gần trắng (lấp lánh)
+const STOPS = [[0, 60, 30, 0], [0.5, 190, 108, 0], [0.7, 240, 162, 0], [0.84, 255, 204, 30], [0.94, 255, 236, 130], [1, 255, 252, 215]];
+const grad = L => { let k = 1; while (k < STOPS.length - 1 && STOPS[k][0] < L) k++; const [a, ...A] = STOPS[k - 1], [b, ...B] = STOPS[k], t = Math.max(0, Math.min(1, (L - a) / (b - a))); return A.map((v, i) => Math.round(v + (B[i] - v) * t)); };
+const out = {}; let n = 0;
+for (const t of [1, 2, 3]) {
+  const img = new Image();
+  img.onload = () => {
+    const c = document.createElement('canvas'); c.width = img.width; c.height = img.height; const g = c.getContext('2d'); g.drawImage(img, 0, 0);
+    const d = g.getImageData(0, 0, c.width, c.height), p = d.data;
+    for (let i = 0; i < p.length; i += 4) { if (!p[i + 3]) continue; const L = (0.3 * p[i] + 0.59 * p[i + 1] + 0.11 * p[i + 2]) / 255; [p[i], p[i + 1], p[i + 2]] = grad(L); }
+    g.putImageData(d, 0, 0); out['stone_kim_' + t] = c.toDataURL('image/webp', 0.92);
+    if (++n === 3) document.getElementById('out').textContent = JSON.stringify(out);
+  };
+  img.src = '../source/stone_kim_raw/stone_kim_' + t + '.webp';
+}
+</script>

@@ -1,0 +1,429 @@
+{
+  "project": "PET WAR",
+  "screen": "11 Túi đồ",
+  "viewport": {
+    "width": 844,
+    "height": 390
+  },
+  "asset_base": "assets/ui/bag/",
+  "source": "11-bag.md",
+  "files": [
+    {
+      "name": "tab_bag",
+      "file": "assets/ui/bag/tab_bag.png",
+      "width": 348,
+      "height": 132,
+      "kind": "new",
+      "notes": "116×44 CSS, blank tab, 9-slice x"
+    },
+    {
+      "name": "tab_bag_active",
+      "file": "assets/ui/bag/tab_bag_active.png",
+      "width": 348,
+      "height": 132,
+      "kind": "new",
+      "notes": "116×44 CSS, active cream and gold"
+    },
+    {
+      "name": "icon_tab_all",
+      "file": "assets/ui/bag/icon_tab_all.png",
+      "width": 96,
+      "height": 96,
+      "kind": "new",
+      "notes": "26×26 CSS tab icon"
+    },
+    {
+      "name": "icon_tab_currency",
+      "file": "assets/ui/bag/icon_tab_currency.png",
+      "width": 96,
+      "height": 96,
+      "kind": "new",
+      "notes": "26×26 CSS tab icon"
+    },
+    {
+      "name": "icon_tab_stone",
+      "file": "assets/ui/bag/icon_tab_stone.png",
+      "width": 96,
+      "height": 96,
+      "kind": "new",
+      "notes": "26×26 CSS tab icon"
+    },
+    {
+      "name": "icon_tab_item",
+      "file": "assets/ui/bag/icon_tab_item.png",
+      "width": 96,
+      "height": 96,
+      "kind": "new",
+      "notes": "26×26 CSS tab icon"
+    },
+    {
+      "name": "icon_tab_chest",
+      "file": "assets/ui/bag/icon_tab_chest.png",
+      "width": 96,
+      "height": 96,
+      "kind": "new",
+      "notes": "26×26 CSS tab icon"
+    },
+    {
+      "name": "slot_item_4",
+      "file": "assets/ui/bag/slot_item_4.png",
+      "width": 192,
+      "height": 192,
+      "kind": "new",
+      "notes": "192x192; uses same base silhouette as rarity 1-3"
+    },
+    {
+      "name": "slot_item_empty",
+      "file": "assets/ui/bag/slot_item_empty.png",
+      "width": 192,
+      "height": 192,
+      "kind": "new",
+      "notes": "192×192 transparent muted empty slot"
+    },
+    {
+      "name": "panel_item_detail",
+      "file": "assets/ui/bag/panel_item_detail.png",
+      "width": 636,
+      "height": 942,
+      "kind": "new",
+      "notes": "212×314 CSS; keep neutral blank top header; 9-slice top 340px"
+    },
+    {
+      "name": "fx_rarity",
+      "file": "assets/ui/bag/fx_rarity.png",
+      "width": 360,
+      "height": 360,
+      "kind": "new",
+      "notes": "Transparent effect: overlay above rarity 3+"
+    },
+    {
+      "name": "fx_rarity_screen",
+      "file": "assets/ui/bag/fx_rarity_screen.png",
+      "width": 360,
+      "height": 360,
+      "kind": "new",
+      "notes": "Use mix-blend-mode: screen"
+    },
+    {
+      "name": "item_gold",
+      "file": "assets/ui/bag/item_gold.png",
+      "width": 192,
+      "height": 192,
+      "kind": "new",
+      "notes": "Currency item, paw-marked coin pile"
+    },
+    {
+      "name": "item_gem",
+      "file": "assets/ui/bag/item_gem.png",
+      "width": 192,
+      "height": 192,
+      "kind": "new",
+      "notes": "Currency item, blue diamond cluster"
+    },
+    {
+      "name": "tag_new",
+      "file": "assets/ui/bag/tag_new.png",
+      "width": 96,
+      "height": 48,
+      "kind": "new",
+      "notes": "Blank center: render MỚI text via code"
+    },
+    {
+      "name": "icon_source",
+      "file": "assets/ui/bag/icon_source.png",
+      "width": 64,
+      "height": 64,
+      "kind": "new",
+      "notes": "16×16 CSS map-pin icon"
+    },
+    {
+      "name": "empty_bag",
+      "file": "assets/ui/bag/empty_bag.png",
+      "width": 480,
+      "height": 360,
+      "kind": "new",
+      "notes": "160×120 CSS empty state cute leather bag"
+    },
+    {
+      "name": "item_chest_1",
+      "file": "assets/ui/bag/item_chest_1.png",
+      "width": 192,
+      "height": 192,
+      "kind": "new",
+      "notes": "Future reserved chest item"
+    },
+    {
+      "name": "item_chest_2",
+      "file": "assets/ui/bag/item_chest_2.png",
+      "width": 192,
+      "height": 192,
+      "kind": "new",
+      "notes": "Future reserved chest item"
+    },
+    {
+      "name": "item_chest_3",
+      "file": "assets/ui/bag/item_chest_3.png",
+      "width": 192,
+      "height": 192,
+      "kind": "new",
+      "notes": "Future reserved chest item"
+    },
+    {
+      "name": "item_shard",
+      "file": "assets/ui/bag/item_shard.png",
+      "width": 192,
+      "height": 192,
+      "kind": "new",
+      "notes": "Future pet shard"
+    },
+    {
+      "name": "item_ticket",
+      "file": "assets/ui/bag/item_ticket.png",
+      "width": 192,
+      "height": 192,
+      "kind": "new",
+      "notes": "Future battle ticket"
+    },
+    {
+      "name": "item_key",
+      "file": "assets/ui/bag/item_key.png",
+      "width": 192,
+      "height": 192,
+      "kind": "new",
+      "notes": "Future ornate gold key"
+    },
+    {
+      "name": "btn_back_fallback",
+      "file": "assets/ui/bag/fallbacks/btn_back_fallback.png",
+      "width": 132,
+      "height": 120,
+      "kind": "fallback",
+      "notes": "Only if you do not have btn_back already"
+    },
+    {
+      "name": "chip_coin_fallback",
+      "file": "assets/ui/bag/fallbacks/chip_coin_fallback.png",
+      "width": 336,
+      "height": 96,
+      "kind": "fallback",
+      "notes": ""
+    },
+    {
+      "name": "chip_gem_fallback",
+      "file": "assets/ui/bag/fallbacks/chip_gem_fallback.png",
+      "width": 312,
+      "height": 96,
+      "kind": "fallback",
+      "notes": ""
+    },
+    {
+      "name": "title_bag_fallback",
+      "file": "assets/ui/bag/fallbacks/title_bag_fallback.png",
+      "width": 780,
+      "height": 144,
+      "kind": "fallback",
+      "notes": "Blank purple title band; add TÚI ĐỒ with HTML"
+    },
+    {
+      "name": "panel_detail_back_fallback",
+      "file": "assets/ui/bag/fallbacks/panel_detail_back_fallback.png",
+      "width": 1140,
+      "height": 942,
+      "kind": "fallback",
+      "notes": "380x314 CSS, 9-slice margin ~60px"
+    },
+    {
+      "name": "slot_stone_1",
+      "file": "assets/ui/upgrade/slot_stone_1.png",
+      "width": 192,
+      "height": 192,
+      "kind": "reused",
+      "notes": "Original PNG from previous 09b upgrade asset package"
+    },
+    {
+      "name": "slot_stone_2",
+      "file": "assets/ui/upgrade/slot_stone_2.png",
+      "width": 192,
+      "height": 192,
+      "kind": "reused",
+      "notes": "Original PNG from previous 09b upgrade asset package"
+    },
+    {
+      "name": "slot_stone_3",
+      "file": "assets/ui/upgrade/slot_stone_3.png",
+      "width": 192,
+      "height": 192,
+      "kind": "reused",
+      "notes": "Original PNG from previous 09b upgrade asset package"
+    },
+    {
+      "name": "slot_stone_sel",
+      "file": "assets/ui/upgrade/slot_stone_sel.png",
+      "width": 192,
+      "height": 192,
+      "kind": "reused",
+      "notes": "Original PNG from previous 09b upgrade asset package"
+    },
+    {
+      "name": "icon_merge",
+      "file": "assets/ui/upgrade/icon_merge.png",
+      "width": 96,
+      "height": 96,
+      "kind": "reused",
+      "notes": "Original PNG from previous 09b upgrade asset package"
+    },
+    {
+      "name": "icon_convert",
+      "file": "assets/ui/upgrade/icon_convert.png",
+      "width": 96,
+      "height": 96,
+      "kind": "reused",
+      "notes": "Original PNG from previous 09b upgrade asset package"
+    },
+    {
+      "name": "arrow_sinh",
+      "file": "assets/ui/upgrade/arrow_sinh.png",
+      "width": 64,
+      "height": 48,
+      "kind": "reused",
+      "notes": "Original PNG from previous 09b upgrade asset package"
+    },
+    {
+      "name": "fx_stat_up",
+      "file": "assets/ui/upgrade/fx_stat_up.png",
+      "width": 96,
+      "height": 128,
+      "kind": "reused",
+      "notes": "Original PNG from previous 09b upgrade asset package"
+    },
+    {
+      "name": "stone_moc_1",
+      "file": "assets/ui/upgrade/stone_moc_1.png",
+      "width": 192,
+      "height": 192,
+      "kind": "reused",
+      "notes": "Original PNG from previous 09b upgrade asset package"
+    },
+    {
+      "name": "stone_moc_2",
+      "file": "assets/ui/upgrade/stone_moc_2.png",
+      "width": 192,
+      "height": 192,
+      "kind": "reused",
+      "notes": "Original PNG from previous 09b upgrade asset package"
+    },
+    {
+      "name": "stone_moc_3",
+      "file": "assets/ui/upgrade/stone_moc_3.png",
+      "width": 192,
+      "height": 192,
+      "kind": "reused",
+      "notes": "Original PNG from previous 09b upgrade asset package"
+    },
+    {
+      "name": "stone_hoa_1",
+      "file": "assets/ui/upgrade/stone_hoa_1.png",
+      "width": 192,
+      "height": 192,
+      "kind": "reused",
+      "notes": "Original PNG from previous 09b upgrade asset package"
+    },
+    {
+      "name": "stone_hoa_2",
+      "file": "assets/ui/upgrade/stone_hoa_2.png",
+      "width": 192,
+      "height": 192,
+      "kind": "reused",
+      "notes": "Original PNG from previous 09b upgrade asset package"
+    },
+    {
+      "name": "stone_hoa_3",
+      "file": "assets/ui/upgrade/stone_hoa_3.png",
+      "width": 192,
+      "height": 192,
+      "kind": "reused",
+      "notes": "Original PNG from previous 09b upgrade asset package"
+    },
+    {
+      "name": "stone_tho_1",
+      "file": "assets/ui/upgrade/stone_tho_1.png",
+      "width": 192,
+      "height": 192,
+      "kind": "reused",
+      "notes": "Original PNG from previous 09b upgrade asset package"
+    },
+    {
+      "name": "stone_tho_2",
+      "file": "assets/ui/upgrade/stone_tho_2.png",
+      "width": 192,
+      "height": 192,
+      "kind": "reused",
+      "notes": "Original PNG from previous 09b upgrade asset package"
+    },
+    {
+      "name": "stone_tho_3",
+      "file": "assets/ui/upgrade/stone_tho_3.png",
+      "width": 192,
+      "height": 192,
+      "kind": "reused",
+      "notes": "Original PNG from previous 09b upgrade asset package"
+    },
+    {
+      "name": "stone_kim_1",
+      "file": "assets/ui/upgrade/stone_kim_1.png",
+      "width": 192,
+      "height": 192,
+      "kind": "reused",
+      "notes": "Original PNG from previous 09b upgrade asset package"
+    },
+    {
+      "name": "stone_kim_2",
+      "file": "assets/ui/upgrade/stone_kim_2.png",
+      "width": 192,
+      "height": 192,
+      "kind": "reused",
+      "notes": "Original PNG from previous 09b upgrade asset package"
+    },
+    {
+      "name": "stone_kim_3",
+      "file": "assets/ui/upgrade/stone_kim_3.png",
+      "width": 192,
+      "height": 192,
+      "kind": "reused",
+      "notes": "Original PNG from previous 09b upgrade asset package"
+    },
+    {
+      "name": "stone_thuy_1",
+      "file": "assets/ui/upgrade/stone_thuy_1.png",
+      "width": 192,
+      "height": 192,
+      "kind": "reused",
+      "notes": "Original PNG from previous 09b upgrade asset package"
+    },
+    {
+      "name": "stone_thuy_2",
+      "file": "assets/ui/upgrade/stone_thuy_2.png",
+      "width": 192,
+      "height": 192,
+      "kind": "reused",
+      "notes": "Original PNG from previous 09b upgrade asset package"
+    },
+    {
+      "name": "stone_thuy_3",
+      "file": "assets/ui/upgrade/stone_thuy_3.png",
+      "width": 192,
+      "height": 192,
+      "kind": "reused",
+      "notes": "Original PNG from previous 09b upgrade asset package"
+    },
+    {
+      "name": "preview_tui_do",
+      "file": "preview_tui_do.png",
+      "width": 1846,
+      "height": 852,
+      "kind": "preview",
+      "notes": "Full mockup reference, not a sliced game asset"
+    }
+  ],
+  "reuseNote": "Existing assets from assets/pet-ui and assets/ui still referenced by the screen; fallbacks are optional."
+}

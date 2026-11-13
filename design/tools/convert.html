@@ -1,0 +1,30 @@
+<!doctype html><meta charset="utf-8">
+<!-- icon_convert (nút Chuyển hoá): ảnh gốc nền trắng → nền trong suốt (ngoài + lỗ giữa vòng), cắt sát hình, thu về 96×96.
+     Gốc: design/source/icon_convert_raw.png · Chạy: node design/tools/extract.mjs convert.html assets/upgrade-ui -->
+<pre id="out"></pre>
+<script>
+const OUT = 96;
+const img = new Image();
+img.onload = () => {
+  const w = img.width, h = img.height, c = document.createElement('canvas'); c.width = w; c.height = h;
+  const g = c.getContext('2d'); g.drawImage(img, 0, 0);
+  const d = g.getImageData(0, 0, w, h), p = d.data, seen = new Uint8Array(w * h), st = [];
+  const bg = i => { const r = p[i * 4], gg = p[i * 4 + 1], b = p[i * 4 + 2]; return Math.min(r, gg, b) > 200 && Math.max(r, gg, b) - Math.min(r, gg, b) < 40; }; // trắng/xám rất nhạt
+  for (let i = 0; i < w; i++) st.push(i, (h - 1) * w + i);
+  for (let j = 0; j < h; j++) st.push(j * w, j * w + w - 1);
+  st.push((h >> 1) * w + (w >> 1)); // lỗ giữa vòng mũi tên
+  while (st.length) { const i = st.pop(); if (seen[i] || !bg(i)) continue; seen[i] = 1;
+    const x = i % w, y = (i / w) | 0; if (x > 0) st.push(i - 1); if (x < w - 1) st.push(i + 1); if (y > 0) st.push(i - w); if (y < h - 1) st.push(i + w); }
+  let x0 = w, y0 = h, x1 = 0, y1 = 0;
+  for (let i = 0; i < w * h; i++) {
+    if (seen[i]) { p[i * 4 + 3] = 0; continue; }
+    const x = i % w, y = (i / w) | 0; x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y);
+  }
+  g.putImageData(d, 0, 0);
+  const s = Math.max(x1 - x0 + 1, y1 - y0 + 1), o = document.createElement('canvas'); o.width = o.height = OUT;
+  const og = o.getContext('2d'); og.imageSmoothingQuality = 'high';
+  const k = OUT / s; og.drawImage(c, x0, y0, x1 - x0 + 1, y1 - y0 + 1, (OUT - (x1 - x0 + 1) * k) / 2, (OUT - (y1 - y0 + 1) * k) / 2, (x1 - x0 + 1) * k, (y1 - y0 + 1) * k);
+  document.getElementById('out').textContent = JSON.stringify({ icon_convert: o.toDataURL('image/webp', 0.95) });
+};
+img.src = '../source/icon_convert_raw.png';
+</script>

@@ -1,0 +1,20 @@
+<!doctype html><meta charset="utf-8">
+<!-- Xoá dải nền trắng sót quanh mép khung panel_detail_back (gây "khung mờ" ngoài lưới túi đồ / bảng chỉ số pet).
+     Gốc: design/source/panel_detail_back_raw.png (ảnh nền trắng, thu về 880×528) · Chạy: node design/tools/extract.mjs panel.html assets/pet-ui -->
+<pre id="out"></pre>
+<script>
+const img = new Image();
+img.onload = () => {
+  const w = 880, h = 528, c = document.createElement('canvas'); c.width = w; c.height = h; // giữ 880×528: CSS border-image cắt 56px theo kích thước này
+  const g = c.getContext('2d'); g.drawImage(img, 0, 0, w, h);
+  const d = g.getImageData(0, 0, w, h), p = d.data, seen = new Uint8Array(w * h), st = [];
+  const bg = i => { const r = p[i * 4], g2 = p[i * 4 + 1], b = p[i * 4 + 2]; return p[i * 4 + 3] < 200 || Math.max(r, g2, b) - Math.min(r, g2, b) < 40; }; // nền trắng + bóng đổ xám (ít bão hoà) nối từ mép ảnh → trong suốt; viền vàng/cam bão hoà cao nên giữ
+  for (let i = 0; i < w; i++) st.push(i, (h - 1) * w + i);
+  for (let j = 0; j < h; j++) st.push(j * w, j * w + w - 1);
+  while (st.length) { const i = st.pop(); if (seen[i] || !bg(i)) continue; seen[i] = 1; p[i * 4 + 3] = 0;
+    const x = i % w, y = (i / w) | 0; if (x > 0) st.push(i - 1); if (x < w - 1) st.push(i + 1); if (y > 0) st.push(i - w); if (y < h - 1) st.push(i + w); }
+  g.putImageData(d, 0, 0);
+  document.getElementById('out').textContent = JSON.stringify({ panel_detail_back: c.toDataURL('image/webp', 0.95) });
+};
+img.src = '../source/panel_detail_back_raw.png';
+</script>

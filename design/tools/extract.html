@@ -1,0 +1,56 @@
+<!doctype html><meta charset="utf-8">
+<!-- Cắt asset từ ảnh thiết kế + tách nền trắng. Chạy qua design/tools/extract.mjs (Chrome headless). -->
+<body>
+<pre id="out"></pre>
+<script>
+// [tên, x, y, w, h, kiểu tách nền]  kiểu: 'edge' = xoá nền trắng nối với mép, 'edge+center' = thêm cả lòng trong, 'none' = giữ nguyên
+// panel_leaf, avatar_frame, btn_gold, btn_purple, chip (khung), icon_gear, icon_shop, đồng xu đã thay bằng bộ v2: home2.html
+const RECTS = [
+  ['frame_small', 1670, 62, 154, 128, 'edge'],
+  ['panel_gold', 1068, 204, 548, 250, 'edge'],
+  ['banner', 1644, 212, 158, 128, 'edge'],
+  ['signpost', 1650, 344, 164, 124, 'edge'],
+  ['icon_gift', 834, 620, 88, 90, 'edge'],
+  ['icon_scroll', 932, 620, 88, 90, 'edge'],
+  ['icon_swords', 1030, 620, 88, 90, 'edge'],
+  ['icon_paw', 1128, 620, 88, 90, 'edge'],
+  ['icon_shield', 1224, 620, 88, 90, 'edge'],
+  ['icon_bag', 1418, 620, 92, 90, 'edge'],
+  ['pedestal', 40, 770, 188, 76, 'edge'],
+];
+const TH = 238; // ngưỡng "trắng"
+const img = new Image();
+img.onload = () => {
+  const out = {};
+  for (const [name, x, y, w, h, mode] of RECTS) {
+    const c = document.createElement('canvas'); c.width = w; c.height = h;
+    const g = c.getContext('2d'); g.drawImage(img, x, y, w, h, 0, 0, w, h);
+    if (mode !== 'none') {
+      const d = g.getImageData(0, 0, w, h), p = d.data, seen = new Uint8Array(w * h), st = [];
+      const white = i => p[i * 4] > TH && p[i * 4 + 1] > TH - 8 && p[i * 4 + 2] > TH - 8;
+      for (let i = 0; i < w; i++) st.push(i, (h - 1) * w + i);
+      for (let j = 0; j < h; j++) st.push(j * w, j * w + w - 1);
+      if (mode === 'edge+center') st.push((h >> 1) * w + (w >> 1));
+      while (st.length) {
+        const i = st.pop(); if (seen[i] || !white(i)) continue; seen[i] = 1; p[i * 4 + 3] = 0;
+        const cx = i % w, cy = (i / w) | 0;
+        if (cx > 0) st.push(i - 1); if (cx < w - 1) st.push(i + 1); if (cy > 0) st.push(i - w); if (cy < h - 1) st.push(i + w);
+      }
+      // làm mềm viền: điểm sáng sát vùng đã xoá thì mờ dần
+      for (let i = 0; i < w * h; i++) if (!seen[i]) {
+        const cx = i % w, cy = (i / w) | 0;
+        const nb = (cx > 0 && seen[i - 1]) || (cx < w - 1 && seen[i + 1]) || (cy > 0 && seen[i - w]) || (cy < h - 1 && seen[i + w]);
+        if (nb) { const m = Math.min(p[i * 4], p[i * 4 + 1], p[i * 4 + 2]); if (m > 200) p[i * 4 + 3] = Math.round(255 * (255 - m) / 55); }
+      }
+      g.putImageData(d, 0, 0);
+      // cắt bỏ lề trong suốt
+      let x0 = w, y0 = h, x1 = -1, y1 = -1;
+      for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) if (p[(j * w + i) * 4 + 3] > 8) { x0 = Math.min(x0, i); y0 = Math.min(y0, j); x1 = Math.max(x1, i); y1 = Math.max(y1, j); }
+      if (x1 >= 0) { const t = document.createElement('canvas'); t.width = x1 - x0 + 1; t.height = y1 - y0 + 1; t.getContext('2d').drawImage(c, -x0, -y0); out[name] = t.toDataURL('image/png'); continue; }
+    }
+    out[name] = c.toDataURL(mode === 'none' ? 'image/webp' : 'image/png', 0.88);
+  }
+  document.getElementById('out').textContent = JSON.stringify(out);
+};
+img.src = '../source/home-kit.png';
+</script>

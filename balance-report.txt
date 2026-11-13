@@ -1,0 +1,123 @@
+
+════════════════════════════════════════════════════════════════════════
+1. BẢNG CHỈ SỐ
+════════════════════════════════════════════════════════════════════════
+Pet        vai hệ     HP   ATK DEF Aggro  Ult
+Rockmane   T   tho   1600   30  50   200  shield 0.25
+Tidewisp   S   thuy   900   35  20   100  heal 0.35
+Leafkit    S   moc   1050   45  20   100  heal 0.35
+Blazefang  D   hoa    800   70  15    75  nuke 12
+Steelclaw  D   kim    900   56  20    75  nuke 12
+
+Boss          hệ      HP     ATK  Ngưỡng choáng  Mẫu đòn
+Boss 1 (dễ)   kim    7000   580        6      single→single→blast
+Boss 2 (vừa)  moc   11000   620        8      single→blast→aoe
+Boss 3 (khó)  thuy  12000   650       10      aoe→blast→single→aoe
+
+════════════════════════════════════════════════════════════════════════
+2. XÁC SUẤT BỊ NHẮM (đội Tanker+Hỗ trợ+AD)
+════════════════════════════════════════════════════════════════════════
+Đủ 3 pet : T= 53%  S= 27%  D= 20%
+Tanker chết: S= 57%  D= 43%
+Trúng đòn lan: T= 80%  S=100%  D= 47%  (pet giữa dễ trúng lan nhất)
+
+════════════════════════════════════════════════════════════════════════
+3. BÀN CỜ: số viên ăn được MỖI NƯỚC ĐI (đội mặc định vs Boss 2)
+════════════════════════════════════════════════════════════════════════
+random  Kiếm 1.32 | Tim 0.94 | Xoắn 1.01 | Khiên 1.05 | Lửa 1.01  | tổng 5.34
+greedy  Kiếm 1.98 | Tim 1.47 | Xoắn 1.47 | Khiên 1.50 | Lửa 1.49  | tổng 7.91
+smart   Kiếm 1.89 | Tim 1.40 | Xoắn 1.38 | Khiên 1.41 | Lửa 1.43  | tổng 7.51
+
+════════════════════════════════════════════════════════════════════════
+4. TỈ LỆ THẮNG theo bot (đội mặc định)  — random=sàn, smart≈trần
+════════════════════════════════════════════════════════════════════════
+Boss          bot      thắng  nước TB  máu còn  pet chết  ult  choáng
+Boss 1 (dễ)   random   78%   23.0    66%     1.02    5.2  3.0
+Boss 1 (dễ)   greedy   97%   14.7    87%     0.26    4.1  2.4
+Boss 1 (dễ)   smart    99%   13.3    87%     0.14    3.2  2.5
+Boss 2 (vừa)  random    3%   20.2    38%     2.94    4.7  1.7
+Boss 2 (vừa)  greedy   38%   31.8    60%     1.90    9.8  3.9
+Boss 2 (vừa)  smart    54%   32.1    67%     1.27    10.2  4.4
+Boss 3 (khó)  random    0%   49.9     0%     2.01    10.8  3.6
+Boss 3 (khó)  greedy   16%   48.0    59%     1.83    13.0  4.9
+Boss 3 (khó)  smart    23%   47.0    61%     1.74    12.6  5.2
+Mục tiêu gợi ý (smart): Boss1 ~90%, Boss2 ~70%, Boss3 ~50%; greedy thấp hơn smart 10-25 điểm để "chọn viên khôn" có giá trị.
+
+════════════════════════════════════════════════════════════════════════
+5. CÂN BẰNG PET & NGŨ HÀNH (smart bot, đủ 10 đội 3 pet, thứ tự cột theo danh sách)
+════════════════════════════════════════════════════════════════════════
+Pet        vai hệ    thắng TB  lệch
+Rockmane   T   tho    76%    +12đ ⚠
+Tidewisp   S   thuy   59%    -5đ
+Leafkit    S   moc    63%    -1đ
+Blazefang  D   hoa    55%    -9đ ⚠
+Steelclaw  D   kim    67%    +2đ
+
+Boss 1 (dễ) (hệ kim)  — ▲ khắc boss · ▼ bị boss khắc · +s được sinh
+  100%  Rockmane·      Tidewisp·      Blazefang▲    
+  100%  Rockmane·      Tidewisp·+s    Steelclaw·    
+  100%  Rockmane·      Leafkit▼       Steelclaw·    
+   95%  Rockmane·      Leafkit▼       Blazefang▲+s  
+   95%  Rockmane·+s    Blazefang▲     Steelclaw·    
+   90%  Tidewisp·      Blazefang▲     Steelclaw·    
+   85%  Tidewisp·      Leafkit▼+s     Blazefang▲+s  
+   80%  Rockmane·      Tidewisp·      Leafkit▼+s    
+   70%  Leafkit▼       Blazefang▲+s   Steelclaw·    
+   50%  Tidewisp·      Leafkit▼+s     Steelclaw·    
+
+Boss 2 (vừa) (hệ moc)  — ▲ khắc boss · ▼ bị boss khắc · +s được sinh
+   95%  Rockmane▼      Tidewisp·+s    Steelclaw▲    
+   95%  Rockmane▼      Leafkit·       Steelclaw▲    
+   95%  Tidewisp·      Leafkit·+s     Steelclaw▲    
+   90%  Rockmane▼+s    Blazefang·     Steelclaw▲    
+   80%  Rockmane▼      Tidewisp·      Leafkit·+s    
+   75%  Rockmane▼      Leafkit·       Blazefang·+s  
+   55%  Leafkit·       Blazefang·+s   Steelclaw▲    
+   45%  Rockmane▼      Tidewisp·      Blazefang·    
+   45%  Tidewisp·      Blazefang·     Steelclaw▲    
+   40%  Tidewisp·      Leafkit·+s     Blazefang·+s  
+
+Boss 3 (khó) (hệ thuy)  — ▲ khắc boss · ▼ bị boss khắc · +s được sinh
+   80%  Rockmane▲      Leafkit·       Steelclaw·    
+   70%  Rockmane▲      Tidewisp·      Leafkit·+s    
+   65%  Rockmane▲      Tidewisp·+s    Steelclaw·    
+   50%  Rockmane▲+s    Blazefang▼     Steelclaw·    
+   45%  Rockmane▲      Leafkit·       Blazefang▼+s  
+   20%  Tidewisp·      Leafkit·+s     Steelclaw·    
+   10%  Rockmane▲      Tidewisp·      Blazefang▼    
+    5%  Leafkit·       Blazefang▼+s   Steelclaw·    
+    0%  Tidewisp·      Leafkit·+s     Blazefang▼+s  
+    0%  Tidewisp·      Blazefang▼     Steelclaw·    
+
+════════════════════════════════════════════════════════════════════════
+6. THỨ TỰ CỘT (đội mặc định, smart, Boss 2) — đòn lan phụ thuộc vị trí
+════════════════════════════════════════════════════════════════════════
+T-S-D  thắng  49%  máu còn  71%  pet chết 1.41
+T-D-S  thắng  41%  máu còn  67%  pet chết 1.53
+S-T-D  thắng  41%  máu còn  70%  pet chết 1.64
+D-T-S  thắng  47%  máu còn  70%  pet chết 1.43
+S-D-T  thắng  43%  máu còn  73%  pet chết 1.44
+D-S-T  thắng  54%  máu còn  69%  pet chết 1.36
+
+════════════════════════════════════════════════════════════════════════
+7. GIÁ TRỊ TỪNG LOẠI VIÊN: vô hiệu hoá hiệu ứng viên đó (smart, đội mặc định)
+════════════════════════════════════════════════════════════════════════
+Viên tắt     Boss1   Boss2   Boss3   (thắng; càng tụt nhiều = viên càng đáng giá)
+(không tắt)   100%     48%     21%  
+Tim            84%      6%      2%  
+Xoắn           96%     22%      8%  
+Khiên          88%      3%      3%  
+Lửa            99%     24%     15%  
+
+════════════════════════════════════════════════════════════════════════
+8. ĐỘ NHẠY THAM SỐ (smart, đội mặc định, Boss 2): thắng% | nước TB
+════════════════════════════════════════════════════════════════════════
+Tim hồi %HP/viên        0.04:  26%|26    0.06:  41%|29    0.08:  53%|32     0.1:  63%|32    0.12:  69%|33
+Khiên %HP/viên          0.03:  34%|27    0.04:  40%|30    0.05:  53%|32    0.06:  56%|32    0.08:  67%|31
+Trần khiên              0.15:  28%|30     0.2:  39%|30     0.3:  53%|32     0.4:  58%|33     0.5:  63%|33
+Ngưỡng choáng (viên)       4:  57%|33       6:  57%|33       8:  53%|32      10:  38%|33      12:  38%|32
+Nộ mỗi viên lửa            0:  26%|32       3:  34%|34       5:  53%|32       8:  67%|30      12:  73%|28
+Nộ mỗi lần trúng đòn      10:  23%|30      15:  33%|32      20:  53%|32      25:  65%|32      30:  74%|31
+Tỉ lệ rơi Kiếm            16:  50%|40      20:  49%|35      24:  53%|32      28:  47%|29      32:  43%|27
+ATK boss                 500:  91%|28     560:  73%|32     620:  53%|32     680:  27%|27     740:  12%|23
+HP boss                 8000:  69%|25    9000:  64%|28   10000:  58%|30   11000:  53%|32   12000:  49%|33

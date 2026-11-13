@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 72 72"><defs>
+<linearGradient id="gold" x1="0" x2=".12" y1="0" y2="1"><stop stop-color="#fff3b9"/><stop offset=".12" stop-color="#ffe67a"/><stop offset=".33" stop-color="#f9b822"/><stop offset=".64" stop-color="#bf6a11"/><stop offset=".84" stop-color="#ffda55"/><stop offset="1" stop-color="#8d3e19"/></linearGradient>
+<linearGradient id="goldshine" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fffbd6"/><stop offset=".4" stop-color="#ffcc3a"/><stop offset="1" stop-color="#bd681b"/></linearGradient>
+<linearGradient id="cream" x1="0" y1="0" x2=".17" y2="1"><stop stop-color="#fffaf0"/><stop offset=".38" stop-color="#fff0d3"/><stop offset="1" stop-color="#ffe0af"/></linearGradient>
+<linearGradient id="purple" x1="0" y1="0" x2=".12" y2="1"><stop stop-color="#a65ef8"/><stop offset=".25" stop-color="#7925bf"/><stop offset=".75" stop-color="#490c87"/><stop offset="1" stop-color="#330757"/></linearGradient>
+<linearGradient id="violetlight" x1="0" y1="0" x2=".35" y2="1"><stop stop-color="#f6dcff"/><stop offset=".4" stop-color="#d8aeef"/><stop offset="1" stop-color="#9f6dca"/></linearGradient>
+<linearGradient id="green" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#ceff83"/><stop offset=".33" stop-color="#67d746"/><stop offset="1" stop-color="#1f8a24"/></linearGradient>
+<linearGradient id="red" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#ffb49d"/><stop offset=".25" stop-color="#ff574b"/><stop offset="1" stop-color="#b90b23"/></linearGradient>
+<linearGradient id="orange" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff2b7"/><stop offset=".4" stop-color="#ffa51f"/><stop offset="1" stop-color="#d3311b"/></linearGradient>
+<radialGradient id="darkGem"><stop stop-color="#8c3cde"/><stop offset=".7" stop-color="#440977"/><stop offset="1" stop-color="#240540"/></radialGradient>
+</defs><path d="M12 61 L53 14" stroke="#52215b" stroke-width="12" stroke-linecap="round"/><path d="M12 61 L53 14" stroke="url(#goldshine)" stroke-width="8" stroke-linecap="round"/>
+<path d="M53 1 L60 15 72 19 61 26 55 40 47 27 34 21 46 15Z" fill="url(#goldshine)" stroke="#69345c" stroke-width="4"/>
+<path d="M53 9 L59 21 52 30 45 21Z" fill="#fff0ab"/>
+<path d="M22 13 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3z" fill="#ffe675"/><path d="M69 50 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z" fill="#e7aeff"/></svg>

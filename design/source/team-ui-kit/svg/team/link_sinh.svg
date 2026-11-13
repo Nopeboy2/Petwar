@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="84" height="42" viewBox="0 0 84 42"><defs>
+<linearGradient id="gold" x1="0" x2=".12" y1="0" y2="1"><stop stop-color="#fff3b9"/><stop offset=".12" stop-color="#ffe67a"/><stop offset=".33" stop-color="#f9b822"/><stop offset=".64" stop-color="#bf6a11"/><stop offset=".84" stop-color="#ffda55"/><stop offset="1" stop-color="#8d3e19"/></linearGradient>
+<linearGradient id="goldshine" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fffbd6"/><stop offset=".4" stop-color="#ffcc3a"/><stop offset="1" stop-color="#bd681b"/></linearGradient>
+<linearGradient id="cream" x1="0" y1="0" x2=".17" y2="1"><stop stop-color="#fffaf0"/><stop offset=".38" stop-color="#fff0d3"/><stop offset="1" stop-color="#ffe0af"/></linearGradient>
+<linearGradient id="purple" x1="0" y1="0" x2=".12" y2="1"><stop stop-color="#a65ef8"/><stop offset=".25" stop-color="#7925bf"/><stop offset=".75" stop-color="#490c87"/><stop offset="1" stop-color="#330757"/></linearGradient>
+<linearGradient id="violetlight" x1="0" y1="0" x2=".35" y2="1"><stop stop-color="#f6dcff"/><stop offset=".4" stop-color="#d8aeef"/><stop offset="1" stop-color="#9f6dca"/></linearGradient>
+<linearGradient id="green" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#ceff83"/><stop offset=".33" stop-color="#67d746"/><stop offset="1" stop-color="#1f8a24"/></linearGradient>
+<linearGradient id="red" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#ffb49d"/><stop offset=".25" stop-color="#ff574b"/><stop offset="1" stop-color="#b90b23"/></linearGradient>
+<linearGradient id="orange" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff2b7"/><stop offset=".4" stop-color="#ffa51f"/><stop offset="1" stop-color="#d3311b"/></linearGradient>
+<radialGradient id="darkGem"><stop stop-color="#8c3cde"/><stop offset=".7" stop-color="#440977"/><stop offset="1" stop-color="#240540"/></radialGradient>
+</defs><path d="M9 6 Q42 -2 75 6 L79 24 Q42 44 5 24Z" fill="url(#gold)" stroke="#7f3d2f" stroke-width="3"/>
+ <path d="M13 9 Q42 0 71 9 L70 22 Q42 32 14 22Z" fill="url(#cream)" stroke="#fff1b1" stroke-width="2"/>
+ <path d="M42 23 Q42 12 44 9" stroke="#4f9717" stroke-width="3" stroke-linecap="round"/>
+ <path d="M43 16 Q28 4 23 13 Q27 23 43 17Z" fill="#7bce35" stroke="#285918" stroke-width="2"/>
+ <path d="M43 16 Q57 3 63 9 Q61 20 43 17Z" fill="#80e553" stroke="#285918" stroke-width="2"/>
+ <path d="M29 11 Q34 14 39 16 M54 10 L46 15" stroke="#d5ff90" stroke-width="2"/><path d="M42 25 l8 8 H45 v5 h-6 v-5 h-5z" fill="#f1a52b" stroke="#5b2c46" stroke-width="2"/></svg>

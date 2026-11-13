@@ -1,0 +1,19 @@
+<!doctype html><meta charset="utf-8">
+<!-- Nền trận theo hệ đảo: design/source/battle_bg/<hệ>.png → assets/battle/bg_<hệ>.webp
+     Thu về 1280×720 và LÀM MỜ + TỐI sẵn trong ảnh (không lọc CSS lúc chạy → nhẹ cho máy yếu). Chỉnh độ mờ ở FILTER.
+     Chạy: node design/tools/extract.mjs battlebg.html assets/battle -->
+<pre id="out"></pre>
+<script>
+const FILTER = 'blur(6px) brightness(.72) saturate(.9)', W = 1280, H = 720, PAD = 24; // PAD: vẽ tràn mép để viền mờ không bị nhạt
+const out = {}, EL = ['moc', 'hoa', 'thuy', 'kim', 'tho']; let n = 0;
+for (const e of EL) {
+  const img = new Image();
+  img.onload = () => {
+    const c = document.createElement('canvas'); c.width = W; c.height = H;
+    const g = c.getContext('2d'); g.filter = FILTER; g.drawImage(img, -PAD, -PAD, W + PAD * 2, H + PAD * 2);
+    out['bg_' + e] = c.toDataURL('image/webp', 0.85);
+    if (++n === EL.length) document.getElementById('out').textContent = JSON.stringify(out);
+  };
+  img.src = '../source/battle_bg/' + e + '.png';
+}
+</script>

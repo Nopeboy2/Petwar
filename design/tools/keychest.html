@@ -1,0 +1,24 @@
+<!doctype html><meta charset="utf-8">
+<!-- Chìa khoá + rương 5 cấp (design/source/key-chest-kit, 1254² nền trong suốt) → WebP 192², cắt sát viền rồi căn giữa, lề 6px.
+     Chạy: node design/tools/extract.mjs keychest.html assets/bag-ui -->
+<pre id="out"></pre>
+<script>
+const SRC = '../source/key-chest-kit/';
+const JOBS = [1, 2, 3, 4, 5].flatMap(k => [['item_key_' + k, 'key_' + k], ['item_chest_' + k, 'chest_' + k]]);
+const out = {}; let n = 0;
+for (const [name, src] of JOBS) {
+  const img = new Image();
+  img.onload = () => {
+    const c = document.createElement('canvas'); c.width = img.width; c.height = img.height;
+    const g = c.getContext('2d'); g.drawImage(img, 0, 0);
+    const d = g.getImageData(0, 0, c.width, c.height).data; let x0 = 1e9, y0 = 1e9, x1 = 0, y1 = 0;
+    for (let y = 0; y < c.height; y++) for (let x = 0; x < c.width; x++) if (d[(y * c.width + x) * 4 + 3] > 20) { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
+    const w = x1 - x0 + 1, h = y1 - y0 + 1, s = 180 / Math.max(w, h);
+    const o = document.createElement('canvas'); o.width = o.height = 192; const og = o.getContext('2d'); og.imageSmoothingQuality = 'high';
+    og.drawImage(c, x0, y0, w, h, (192 - w * s) / 2, (192 - h * s) / 2, w * s, h * s);
+    out[name] = o.toDataURL('image/webp', 0.9);
+    if (++n === JOBS.length) document.getElementById('out').textContent = JSON.stringify(out);
+  };
+  img.src = SRC + src + '.png';
+}
+</script>

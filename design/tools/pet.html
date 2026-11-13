@@ -1,0 +1,88 @@
+<!doctype html><meta charset="utf-8">
+<!-- Chuẩn hoá ảnh pet theo PET-ART-PLAN mục 2. Chạy qua design/tools/pet.mjs -->
+<pre id="out"></pre>
+<script>
+const q = new URLSearchParams(location.search);
+const FILL = { T: 0.82, S: 0.68, D: 0.75 }[q.get('role')] || 0.75; // chiều cao pet / khung theo vai
+const GROUND = 0.92, TH = 238, SCALE = +q.get('scale') || 1; // SCALE: chỉnh riêng từng pet cho cùng diện tích nhìn thấy (pets.json)
+const img = new Image();
+img.onload = () => {
+  // crop=x,y,w,h: chỉ lấy một ô (ảnh nhiều tư thế)
+  const cr = (q.get('crop') || '').split(',').map(Number), [ox, oy, w, h] = cr.length === 4 ? cr : [0, 0, img.width, img.height];
+  const c = document.createElement('canvas'); c.width = w; c.height = h;
+  const g = c.getContext('2d'); if (q.get('flip')) g.setTransform(-1, 0, 0, 1, w, 0); // flip=1: lật ngang (boss quay trái → pet quay phải)
+  g.drawImage(img, -ox, -oy); g.setTransform(1, 0, 0, 1, 0, 0);
+  const d = g.getImageData(0, 0, w, h), p = d.data, seen = new Uint8Array(w * h), st = [];
+  const white = i => p[i * 4] > TH && p[i * 4 + 1] > TH && p[i * 4 + 2] > TH;
+  for (let i = 0; i < w; i++) st.push(i, (h - 1) * w + i);
+  for (let j = 0; j < h; j++) st.push(j * w, j * w + w - 1);
+  while (st.length) { // xoá nền trắng nối với mép ảnh
+    const i = st.pop(); if (seen[i] || !white(i)) continue; seen[i] = 1; p[i * 4 + 3] = 0;
+    const x = i % w, y = (i / w) | 0;
+    if (x > 0) st.push(i - 1); if (x < w - 1) st.push(i + 1); if (y > 0) st.push(i - w); if (y < h - 1) st.push(i + w);
+  }
+  for (let i = 0; i < w * h; i++) if (!seen[i]) { // làm mềm viền
+    const x = i % w, y = (i / w) | 0;
+    if ((x > 0 && seen[i - 1]) || (x < w - 1 && seen[i + 1]) || (y > 0 && seen[i - w]) || (y < h - 1 && seen[i + w])) {
+      const m = Math.min(p[i * 4], p[i * 4 + 1], p[i * 4 + 2]); if (m > 200) p[i * 4 + 3] = Math.round(255 * (255 - m) / 55);
+    }
+  }
+  // iso=1: các tư thế chồng nhau → giữ khối lớn nhất (nhân vật) + giọt nhỏ không chạm mép ô; bỏ phần tư thế bên cạnh lấn vào
+  if (q.get('iso')) {
+    const lab = new Int32Array(w * h).fill(-1), comps = [];
+    for (let s0 = 0; s0 < w * h; s0++) {
+      if (lab[s0] >= 0 || p[s0 * 4 + 3] <= 128) continue;
+      const id = comps.length, st2 = [s0]; let size = 0, touch = false; lab[s0] = id;
+      while (st2.length) {
+        const i = st2.pop(), x = i % w, y = (i / w) | 0; size++;
+        if (x === 0 || y === 0 || x === w - 1 || y === h - 1) touch = true;
+        for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) {
+          const nx = x + dx, ny = y + dy, j = ny * w + nx;
+          if (nx >= 0 && ny >= 0 && nx < w && ny < h && lab[j] < 0 && p[j * 4 + 3] > 128) { lab[j] = id; st2.push(j); }
+        }
+      }
+      comps.push({ size, touch });
+    }
+    const main = comps.reduce((b, c2, k) => c2.size > comps[b].size ? k : b, 0);
+    const keep = comps.map((c2, k) => k === main || !c2.touch);
+    const dist = new Float32Array(w * h).fill(1e9); // khoảng cách tới phần được giữ (để giữ quầng sáng mờ quanh nhân vật)
+    for (let i = 0; i < w * h; i++) if (lab[i] >= 0 && keep[lab[i]]) dist[i] = 0;
+    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) { const i = y * w + x; if (x) dist[i] = Math.min(dist[i], dist[i - 1] + 1); if (y) dist[i] = Math.min(dist[i], dist[i - w] + 1); }
+    for (let y = h - 1; y >= 0; y--) for (let x = w - 1; x >= 0; x--) { const i = y * w + x; if (x < w - 1) dist[i] = Math.min(dist[i], dist[i + 1] + 1); if (y < h - 1) dist[i] = Math.min(dist[i], dist[i + w] + 1); }
+    for (let i = 0; i < w * h; i++) if ((lab[i] >= 0 && !keep[lab[i]]) || (lab[i] < 0 && dist[i] > 24)) p[i * 4 + 3] = 0;
+  }
+  g.putImageData(d, 0, 0);
+  let x0 = w, y0 = h, x1 = 0, y1 = 0;
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) if (p[(y * w + x) * 4 + 3] > 8) { x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y); }
+  // tâm ngang = trọng tâm BÀN CHÂN (6% đáy, điểm ảnh đặc) — không phải giữa khung (đuôi/lửa làm lệch)
+  let sx = 0, n = 0;
+  for (const [frac, th] of [[0.06, 200], [0.15, 128]]) {
+    for (let y = Math.round(y1 - (y1 - y0) * frac); y <= y1; y++) for (let x = x0; x <= x1; x++) if (p[(y * w + x) * 4 + 3] > th) { sx += x; n++; }
+    if (n > 50) break; sx = 0; n = 0;
+  }
+  // ref = chiều cao tham chiếu (px ảnh gốc) dùng chung cho mọi tư thế → cùng tỉ lệ, pet không to/nhỏ khi đổi tư thế
+  const ref = +q.get('ref') || (y1 - y0 + 1);
+  // tư thế khác Đứng (nhảy, nằm…): chân không chạm đất/lệch → căn theo TRỌNG TÂM khối nhìn thấy để pet nằm giữa bệ
+  let mx = 0, mn = 0; if (q.get('pose') !== 'idle') for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) if (p[(y * w + x) * 4 + 3] > 128) { mx += x; mn++; }
+  const cx = mn ? mx / mn : n ? sx / n : (x0 + x1) / 2, out = { h: y1 - y0 + 1 };
+  const render = (S, key) => {
+    let k = Math.min(FILL * SCALE * S / ref, 0.96 * S / (x1 - x0 + 1), (GROUND * S) / (y1 - y0 + 1));
+    let dx;
+    if (q.get('pose') === 'idle') {
+      // tư thế Đứng (đứng trên bệ ở sảnh): chân luôn ở CHÍNH GIỮA; đuôi dài thì thu nhỏ thay vì đẩy lệch
+      k = Math.min(k, 0.49 * S / (Math.max(cx - x0, x1 - cx) + 1));
+      if (SCALE < 1) k = Math.min(k, SCALE * Math.min(FILL * S / ref, 0.96 * S / (x1 - x0 + 1), (GROUND * S) / (y1 - y0 + 1), 0.49 * S / (Math.max(cx - x0, x1 - cx) + 1))); // thu nhỏ: áp sau mọi giới hạn
+      dx = S / 2 - cx * k;
+    } else { dx = S / 2 - cx * k; dx = Math.max(-x0 * k + 0.02 * S, Math.min(S - x1 * k - 0.02 * S, dx)); } // không tràn mép (mép trái ≤ dx ≤ mép phải)
+    const o = document.createElement('canvas'); o.width = o.height = S;
+    const og = o.getContext('2d'); og.imageSmoothingQuality = 'high';
+    og.drawImage(c, dx, GROUND * S - y1 * k, w * k, h * k);
+    out[key] = o.toDataURL('image/webp', 0.9);
+  };
+  render(560, 'idle_L'); render(256, 'idle');
+  const pb = (q.get('portrait') || '').split(',').map(Number);
+  if (pb.length === 3) { const o = document.createElement('canvas'); o.width = o.height = 144; const og = o.getContext('2d'); og.imageSmoothingQuality = 'high'; og.drawImage(c, pb[0], pb[1], pb[2], pb[2], 0, 0, 144, 144); out.portrait = o.toDataURL('image/webp', 0.9); }
+  document.getElementById('out').textContent = JSON.stringify(out);
+};
+img.src = q.get('src');
+</script>

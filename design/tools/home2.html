@@ -1,0 +1,58 @@
+<!doctype html><meta charset="utf-8">
+<!-- Bộ asset trang chủ v2: tách nền trắng + thu nhỏ từng ảnh rời trong design/source/home-kit-v2.
+     Chạy: node design/tools/extract.mjs home2.html assets/ui -->
+<pre id="out"></pre>
+<script>
+// [tên, rộng xuất (0 = giữ cỡ gốc), kiểu, ngưỡng trắng=236] · icon: xuất 160 = 4× cỡ hiển thị 40px  'edge' = xoá nền trắng nối mép · 'edge+center' = thêm lòng trong · 'blue' = chỉ giữ phần xanh (thanh đầy)
+const LIST = [
+  ['avatar_frame', 192, 'edge+center'],
+  ['panel_leaf', 640, 'edge'],
+  ['btn_gold', 720, 'edge'],
+  ['btn_purple', 400, 'edge'],
+  ['badge_lv', 160, 'edge'],
+  ['chip_bar', 400, 'edge'],
+  ['bar_track', 480, 'edge', 190],
+  ['bar_fill', 480, 'blue'],
+  ['icon_gear', 160, 'edge+center'], // lỗ giữa bánh răng cũng là nền trắng
+  ['icon_coin', 160, 'edge'],
+  ['icon_shop', 160, 'edge'],
+];
+
+const load = n => new Promise(r => { const i = new Image(); i.onload = () => r(i); i.src = `../source/home-kit-v2/${n}.png`; });
+(async () => {
+  const out = {};
+  for (let [name, W, mode, TH = 236] of LIST) {
+    const img = await load(name), w = img.width, h = img.height;
+    const c = document.createElement('canvas'); c.width = w; c.height = h;
+    const g = c.getContext('2d'); g.drawImage(img, 0, 0);
+    const d = g.getImageData(0, 0, w, h), p = d.data;
+    if (mode === 'blue') {
+      for (let i = 0; i < w * h; i++) if (p[i * 4 + 2] - p[i * 4] < 60) p[i * 4 + 3] = 0;
+    } else {
+      const seen = new Uint8Array(w * h), st = [];
+      const white = i => Math.abs(p[i * 4] - p[i * 4 + 2]) < 24 && p[i * 4] > TH && p[i * 4 + 1] > TH - 8 && p[i * 4 + 2] > TH - 8;
+      for (let i = 0; i < w; i++) st.push(i, (h - 1) * w + i);
+      for (let j = 0; j < h; j++) st.push(j * w, j * w + w - 1);
+      if (mode === 'edge+center') st.push((h >> 1) * w + (w >> 1));
+      while (st.length) {
+        const i = st.pop(); if (seen[i] || !white(i)) continue; seen[i] = 1; p[i * 4 + 3] = 0;
+        const cx = i % w, cy = (i / w) | 0;
+        if (cx > 0) st.push(i - 1); if (cx < w - 1) st.push(i + 1); if (cy > 0) st.push(i - w); if (cy < h - 1) st.push(i + w);
+      }
+      for (let i = 0; i < w * h; i++) if (!seen[i]) { // làm mềm viền
+        const cx = i % w, cy = (i / w) | 0;
+        const nb = (cx > 0 && seen[i - 1]) || (cx < w - 1 && seen[i + 1]) || (cy > 0 && seen[i - w]) || (cy < h - 1 && seen[i + w]);
+        if (nb) { const m = Math.min(p[i * 4], p[i * 4 + 1], p[i * 4 + 2]); if (m > 190) p[i * 4 + 3] = Math.round(255 * (255 - m) / 65); }
+      }
+    }
+    g.putImageData(d, 0, 0);
+    let x0 = w, y0 = h, x1 = -1, y1 = -1; // cắt lề trong suốt
+    for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) if (p[(j * w + i) * 4 + 3] > 8) { x0 = Math.min(x0, i); y0 = Math.min(y0, j); x1 = Math.max(x1, i); y1 = Math.max(y1, j); }
+    const tw = x1 - x0 + 1, th = y1 - y0 + 1; W = W || tw; const H = Math.round(th * W / tw);
+    const t = document.createElement('canvas'); t.width = W; t.height = H;
+    const tg = t.getContext('2d'); tg.imageSmoothingQuality = 'high'; tg.drawImage(c, x0, y0, tw, th, 0, 0, W, H);
+    out[name] = t.toDataURL('image/webp', 0.9);
+  }
+  document.getElementById('out').textContent = JSON.stringify(out);
+})();
+</script>

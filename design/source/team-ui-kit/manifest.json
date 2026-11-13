@@ -1,0 +1,432 @@
+{
+  "version": "1.0.0",
+  "viewport": [
+    844,
+    390
+  ],
+  "assetCount": 37,
+  "assets": {
+    "slot_team": {
+      "path": "assets/team/slot_team.png",
+      "size_px": [
+        600,
+        168
+      ],
+      "logical_px": [
+        300,
+        84
+      ],
+      "format": "png",
+      "alpha": true,
+      "notes": "Khung ngang; thêm ảnh portrait và text riêng bằng code"
+    },
+    "slot_team_active": {
+      "path": "assets/team/slot_team_active.png",
+      "size_px": [
+        600,
+        168
+      ],
+      "logical_px": [
+        300,
+        84
+      ],
+      "format": "png",
+      "alpha": true,
+      "notes": "Khung ngang; thêm ảnh portrait và text riêng bằng code"
+    },
+    "slot_team_empty": {
+      "path": "assets/team/slot_team_empty.png",
+      "size_px": [
+        600,
+        168
+      ],
+      "logical_px": [
+        300,
+        84
+      ],
+      "format": "png",
+      "alpha": true,
+      "notes": "Khung ngang; thêm ảnh portrait và text riêng bằng code"
+    },
+    "frame_portrait": {
+      "path": "assets/team/frame_portrait.png",
+      "size_px": [
+        128,
+        128
+      ],
+      "logical_px": [
+        64,
+        64
+      ],
+      "format": "png",
+      "alpha": true
+    },
+    "chip_boss": {
+      "path": "assets/team/chip_boss.png",
+      "size_px": [
+        336,
+        80
+      ],
+      "logical_px": [
+        168,
+        40
+      ],
+      "format": "png",
+      "alpha": true,
+      "notes": "Boss portrait 32px tại trái và icon hệ 24px bên phải; chữ là HTML"
+    },
+    "filter_bar": {
+      "path": "assets/team/filter_bar.png",
+      "size_px": [
+        816,
+        68
+      ],
+      "logical_px": [
+        408,
+        34
+      ],
+      "format": "png",
+      "alpha": true
+    },
+    "icon_aggro_target": {
+      "path": "assets/team/icon_aggro_target.png",
+      "size_px": [
+        64,
+        64
+      ],
+      "logical_px": [
+        18,
+        18
+      ],
+      "format": "png",
+      "alpha": true
+    },
+    "icon_blast": {
+      "path": "assets/team/icon_blast.png",
+      "size_px": [
+        64,
+        64
+      ],
+      "logical_px": [
+        18,
+        18
+      ],
+      "format": "png",
+      "alpha": true
+    },
+    "icon_auto_team": {
+      "path": "assets/team/icon_auto_team.png",
+      "size_px": [
+        72,
+        72
+      ],
+      "logical_px": [
+        24,
+        24
+      ],
+      "format": "png",
+      "alpha": true
+    },
+    "tag_adv": {
+      "path": "assets/team/tag_adv.png",
+      "size_px": [
+        112,
+        44
+      ],
+      "logical_px": [
+        56,
+        22
+      ],
+      "format": "png",
+      "alpha": true
+    },
+    "tag_dis": {
+      "path": "assets/team/tag_dis.png",
+      "size_px": [
+        112,
+        44
+      ],
+      "logical_px": [
+        56,
+        22
+      ],
+      "format": "png",
+      "alpha": true
+    },
+    "link_sinh": {
+      "path": "assets/team/link_sinh.png",
+      "size_px": [
+        84,
+        42
+      ],
+      "logical_px": [
+        28,
+        14
+      ],
+      "format": "png",
+      "alpha": true
+    },
+    "link_sinh_up": {
+      "path": "assets/team/link_sinh_up.png",
+      "size_px": [
+        84,
+        42
+      ],
+      "logical_px": [
+        28,
+        14
+      ],
+      "format": "png",
+      "alpha": true
+    },
+    "icon_role_t_round": {
+      "path": "assets/team/icon_role_t_round.png",
+      "size_px": [
+        64,
+        64
+      ],
+      "logical_px": [
+        18,
+        18
+      ],
+      "format": "png",
+      "alpha": true
+    },
+    "icon_role_s_round": {
+      "path": "assets/team/icon_role_s_round.png",
+      "size_px": [
+        64,
+        64
+      ],
+      "logical_px": [
+        18,
+        18
+      ],
+      "format": "png",
+      "alpha": true
+    },
+    "icon_role_d_round": {
+      "path": "assets/team/icon_role_d_round.png",
+      "size_px": [
+        64,
+        64
+      ],
+      "logical_px": [
+        18,
+        18
+      ],
+      "format": "png",
+      "alpha": true
+    },
+    "title_pet": {
+      "path": "assets/shared/title_pet.png",
+      "size_px": [
+        520,
+        80
+      ],
+      "format": "png",
+      "alpha": true,
+      "reused_from": "petwar_pet_assets"
+    },
+    "btn_back": {
+      "path": "assets/shared/btn_back.png",
+      "size_px": [
+        88,
+        80
+      ],
+      "format": "png",
+      "alpha": true,
+      "reused_from": "petwar_pet_assets"
+    },
+    "btn_primary": {
+      "path": "assets/shared/btn_primary.png",
+      "size_px": [
+        360,
+        72
+      ],
+      "format": "png",
+      "alpha": true,
+      "reused_from": "petwar_pet_assets"
+    },
+    "btn_secondary": {
+      "path": "assets/shared/btn_secondary.png",
+      "size_px": [
+        280,
+        72
+      ],
+      "format": "png",
+      "alpha": true,
+      "reused_from": "petwar_pet_assets"
+    },
+    "card_pet": {
+      "path": "assets/shared/card_pet.png",
+      "size_px": [
+        272,
+        416
+      ],
+      "format": "png",
+      "alpha": true,
+      "reused_from": "petwar_pet_assets"
+    },
+    "card_pet_selected": {
+      "path": "assets/shared/card_pet_selected.png",
+      "size_px": [
+        272,
+        416
+      ],
+      "format": "png",
+      "alpha": true,
+      "reused_from": "petwar_pet_assets"
+    },
+    "card_pet_locked": {
+      "path": "assets/shared/card_pet_locked.png",
+      "size_px": [
+        272,
+        416
+      ],
+      "format": "png",
+      "alpha": true,
+      "reused_from": "petwar_pet_assets"
+    },
+    "badge_team_1": {
+      "path": "assets/shared/badge_team_1.png",
+      "size_px": [
+        72,
+        72
+      ],
+      "format": "png",
+      "alpha": true,
+      "reused_from": "petwar_pet_assets"
+    },
+    "badge_team_2": {
+      "path": "assets/shared/badge_team_2.png",
+      "size_px": [
+        72,
+        72
+      ],
+      "format": "png",
+      "alpha": true,
+      "reused_from": "petwar_pet_assets"
+    },
+    "badge_team_3": {
+      "path": "assets/shared/badge_team_3.png",
+      "size_px": [
+        72,
+        72
+      ],
+      "format": "png",
+      "alpha": true,
+      "reused_from": "petwar_pet_assets"
+    },
+    "panel_detail_back": {
+      "path": "assets/shared/panel_detail_back.png",
+      "size_px": [
+        880,
+        528
+      ],
+      "format": "png",
+      "alpha": true,
+      "reused_from": "petwar_pet_assets"
+    },
+    "icon_el_kim": {
+      "path": "assets/shared/icon_el_kim.png",
+      "size_px": [
+        112,
+        112
+      ],
+      "format": "png",
+      "alpha": true,
+      "reused_from": "petwar_pet_assets"
+    },
+    "icon_el_moc": {
+      "path": "assets/shared/icon_el_moc.png",
+      "size_px": [
+        112,
+        112
+      ],
+      "format": "png",
+      "alpha": true,
+      "reused_from": "petwar_pet_assets"
+    },
+    "icon_el_thuy": {
+      "path": "assets/shared/icon_el_thuy.png",
+      "size_px": [
+        112,
+        112
+      ],
+      "format": "png",
+      "alpha": true,
+      "reused_from": "petwar_pet_assets"
+    },
+    "icon_el_hoa": {
+      "path": "assets/shared/icon_el_hoa.png",
+      "size_px": [
+        112,
+        112
+      ],
+      "format": "png",
+      "alpha": true,
+      "reused_from": "petwar_pet_assets"
+    },
+    "icon_el_tho": {
+      "path": "assets/shared/icon_el_tho.png",
+      "size_px": [
+        112,
+        112
+      ],
+      "format": "png",
+      "alpha": true,
+      "reused_from": "petwar_pet_assets"
+    },
+    "icon_role_t": {
+      "path": "assets/shared/icon_role_t.png",
+      "size_px": [
+        176,
+        56
+      ],
+      "format": "png",
+      "alpha": true,
+      "reused_from": "petwar_pet_assets"
+    },
+    "icon_role_s": {
+      "path": "assets/shared/icon_role_s.png",
+      "size_px": [
+        176,
+        56
+      ],
+      "format": "png",
+      "alpha": true,
+      "reused_from": "petwar_pet_assets"
+    },
+    "icon_role_d": {
+      "path": "assets/shared/icon_role_d.png",
+      "size_px": [
+        176,
+        56
+      ],
+      "format": "png",
+      "alpha": true,
+      "reused_from": "petwar_pet_assets"
+    },
+    "dot_notify": {
+      "path": "assets/shared/dot_notify.png",
+      "size_px": [
+        44,
+        44
+      ],
+      "format": "png",
+      "alpha": true,
+      "reused_from": "petwar_pet_assets"
+    },
+    "bg_team": {
+      "path": "assets/backgrounds/bg_team.png",
+      "size_px": [
+        1920,
+        880
+      ],
+      "format": "png",
+      "alpha": false,
+      "notes": "Nền trang Pet làm mờ 5 logical px, giảm sáng 20% để dễ đọc UI"
+    }
+  }
+}

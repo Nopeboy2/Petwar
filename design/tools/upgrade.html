@@ -1,0 +1,35 @@
+<!doctype html><meta charset="utf-8">
+<!-- Chuyển bộ asset Nâng cấp (design/source/upgrade-ui-kit, PNG rời) → WebP. Chạy: node design/tools/extract.mjs upgrade.html assets/upgrade-ui -->
+<body>
+<pre id="out"></pre>
+<script>
+const SRC = '../source/upgrade-ui-kit/assets/ui/upgrade/';
+const EL = ['moc', 'hoa', 'tho', 'kim', 'thuy'];
+// [tên ra, file nguồn, kiểu]  'copy' = giữ nguyên alpha · 'center' = dời hình vào giữa khung theo vùng có alpha (đá vẽ lệch tới ±9px) · 'screen' = nền đen → trong suốt theo độ sáng (bản có sẵn bị nhạt quầng)
+const LIST = [
+  ...['arrow_sinh', 'arrow_upgrade', 'badge_level', 'badge_level_new', 'btn_close', 'frame_upgrade', 'icon_bag_stone', 'icon_merge', // icon_convert: xem convert.html
+    'icon_upgrade', 'panel_upgrade', 'plate_maxed', 'row_compare', 'slot_stone_1', 'slot_stone_2', 'slot_stone_3', 'slot_stone_sel'].map(n => [n, n, 'copy']),
+  ...EL.flatMap(e => [2, 3].map(t => [`stone_${e}_${t}`, `stone_${e}_${t}`, 'center'])), // cấp 1: xem stones.html
+  ['fx_levelup', 'fx_levelup_screen', 'screen'], ['fx_stat_up', 'fx_stat_up_screen', 'screen'],
+];
+const load = src => new Promise((ok, err) => { const i = new Image(); i.onload = () => ok(i); i.onerror = err; i.src = SRC + src + '.png'; });
+(async () => {
+  const out = {};
+  for (const [name, src, mode] of LIST) {
+    const img = await load(src), c = document.createElement('canvas'); c.width = img.width; c.height = img.height;
+    const g = c.getContext('2d'); g.drawImage(img, 0, 0);
+    if (mode === 'center') {
+      const d = g.getImageData(0, 0, c.width, c.height).data; let x0 = c.width, y0 = c.height, x1 = 0, y1 = 0;
+      for (let y = 0; y < c.height; y++) for (let x = 0; x < c.width; x++) if (d[(y * c.width + x) * 4 + 3] > 40) { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
+      g.clearRect(0, 0, c.width, c.height); g.drawImage(img, Math.round(c.width / 2 - (x0 + x1 + 1) / 2), Math.round(c.height / 2 - (y0 + y1 + 1) / 2));
+    }
+    if (mode === 'screen') {
+      const d = g.getImageData(0, 0, c.width, c.height), p = d.data;
+      for (let i = 0; i < p.length; i += 4) { const a = Math.max(p[i], p[i + 1], p[i + 2]) / 255; if (a) for (let k = 0; k < 3; k++) p[i + k] = Math.min(255, p[i + k] / a); p[i + 3] = Math.round(255 * a); }
+      g.putImageData(d, 0, 0);
+    }
+    out[name] = c.toDataURL('image/webp', 0.9);
+  }
+  document.getElementById('out').textContent = JSON.stringify(out);
+})();
+</script>

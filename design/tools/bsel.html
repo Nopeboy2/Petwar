@@ -1,0 +1,39 @@
+<!doctype html><meta charset="utf-8">
+<!-- Màn 04 chọn boss: ghép bộ rời design/source/boss-select-kit/*.png (nền trong suốt) → assets/boss-ui.
+     Khung dài giãn 3 khúc (2 đầu giữ tỉ lệ, chỉ kéo đoạn giữa) cho đúng khung CSS → không méo đầu bo tròn.
+     Kích thước ra = 3× khung CSS: btn_go 316×44, title_boss 380×44, btn_back 56×40, chip_star 132×46, sao 24.
+     Chạy: node design/tools/extract.mjs bsel.html assets/boss-ui -->
+<pre id="out"></pre>
+<script>
+const K = 3, out = {}, src = n => '../source/boss-select-kit/' + n + '.png';
+const load = n => new Promise((ok, no) => { const i = new Image(); i.onload = () => ok(trim(i)); i.onerror = no; i.src = src(n); });
+function trim(img) { // cắt theo vùng alpha > 20 → canvas vừa khít
+  const c = document.createElement('canvas'); c.width = img.width; c.height = img.height;
+  const g = c.getContext('2d'); g.drawImage(img, 0, 0);
+  const d = g.getImageData(0, 0, c.width, c.height).data; let x0 = 1e9, y0 = 1e9, x1 = 0, y1 = 0;
+  for (let y = 0; y < c.height; y++) for (let x = 0; x < c.width; x++) if (d[(y * c.width + x) * 4 + 3] > 20) { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
+  const o = document.createElement('canvas'); o.width = x1 - x0 + 1; o.height = y1 - y0 + 1;
+  o.getContext('2d').drawImage(c, -x0, -y0); return o;
+}
+const canvas = (w, h) => { const c = document.createElement('canvas'); c.width = w * K; c.height = h * K; const g = c.getContext('2d'); g.imageSmoothingQuality = 'high'; return [c, g]; };
+// Khung giãn ngang: l, r = phần trái/phải (tỉ lệ bề rộng ảnh) giữ nguyên tỉ lệ khi cao = H.
+function slice3(g, im, W, H, l, r) {
+  const s = H / im.height, L = im.width * l, R = im.width * r;
+  g.drawImage(im, 0, 0, L, im.height, 0, 0, L * s, H);
+  g.drawImage(im, L, 0, im.width - L - R, im.height, L * s, 0, W - (L + R) * s, H);
+  g.drawImage(im, im.width - R, 0, R, im.height, W - R * s, 0, R * s, H);
+}
+const put = (g, im, cx, cy, h) => { const w = im.width * h / im.height; g.drawImage(im, cx - w / 2, cy - h / 2, w, h); };
+const done = (n, c) => out[n] = c.toDataURL('image/webp', 0.92);
+(async () => {
+  const [sw, go, star, chip, paw, bar, arrow, frame] = await Promise.all(['icon_swords', 'btn_go', 'icon_star', 'chip_star', 'icon_paw', 'title_bar', 'icon_arrow', 'btn_frame'].map(load));
+  let [c, g] = canvas(316, 44); slice3(g, go, c.width, c.height, .12, .12); done('btn_go', c); // kiếm là <img> riêng trong nút → căn cụm cùng chữ
+  [c, g] = canvas(36, 36); put(g, sw, 18 * K, 18 * K, 30 * K); done('icon_swords', c);
+  [c, g] = canvas(380, 44); slice3(g, bar, c.width, c.height, .2, .2); put(g, paw, 84 * K, 22 * K, 22 * K); put(g, paw, 296 * K, 22 * K, 22 * K); done('title_boss', c);
+  [c, g] = canvas(56, 40); g.drawImage(frame, 0, 0, c.width, c.height); put(g, arrow, 28 * K, 20 * K, 26 * K); done('btn_back', c);
+  [c, g] = canvas(132, 46); slice3(g, chip, c.width, c.height, .36, .12); done('chip_star', c);
+  [c, g] = canvas(32, 32); put(g, star, 16 * K, 16 * K, 32 * K); done('icon_star_on', c);
+  [c, g] = canvas(32, 32); g.filter = 'grayscale(1) sepia(.35) brightness(.78) contrast(.9)'; put(g, star, 16 * K, 16 * K, 32 * K); done('icon_star_off', c);
+  document.getElementById('out').textContent = JSON.stringify(out);
+})();
+</script>

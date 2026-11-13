@@ -1,0 +1,74 @@
+<!doctype html><meta charset="utf-8">
+<!-- Cắt asset màn 03 Chọn đảo từ design/source/map-ui-kit.png (nền ĐEN). Chạy: node design/tools/extract.mjs map.html assets/map-ui -->
+<body>
+<pre id="out"></pre>
+<script>
+// [tên, x, y, w, h, kiểu]  'dark' = xoá nền đen nối mép · 'glow' = như dark + quầng sáng mờ dần · 'screen' = độ trong theo độ sáng (hiệu ứng phát sáng) · 'none' = giữ nguyên
+const RECTS = [
+  ['bg_sea_map', 14, 11, 983, 227, 'none'],
+  ['title_island', 1018, 8, 711, 99, 'dark'],
+  ['plaque_plain', 1020, 116, 337, 118, 'dark'],
+  ['chip_progress', 1383, 112, 363, 127, 'dark'],
+  ['island_moc', 10, 250, 334, 231, 'dark'],
+  ['island_hoa', 360, 247, 334, 234, 'dark'],
+  ['island_tho', 708, 257, 331, 223, 'dark'],
+  ['island_kim', 1052, 249, 335, 231, 'dark'],
+  ['island_thuy', 1408, 243, 346, 238, 'dark'],
+  ['plaque_moc', 14, 479, 329, 101, 'dark'],
+  ['plaque_hoa', 364, 479, 328, 101, 'dark'],
+  ['plaque_tho', 711, 479, 328, 101, 'dark'],
+  ['plaque_kim', 1057, 479, 329, 101, 'dark'],
+  ['plaque_thuy', 1406, 479, 337, 101, 'dark'],
+  ['fog_lock', 3, 579, 379, 186, 'screen'],
+  ['icon_lock_gold', 401, 607, 76, 103, 'glow'],
+  ['marker_current', 499, 586, 127, 139, 'glow'],
+  ['flag_cleared', 638, 594, 117, 130, 'glow'],
+  ['route_on', 772, 620, 334, 50, 'screen'],
+  ['route_off', 772, 688, 334, 42, 'screen'],
+  ['fx_portal_gold', 1128, 572, 242, 130, 'screen'],
+  ['fx_portal_blue', 1128, 698, 242, 114, 'screen'],
+  ['icon_boss_mini', 1375, 620, 168, 170, 'glow'],
+  ['boss_unknown', 1542, 596, 232, 226, 'glow'],
+];
+const T1 = 26, T2 = 90; // T1: coi là nền đen · T2: quầng sáng (chế độ glow) mờ dần tới ngưỡng này
+const img = new Image();
+img.onload = () => {
+  const out = {};
+  for (const [name, x, y, w, h, mode] of RECTS) {
+    const c = document.createElement('canvas'); c.width = w; c.height = h;
+    const g = c.getContext('2d'); g.drawImage(img, x, y, w, h, 0, 0, w, h);
+    if (mode === 'none') { out[name] = c.toDataURL('image/webp', 0.9); continue; }
+    const d = g.getImageData(0, 0, w, h), p = d.data, mx = i => Math.max(p[i * 4], p[i * 4 + 1], p[i * 4 + 2]);
+    const unscreen = (i, a) => { if (a <= 0) { p[i * 4 + 3] = 0; return; } for (let k = 0; k < 3; k++) p[i * 4 + k] = Math.min(255, p[i * 4 + k] / a); p[i * 4 + 3] = Math.round(255 * a); };
+    if (mode === 'screen') for (let i = 0; i < w * h; i++) unscreen(i, mx(i) / 255);
+    else {
+      // loang từ mép qua điểm tối (< lim); điểm trong vùng loang được làm trong theo độ sáng
+      const flood = (lim, seen) => {
+        const st = [];
+        for (let i = 0; i < w; i++) st.push(i, (h - 1) * w + i);
+        for (let j = 0; j < h; j++) st.push(j * w, j * w + w - 1);
+        while (st.length) {
+          const i = st.pop(); if (seen[i] || mx(i) >= lim) continue; seen[i] = 1;
+          const cx = i % w, cy = (i / w) | 0;
+          if (cx > 0) st.push(i - 1); if (cx < w - 1) st.push(i + 1); if (cy > 0) st.push(i - w); if (cy < h - 1) st.push(i + w);
+        }
+      };
+      const lim = mode === 'glow' ? T2 : T1, seen = new Uint8Array(w * h); flood(lim, seen);
+      for (let i = 0; i < w * h; i++) if (seen[i]) unscreen(i, Math.max(0, mx(i) - 10) / (lim - 10));
+      // làm mềm: điểm sát vùng nền còn hơi tối thì mờ một nửa
+      for (let i = 0; i < w * h; i++) if (!seen[i]) {
+        const cx = i % w, cy = (i / w) | 0;
+        if (((cx > 0 && seen[i - 1]) || (cx < w - 1 && seen[i + 1]) || (cy > 0 && seen[i - w]) || (cy < h - 1 && seen[i + w])) && mx(i) < lim + 30) p[i * 4 + 3] = 170;
+      }
+    }
+    g.putImageData(d, 0, 0);
+    // cắt bỏ lề trong suốt
+    let x0 = w, y0 = h, x1 = -1, y1 = -1;
+    for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) if (p[(j * w + i) * 4 + 3] > 8) { x0 = Math.min(x0, i); y0 = Math.min(y0, j); x1 = Math.max(x1, i); y1 = Math.max(y1, j); }
+    const t = document.createElement('canvas'); t.width = x1 - x0 + 1; t.height = y1 - y0 + 1; t.getContext('2d').drawImage(c, -x0, -y0);
+    out[name] = t.toDataURL('image/webp', 0.9);
+  }
+  document.getElementById('out').textContent = JSON.stringify(out);
+};
+img.src = '../source/map-ui-kit.png';
+</script>
