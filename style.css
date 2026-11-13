@@ -113,9 +113,9 @@ table.st td{padding:2px 10px;text-align:left}
 .head .bk{position:relative}
 .pg-title{background:url(assets/boss-ui/title_boss.webp) center/100% 100% no-repeat;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;letter-spacing:1px;text-shadow:0 2px 2px #2a0a5a;padding-bottom:2px}
 .pc-row{display:flex;gap:11px;justify-content:center}
-.pc{position:relative;width:136px;height:208px;flex:none;background:url(assets/pet-ui/card_pet.webp) center/100% 100% no-repeat!important}
-.pc.on{background-image:url(assets/pet-ui/card_pet_selected.webp)!important}
-.pc:active{background-image:url(assets/pet-ui/card_pet_pressed.webp)!important;transform:scale(.97)}
+.pc{position:relative;width:136px;height:208px;flex:none;background:url(assets/pet-ui/card_pet.png) center/100% 100% no-repeat!important}
+.pc.on{background-image:url(assets/pet-ui/card_pet_selected.png)!important}
+.pc:active{background-image:url(assets/pet-ui/card_pet_pressed.png)!important;transform:scale(.97)}
 .pc>*{position:absolute}
 .pc-pet{left:8px;top:40px;width:120px;height:120px;filter:drop-shadow(0 3px 2px #0004);transform-origin:50% 92%;animation:breathe 2.4s ease-in-out infinite}
 .pc.lock{opacity:1!important;cursor:default}
@@ -124,11 +124,11 @@ table.st td{padding:2px 10px;text-align:left}
 .pc-emo{display:grid;place-items:center;font-size:64px;line-height:1}
 /* số ô đội viết lên chiếc khiên đã vẽ sẵn trong card_pet_selected (không chồng thêm huy hiệu) */
 .pc-lv{right:14px;top:6px;width:38px;height:33px;z-index:2;background:center/100% 100% no-repeat;display:grid;place-items:center;padding-bottom:4px;color:#fff;font-size:10px;font-weight:800;text-shadow:0 1px 2px #2a0a5a;white-space:nowrap}
-.pc-no{left:17px;top:8px;width:30px;height:30px;z-index:2;display:grid;place-items:center;color:#6b3a00;font-size:16px;line-height:1;text-shadow:0 1px 0 #ffe9a8}
+.pc-no{left:10px;top:5px;width:30px;height:30px;z-index:2;display:grid;place-items:center;color:#6b3a00;font-size:16px;line-height:1;text-shadow:0 1px 0 #ffe9a8}
 .pc-n{left:8px;right:8px;top:174px;height:26px;display:grid;place-items:center;color:#fff;font-size:15px;text-shadow:0 2px 2px #2a0a5a}
 /* khung "được chọn" có dải tên cao hơn + hẹp hơn khung thường */
 .pc.on .pc-pet{top:33px}
-.pc.on .pc-n{top:161px;height:26px;left:17px;right:16px}
+.pc.on .pc-n{top:174px;height:26px;left:17px;right:16px}
 .pc-empty{width:100%;display:grid;place-items:center;color:#fff;font-size:16px;text-shadow:0 2px 3px #000;background:#0005;border-radius:14px}
 /* thanh lọc: kính mờ một dải, chỉ icon, nút chọn có vòng vàng sáng */
 .pf-bar{display:flex;align-items:center;justify-content:center;gap:2px;padding:0 10px;border-radius:19px;background:linear-gradient(#ffffff22,#ffffff0d);border:1px solid #ffffff33;box-shadow:0 4px 14px #0004,inset 0 1px 0 #ffffff33;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
@@ -255,7 +255,7 @@ table.st td{padding:2px 10px;text-align:left}
 .bsc.cur:not(.on){animation:bscGlow 1.6s ease-in-out infinite}
 @keyframes bscGlow{50%{filter:drop-shadow(0 0 7px #ffd24a)}}
 .bsc:not(.lock):not(.soon):active{transform:scale(.97)}
-.bsc-el{left:7px;top:5px;width:30px;height:30px}
+.bsc-el{left:2px;top:0;width:40px;height:40px}
 .bsc-lv{left:58px;right:34px;top:5px;height:19px;background:url(assets/boss-ui/tag_diff.webp) center/100% 100% no-repeat;display:grid;place-items:center;color:#5a3412;font-size:12px;line-height:1}
 .bsc-art{left:16px;top:44px;width:120px;height:140px;object-fit:contain;filter:drop-shadow(0 3px 3px #0005)}
 .face-r{transform:scaleX(-1)} /* ảnh boss gốc quay TRÁI (dùng trong trận); ngoài trận lật cho quay PHẢI */
@@ -490,7 +490,7 @@ table.st td{padding:2px 10px;text-align:left}
 .bc-fx{position:absolute;z-index:3;left:-10%;top:-40%;width:120%;height:120%;pointer-events:none;animation:bc-up .9s ease-out forwards}
 @keyframes bc-up{from{transform:translateY(20px);opacity:1}to{transform:translateY(-16px);opacity:0}}
 .bc-empty{width:64px;height:64px}
-.bs{display:grid;grid-template-columns:repeat(5,64px);grid-template-rows:24px repeat(3,64px);gap:6px 6px;justify-content:center;align-items:center}
+.bs{display:grid;height:100%;grid-template-columns:repeat(5,64px);grid-template-rows:24px repeat(3,64px);justify-content:space-evenly;align-content:space-evenly;align-items:center}
 .bs-h{position:relative;display:grid;place-items:center}
 .bs-h>img:first-child{width:24px;height:24px}
 .bs-ar{position:absolute;right:-11px;top:6px;width:16px;height:12px}
