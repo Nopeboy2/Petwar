@@ -12,7 +12,7 @@ export const ART = {
 };
 
 // Bộ UI trang Pet (design/source/pet-ui-kit, đã chuyển WebP)
-export const pui = n => `assets/pet-ui/${n}.${n.startsWith('icon_el_') || n.startsWith('icon_role_') ? 'png' : 'webp'}`;
+export const pui = n => `assets/pet-ui/${n}.${n === 'pedestal_large' || n.startsWith('icon_el_') || n.startsWith('icon_role_') ? 'png' : 'webp'}`;
 // Bộ màn Chọn đảo (design/source/map-ui-kit.png, cắt bằng `node design/tools/extract.mjs map.html assets/map-ui`)
 export const mui = n => `assets/map-ui/${n}.webp`;
 // Bộ Nâng cấp + Túi đá (design/source/upgrade-ui-kit → `node design/tools/extract.mjs upgrade.html assets/upgrade-ui`). Đá: stone_<hệ>_<1|2|3>
