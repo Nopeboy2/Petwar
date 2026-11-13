@@ -135,7 +135,7 @@ const screens = {
       <div class="il-map" style="${BLOCK}">${POS.slice(1).map((_, k) => route(k)).join('')}${ISLANDS.map(isl).join('')}</div>
     </div></div>`;
   },
-  // 04 Chọn boss trong đảo — design/briefs/04-boss.md (bộ asset assets/boss-ui; card_boss/panel_boss_detail chưa có → tạm card_team + khung CSS)
+  // 04 Chọn boss trong đảo — design/briefs/04-boss.md (bộ asset assets/boss-ui; thẻ = card_boss; panel_boss_detail chưa có → khung CSS)
   boss() {
     const s = ISLANDS[islIdx], mid = '(var(--sh, 390px) - 390px) / 2', lv = bossLv();
     const ids = s.bosses.filter(i => i <= save.cleared);

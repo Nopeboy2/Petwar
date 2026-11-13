@@ -28,8 +28,9 @@ const load = n => new Promise(ok => { const i = new Image(); i.onload = () => ok
     let x0 = w, y0 = h, x1 = 0, y1 = 0;
     for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) if (p[(y * w + x) * 4 + 3] > 40) { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
     g.putImageData(d, 0, 0);
-    const o = document.createElement('canvas'); o.width = w; o.height = h;
-    o.getContext('2d').drawImage(c, Math.round(w / 2 - (x0 + x1 + 1) / 2), Math.round(h / 2 - (y0 + y1 + 1) / 2));
+    const o = document.createElement('canvas');
+    if (name.startsWith('icon_')) { o.width = x1 - x0 + 1; o.height = y1 - y0 + 1; o.getContext('2d').drawImage(c, -x0, -y0); } // icon chip: cắt sát mép như icon_coin
+    else { o.width = w; o.height = h; o.getContext('2d').drawImage(c, Math.round(w / 2 - (x0 + x1 + 1) / 2), Math.round(h / 2 - (y0 + y1 + 1) / 2)); }
     out[name] = o.toDataURL('image/webp', 0.92);
   }
   document.getElementById('out').textContent = JSON.stringify(out);

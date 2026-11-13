@@ -245,28 +245,28 @@ table.st td{padding:2px 10px;text-align:left}
 .tm.form .tp-pager{top:352px}
 .tm-auto:active,.tm-fight:not(:disabled):active,.ts:active{transform:scale(.97)}
 
-/* ─── CHỌN BOSS (04) — assets/boss-ui; khung thẻ tạm = card_team, bảng chi tiết tạm = CSS ─── */
+/* ─── CHỌN BOSS (04) — assets/boss-ui; khung thẻ = card_boss, bảng chi tiết tạm = CSS ─── */
 .bs-l,.bs-r{position:absolute}.bs-l>*,.bs-r>*{position:absolute}
 .bs-prog{position:absolute}.il-prog.bs-prog{background-image:url(assets/boss-ui/chip_star.webp)}.il-prog.bs-prog img{left:10px;top:11px;width:24px;height:24px} /* tâm huy hiệu chip_star = (22,23) */
 .il-prog.bs-prog span{left:47px;right:14px;top:11px;bottom:8px} /* lòng kem chip_star: x 47–118, y 11–38 */
-.bsc{top:58px;width:152px;height:220px;background:url(assets/team-ui/card_team.webp) center/100% 100% no-repeat!important;color:#fff}
+.bsc{top:58px;width:152px;height:254px;background:url(assets/boss-ui/card_boss.webp) center/100% 100% no-repeat!important;color:#fff} /* card_boss 456×762 (3×): tròn hệ tâm (22,20) · lòng kem x13–138 y18–202 · thanh tím x10–143 y208–243 */
 .bsc>*{position:absolute}
 .bsc.on{transform:scale(1.04);filter:drop-shadow(0 0 8px #ffd24a)}
 .bsc.cur:not(.on){animation:bscGlow 1.6s ease-in-out infinite}
 @keyframes bscGlow{50%{filter:drop-shadow(0 0 7px #ffd24a)}}
 .bsc:not(.lock):not(.soon):active{transform:scale(.97)}
-.bsc-el{left:10px;top:7px;width:26px;height:26px}
-.bsc-lv{left:44px;right:22px;top:9px;height:19px;background:url(assets/boss-ui/tag_diff.webp) center/100% 100% no-repeat;display:grid;place-items:center;color:#5a3412;font-size:12px;line-height:1}
-.bsc-art{left:16px;top:40px;width:120px;height:120px;object-fit:contain;filter:drop-shadow(0 3px 3px #0005)}
+.bsc-el{left:7px;top:5px;width:30px;height:30px}
+.bsc-lv{left:58px;right:34px;top:5px;height:19px;background:url(assets/boss-ui/tag_diff.webp) center/100% 100% no-repeat;display:grid;place-items:center;color:#5a3412;font-size:12px;line-height:1}
+.bsc-art{left:16px;top:44px;width:120px;height:140px;object-fit:contain;filter:drop-shadow(0 3px 3px #0005)}
 .face-r{transform:scaleX(-1)} /* ảnh boss gốc quay TRÁI (dùng trong trận); ngoài trận lật cho quay PHẢI */
-.bsc-n{left:16px;right:16px;top:186px;height:24px;display:grid;place-items:center;font-size:13px;line-height:1;white-space:nowrap;overflow:hidden;text-shadow:0 1px 1px #2a0a5a}
+.bsc-n{left:16px;right:16px;top:211px;height:30px;display:grid;place-items:center;font-size:13px;line-height:1;white-space:nowrap;overflow:hidden;text-shadow:0 1px 1px #2a0a5a}
 .bsc-stamp{right:-8px;top:-10px;width:46px;height:46px;transform:rotate(12deg);filter:drop-shadow(0 2px 2px #0006)}
-.bsc-stars{left:0;right:0;top:226px;display:flex;justify-content:center;gap:4px}
+.bsc-stars{left:0;right:0;top:260px;display:flex;justify-content:center;gap:4px}
 .bsc-stars img{width:24px;height:24px}
 .bsc.lock,.bsc.soon{filter:grayscale(.6) brightness(.85)}
 .bsc.soon{opacity:.75}
-.bsc-lock{left:56px;top:76px;width:40px;height:40px}
-.bsc-sub{left:0;right:0;top:226px;text-align:center;font-size:12px;color:#fff;text-shadow:0 1px 2px #000}
+.bsc-lock{left:56px;top:94px;width:40px;height:40px}
+.bsc-sub{left:0;right:0;top:260px;text-align:center;font-size:12px;color:#fff;text-shadow:0 1px 2px #000}
 .bsd{left:0;top:58px;width:316px;height:260px;box-sizing:border-box;padding:10px 14px;border-radius:18px;background:linear-gradient(#fff6e2,#f5dfb8);border:3px solid #f0b93a;box-shadow:0 0 0 2px #6b3410,inset 0 2px 0 #fffa,0 4px 8px #0005;color:#5a3412;font-size:14px;display:flex;flex-direction:column;justify-content:space-between}
 .bsd img{width:24px;height:24px;flex:none}
 .bsd b{font-weight:800}
