@@ -2,6 +2,7 @@
   "type": "module",
   "scripts": {
     "start": "node serve.js",
-    "sim": "node sim.js 200"
+    "sim": "node sim.js 200",
+    "deploy": "git add -A && git commit -m \"cap nhat\" && git push"
   }
 }
