@@ -81,7 +81,7 @@ img.onload = () => {
   };
   render(560, 'idle_L');
   const pb = (q.get('portrait') || '').split(',').map(Number);
-  if (pb.length === 3) { const o = document.createElement('canvas'); o.width = o.height = 144; const og = o.getContext('2d'); og.imageSmoothingQuality = 'high'; og.drawImage(c, pb[0], pb[1], pb[2], pb[2], 0, 0, 144, 144); out.portrait = o.toDataURL('image/webp', 0.9); }
+  if (pb.length === 3) { const o = document.createElement('canvas'); o.width = o.height = 432; const og = o.getContext('2d'); og.imageSmoothingQuality = 'high'; og.drawImage(c, pb[0], pb[1], pb[2], pb[2], 0, 0, 432, 432); out.portrait = o.toDataURL('image/webp', 0.94); }
   document.getElementById('out').textContent = JSON.stringify(out);
 };
 img.src = q.get('src');

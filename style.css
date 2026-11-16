@@ -427,17 +427,21 @@ table.st td{padding:2px 10px;text-align:left}
 .pd-up .pd-dot{position:absolute;right:-4px;top:-6px;width:16px;height:16px}
 .up-dim{inset:0;background:#0009;z-index:20}
 .up-dlg{z-index:21;color:#5a3412}
+.up-pick-dim{inset:0;background:#0007;z-index:22}
+.pick-dlg{z-index:23;transform:translateY(-23px)}
 .up-dlg>*{position:absolute}
-.up-panel{box-sizing:border-box;border:36px solid;border-image:url(assets/upgrade-ui/panel_upgrade.webp) 72 fill / 36px}
+.up-dlg.pet-up .h-chip{justify-content:flex-start;padding-left:34px;padding-right:4px;font-size:13px;white-space:nowrap}
+.up-dlg.pet-up .h-chip img{width:28px;height:28px;left:0}
+.up-panel{box-sizing:border-box}
 .up-lvrow{display:flex;align-items:center;justify-content:center;gap:4px}
 .up-lvrow>img{width:28px;height:20px}
-.up-badge{width:52px;height:44px;background:center/100% 100% no-repeat;display:grid;place-items:center;color:#fff;font-size:13px;text-shadow:0 1px 2px #2a0a5a;padding-bottom:4px}
+.up-badge{width:50px;height:42px;background:center/100% 100% no-repeat;display:grid;place-items:center;color:#fff;font-size:12px;text-shadow:0 1px 2px #2a0a5a;padding-bottom:3px}
 .up-badge.pop{animation:up-pop .5s}
 @keyframes up-pop{from{transform:scale(1.5)}}
 .pg .up-bagbtn{background:url(assets/pet-ui/btn_secondary.png) center/100% 100% no-repeat;display:flex;align-items:center;justify-content:center;gap:6px;color:#fff;font-size:14px;text-shadow:0 1px 2px #2a0a5a}
-.up-bagbtn img{width:24px;height:24px}
+.up-bagbtn img{width:22px;height:22px}
 .up-rows{display:flex;flex-direction:column;gap:4px}
-.up-row{height:34px;background:url(assets/upgrade-ui/row_compare.webp) center/100% 100% no-repeat;display:grid;grid-template-columns:24px 36px minmax(0,1fr) 16px 42px 44px;align-items:center;column-gap:6px;padding:0 12px 0 8px}
+.up-row{height:34px;background:url(assets/upgrade-ui/row_compare.png) center/100% 100% no-repeat;display:grid;grid-template-columns:24px 36px minmax(0,1fr) 16px 42px 44px;align-items:center;column-gap:6px;padding:0 12px 0 8px}
 .up-row>img{width:24px;height:24px}
 .up-l{width:36px;font-size:13px;color:#7a5a3a}
 .up-a{font-size:15px;text-align:right}
@@ -447,23 +451,30 @@ table.st td{padding:2px 10px;text-align:left}
 .up-row.maxed{grid-template-columns:24px 36px minmax(0,1fr)}
 .up-row.maxed .up-a{text-align:center}
 .up-note{grid-column:3/-1;font-size:11px;color:#7a5a3a;text-align:center}
-.up-pick{display:grid;grid-template-columns:repeat(3,44px) minmax(0,1fr) 96px;align-items:center;column-gap:6px}
+.up-pick{display:grid;grid-template-columns:repeat(3,44px) minmax(0,1fr) 96px;align-items:center;column-gap:7px}
 .pg .up-slot{position:relative;isolation:isolate;width:44px;height:44px;background:center/100% 100% no-repeat;flex:none}
-.up-slot>img{position:absolute;left:8px;top:4px;width:28px;height:28px}
+.up-slot>img{position:absolute;left:50%;top:50%;width:28px;height:28px;object-fit:contain;transform:translate(-50%,-50%)}
 .up-slot .up-sel{left:-3px;top:-3px;width:50px;height:50px}
 .up-slot b{position:absolute;z-index:1;left:50%;transform:translateX(-50%);padding:0 4px;border-radius:7px;background:#1a0f2ccc;color:#fff;line-height:13px;white-space:nowrap;bottom:3px;font-size:10px}
 .up-rate{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0;line-height:1.15}
 .up-rate small{font-size:11px;color:#7a5a3a}
-.up-rate b{font-size:17px}
+.up-rate b{font-size:16px}
 .up-rate i{font-size:10px;color:#2e9e3e;font-style:normal;white-space:nowrap}
 .up-info{font-size:11px;display:flex;align-items:center;justify-content:center;gap:4px;white-space:nowrap}
+.pet-up .up-info{font-size:10px;justify-content:flex-start}
 .up-info img{width:14px;height:14px}
 .up-good{color:#2e9e3e;font-weight:800}.up-bad{color:#d9363e;font-weight:800}
 .up-go{display:flex;align-items:center;justify-content:center;gap:6px}
 .up-go img{width:24px;height:24px}
+.up-pet-go{position:relative}
+.up-pet-go span{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap}
+.up-pet-go img{position:absolute;left:calc(100% + 4px);top:50%;transform:translateY(-50%)}
 .up-actions{display:flex;align-items:center;justify-content:center;gap:14px}
-.up-actions .up-go,.up-actions .up-maxed{width:184px;height:46px;flex:none}
-.up-actions .up-close{width:150px;height:46px;flex:none;display:grid;place-items:center}
+.up-actions .up-go,.up-actions .up-maxed{width:180px;height:40px;flex:none}
+.up-actions .up-close{width:146px;height:40px;flex:none;display:grid;place-items:center}
+.pet-up .up-actions{gap:16px}
+.pet-up .up-actions .up-go,.pet-up .up-actions .up-maxed{width:190px;height:42px}
+.pet-up .up-actions .up-close{width:158px;height:42px}
 .pg .rs-btn:disabled{filter:grayscale(.85) brightness(.9);opacity:1}
 .up-maxed{background:center/100% 100% no-repeat;display:grid;place-items:center;color:#fff;font-size:15px;text-shadow:0 1px 2px #000;padding-left:20px}
 .up-fx{pointer-events:none;animation:up-burst .9s ease-out both}
@@ -522,12 +533,12 @@ table.st td{padding:2px 10px;text-align:left}
 /* Hộp thoại Chuyển hoá đá */
 .cv-src{display:flex;flex-direction:column;align-items:center;gap:2px}
 .cv-src i,.cv-card i{position:relative;width:72px;height:72px;background:center/100% 100% no-repeat;display:block}
-.cv-src i>img,.cv-card i>img:first-child{position:absolute;left:14px;top:9px;width:44px;height:44px}
+.cv-src i>img,.cv-card i>img:first-child{position:absolute;left:50%;top:50%;width:44px;height:44px;object-fit:contain;transform:translate(-50%,-50%)}
 .cv-src b{font-size:14px;margin-top:4px}.cv-src small{font-size:12px;color:#7a5a3a}
 .cv-ar{width:30px;height:24px}
 .pg .cv-card{top:72px;width:70px;height:128px;display:flex;flex-direction:column;align-items:center;gap:3px;border-radius:10px}
 .pg .cv-card.on{background:#ffd24a40}
-.cv-card i{width:62px;height:62px}.cv-card i>img:first-child{left:12px;top:8px;width:38px;height:38px}
+.cv-card i{width:62px;height:62px}.cv-card i>img:first-child{width:38px;height:38px}
 .cv-card .up-sel{position:absolute;left:-4px;top:-4px;width:70px;height:70px}
 .cv-rel{margin-top:4px;padding:1px 6px;border-radius:8px;background:#7a5a3a;color:#fff;font-size:10px;white-space:nowrap}
 .cv-card b{font-size:14px}
@@ -544,13 +555,13 @@ table.st td{padding:2px 10px;text-align:left}
 .pg .pk-card{top:118px;width:96px;height:110px;display:flex;flex-direction:column;align-items:center;gap:2px;border-radius:10px}
 .pg .pk-card.on{background:#ffd24a40}
 .pk-card i{position:relative;display:block;width:64px;height:64px;background:center/100% 100% no-repeat}
-.pk-card i>img:first-child{position:absolute;left:12px;top:8px;width:40px;height:40px}
+.pk-card i>img:first-child{position:absolute;left:50%;top:50%;width:40px;height:40px;object-fit:contain;transform:translate(-50%,-50%)}
 .pk-card .up-sel{position:absolute;left:-4px;top:-4px;width:72px;height:72px}
 .pk-card b{font-size:12px}.pk-card small{font-size:10px;color:#7a5a3a;white-space:nowrap}
 .pk-card:disabled{opacity:.45}
 .tb-n small{margin-left:4px;color:#ffd24a;font-size:11px}
 /* nền hộp thoại = nguyên ảnh (1120×672 = 2× khung 560×336); khung khác tỉ lệ 5:3 sẽ méo nên các hộp nhỏ cũng giữ 5:3 */
-.up-panel.full{border:0;border-image:none;background:url(assets/upgrade-ui/panel_upgrade.webp) center/100% 100% no-repeat}
+.up-panel.full{background:url(assets/upgrade-ui/panel_upgrade.png) center/100% 100% no-repeat}
 /* thất bại: loé đỏ + chữ rơi + pet rung xám */
 .up-flash{pointer-events:none;border-radius:24px;background:radial-gradient(ellipse at 50% 50%,#ff303000 30%,#ff3030aa 100%);animation:up-flash .9s ease-out forwards}
 @keyframes up-flash{0%{opacity:0}15%{opacity:1}100%{opacity:0}}
@@ -602,7 +613,7 @@ table.st td{padding:2px 10px;text-align:left}
 .pg .mg-card{top:78px;width:104px;height:124px;display:flex;flex-direction:column;align-items:center;gap:2px;border-radius:10px;padding-top:4px;box-sizing:border-box}
 .pg .mg-card.on{background:#ffd24a40}
 .mg-card i{position:relative;width:72px;height:72px;background:center/100% 100% no-repeat;display:block}
-.mg-card i>img:first-child{position:absolute;left:14px;top:9px;width:44px;height:44px}
+.mg-card i>img:first-child{position:absolute;left:50%;top:50%;width:44px;height:44px;object-fit:contain;transform:translate(-50%,-50%)}
 .mg-card .up-sel{position:absolute;left:-5px;top:-5px;width:82px;height:82px}
 .mg-card b{font-size:13px;margin-top:4px;white-space:nowrap}.mg-card small{font-size:12px;color:#7a5a3a}
 .cv-qty.mg-qty{justify-content:center;gap:8px}

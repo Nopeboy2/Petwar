@@ -7,8 +7,8 @@ const SRC = '../source/upgrade-ui-kit/assets/ui/upgrade/';
 const EL = ['moc', 'hoa', 'tho', 'kim', 'thuy'];
 // [tên ra, file nguồn, kiểu]  'copy' = giữ nguyên alpha · 'center' = dời hình vào giữa khung theo vùng có alpha (đá vẽ lệch tới ±9px) · 'screen' = nền đen → trong suốt theo độ sáng (bản có sẵn bị nhạt quầng)
 const LIST = [
-  ...['arrow_sinh', 'arrow_upgrade', 'badge_level', 'badge_level_new', 'btn_close', 'frame_upgrade', 'icon_bag_stone', 'icon_merge', // icon_convert: xem convert.html
-    'icon_upgrade', 'panel_upgrade', 'plate_maxed', 'row_compare', 'slot_stone_1', 'slot_stone_2', 'slot_stone_3', 'slot_stone_sel'].map(n => [n, n, 'copy']),
+  ...['arrow_sinh', 'arrow_upgrade', 'badge_level', 'badge_level_new', 'btn_close', 'frame_upgrade', 'icon_merge', // icon_convert: xem convert.html
+    'icon_upgrade', 'panel_upgrade', 'plate_maxed', 'row_compare'].map(n => [n, n, 'copy']),
   ...EL.flatMap(e => [2, 3].map(t => [`stone_${e}_${t}`, `stone_${e}_${t}`, 'center'])), // cấp 1: xem stones.html
   ['fx_levelup', 'fx_levelup_screen', 'screen'], ['fx_stat_up', 'fx_stat_up_screen', 'screen'],
 ];

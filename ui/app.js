@@ -281,7 +281,7 @@ const screens = {
         <div class="pd-ult"><img src="${pui('icon_ult')}" alt=""><span><b>${ULT_NAME[p.ult.k]}</b><small>${ULT_TEXT[p.ult.k](p.ult.v)}</small></span></div>
         <div class="pd-btns"><button class="pd-btn sec pd-up" data-act="upOpen" data-i="${i}"><img src="${uui('icon_upgrade')}" alt="">Lên cấp${canUp(p0) ? `<img class="pd-dot" src="${pui('dot_notify')}" alt="Nâng được">` : ''}</button><button class="pd-btn" data-act="toTeam" data-i="${i}" ${k >= 0 ? 'disabled' : ''}>${k >= 0 ? `Trong đội · ô ${k + 1}` : 'Chọn vào đội'}</button></div>
       </div>
-      ${upUI.open ? `<div class="up-dim"></div><div class="up-dlg${upUI.msg === 'fail' ? ' fail' : ''}" style="${BLOCK}">${upDialog(i)}${upUI.pick ? pickDialog(p0) : ''}${upUI.msg === 'ok' ? okDialog(p0) : upUI.msg === 'fail' ? failDialog(p0) : ''}</div>` : ''}
+      ${upUI.open ? `<div class="up-dim"></div><div class="up-dlg pet-up${upUI.msg === 'fail' ? ' fail' : ''}" style="${BLOCK}">${upDialog(i)}${upUI.msg === 'ok' ? okDialog(p0) : upUI.msg === 'fail' ? failDialog(p0) : ''}</div>${upUI.pick ? `<div class="up-pick-dim"></div><div class="up-dlg pick-dlg" style="${BLOCK}">${pickDialog(p0)}</div>` : ''}` : ''}
     </div></div>`;
   },
   settings() {
@@ -308,7 +308,7 @@ const screens = {
         ${star(0, 'Thắng', r.stars >= 1)}${star(1, `≤${STAR_MOVES} lượt`, r.win && r.moves <= STAR_MOVES)}${star(2, 'Không pet chết', r.win && r.dead === 0)}
         ${pick.map(i => PETS[i]).map(pet).join('')}
         <div class="rs-row" style="left:122px;top:258px;width:600px;height:40px">${r.win
-          ? `<span class="rs-rw rs-gold"><img src="${ART.icon_coin}" alt="Vàng">+${r.gold}</span><span class="rs-rw rs-xp"><b>XP</b>+${r.xp}</span>${r.stone ? `<span class="rs-rw rs-stone" title="Đá ${ELEM[r.stone.el].n} ${TIER[r.stone.t]}"><i style="background-image:url(${uui('slot_stone_' + (r.stone.t + 1))})"><img src="${uui(`stone_${r.stone.el}_${r.stone.t + 1}`)}" alt=""></i>×${r.stone.n}</span>` : ''}${r.chests.length ? `<span class="rs-rw rs-chests">${r.chests.map(k => `<span class="rs-ck" title="${ITEMS.find(x => x.id === 'chest_' + k).n} + ${ITEMS.find(x => x.id === 'key_' + k).n}"><img class="rs-ci" src="${bui('item_chest_' + k)}" alt="${ITEMS.find(x => x.id === 'chest_' + k).n}"><img class="rs-key" src="${bui('item_key_' + k)}" alt="${ITEMS.find(x => x.id === 'key_' + k).n}"></span>`).join('')}</span>` : ''}`
+          ? `<span class="rs-rw rs-gold"><img src="${ART.icon_coin}" alt="Vàng">+${r.gold}</span><span class="rs-rw rs-xp"><b>XP</b>+${r.xp}</span>${r.stone ? `<span class="rs-rw rs-stone" title="Đá ${ELEM[r.stone.el].n} ${TIER[r.stone.t]}"><i style="background-image:url(${stoneFrame(r.stone.t)})"><img src="${uui(`stone_${r.stone.el}_${r.stone.t + 1}`)}" alt=""></i>×${r.stone.n}</span>` : ''}${r.chests.length ? `<span class="rs-rw rs-chests">${r.chests.map(k => `<span class="rs-ck" title="${ITEMS.find(x => x.id === 'chest_' + k).n} + ${ITEMS.find(x => x.id === 'key_' + k).n}"><img class="rs-ci" src="${bui('item_chest_' + k)}" alt="${ITEMS.find(x => x.id === 'chest_' + k).n}"><img class="rs-key" src="${bui('item_key_' + k)}" alt="${ITEMS.find(x => x.id === 'key_' + k).n}"></span>`).join('')}</span>` : ''}`
           : `<span class="rs-rw rs-xp"><b>XP</b>+${r.xp}</span><span class="rs-tip">Thử “Gợi ý đội” hoặc đặt pet khắc hệ boss lên đầu</span>`}</div>
         <div class="rs-row rs-tags" style="left:72px;top:300px;width:700px;height:22px">${r.first ? '<span class="rs-tag">Lần đầu ×3</span>' : ''}${save.plv > r.plv0 ? `<span class="rs-lvup">LÊN CẤP ${save.plv} · Toàn đội +${(plBonus(CFG, save.plv) * 100).toFixed(1)}%</span>` : ''}${unl}</div>
         <button class="rs-btn ib" style="left:180px;top:330px;width:152px;background-image:url(assets/result-ui/btn_replay.webp)" data-act="fight" aria-label="Chơi lại"></button>
@@ -374,8 +374,8 @@ function fight() {
 const upUI = { open: false, slots: [null, null, null], pick: null, msg: '' };
 const canUp = p => lvOf(p) < CFG.up.maxLv && save.gold >= upGold(CFG, lvOf(p)) && stonesOf(p.el).some(n => n > 0);
 const stoneImg = (el, t) => `<img src="${uui(`stone_${el}_${t + 1}`)}" alt="Đá ${ELEM[el].n} ${TIER[t]}">`;
-const dlgFrame = title => `<div class="up-panel full" style="left:142px;top:34px;width:560px;height:336px"></div>
-  <div class="pg-title" style="left:272px;top:14px;width:300px;height:44px">${title}</div>`;
+const dlgFrame = (title, top = '14px', height = 44, large = false) => `<div class="up-panel full" style="left:${large ? 112 : 142}px;top:${large ? 24 : 34}px;width:${large ? 620 : 560}px;height:${large ? 350 : 336}px"></div>
+  <div class="pg-title" style="left:272px;top:${top};width:300px;height:${height}px">${title}</div>`;
 // tỉ lệ: mỗi viên cộng upRate(cấp đá) · may mắn cộng 1 lần · tối đa 100%
 const upPer = (p, t) => upRate(CFG, t, lvOf(p));
 const upPicks = (skip = -1) => upUI.slots.filter((s, j) => s && j !== skip);
@@ -387,6 +387,7 @@ const upClamp = p => { upUI.slots = upUI.slots.map((s, k) => { if (!s) return nu
 const chip = (icon, v, style, short = false) => `<div class="h-chip${short ? ' short' : ''}" style="${style}"><img src="${ART[icon]}" alt="">${fmtN(v)}</div>`;
 const coin = (v, style, short = false) => chip('icon_coin', v, style, short); // ô vàng dùng chung mọi màn
 const gem = (v, style) => chip('icon_gem', v, style);
+const stoneFrame = t => bui('slot_item_' + [1, 3, 4][t]);
 function upDialog(i) {
   const p0 = PETS[i], lv = lvOf(p0), maxed = lv >= CFG.up.maxLv, a = lvPet(CFG, p0, lv), b = lvPet(CFG, p0, Math.min(lv + 1, CFG.up.maxLv));
   upClamp(p0); // đá có thể đã đổi trong Túi đồ
@@ -394,30 +395,30 @@ function upDialog(i) {
   const row = (icon, lab, x, y) => `<div class="up-row${maxed ? ' maxed' : ''}"><img src="${pui(icon)}" alt=""><span class="up-l">${lab}</span><b class="up-a">${x}</b>${maxed ? '' : `<img class="up-ar" src="${uui('arrow_upgrade')}" alt="→"><b class="up-b">${y}</b><small>(+${y - x})</small>`}</div>`;
   const nuke = q => Math.round(q.atk * q.ult.v);
   const slot = k => { const s = upUI.slots[k];
-    return s ? `<button class="up-slot" data-act="upSlot" data-k="${k}" style="background-image:url(${uui('slot_stone_' + (s.t + 1))})" aria-label="Ô ${k + 1}: ${s.n} đá ${TIER[s.t]}">${stoneImg(p0.el, s.t)}<b>×${s.n}</b></button>`
+    return s ? `<button class="up-slot" data-act="upSlot" data-k="${k}" style="background-image:url(${stoneFrame(s.t)})" aria-label="Ô ${k + 1}: ${s.n} đá ${TIER[s.t]}">${stoneImg(p0.el, s.t)}<b>×${s.n}</b></button>`
       : `<button class="up-slot empty" data-act="upSlot" data-k="${k}" ${full ? 'disabled' : ''} style="background-image:url(${bui('slot_item_empty')})" aria-label="Ô ${k + 1}: trống, chạm để chọn đá"><span>+</span></button>`; };
   const info = maxed ? 'Đã đạt cấp tối đa ' + CFG.up.maxLv
     : upUI.msg === 'fail' ? `<span class="up-bad">Thất bại — mất đá và vàng · lần sau +${Math.round(CFG.up.pity * 100)}%</span>`
     : !stonesOf(p0.el).some(n => n) && !picks.length ? `<span class="up-bad">Hết đá ${ELEM[p0.el].n}</span> — đổi trong Túi đồ hoặc <button class="up-link" data-act="shopUp">mua ở Cửa hàng</button>`
     : save.gold < gold ? `<span class="up-bad">Thiếu ${gold - save.gold} vàng</span>`
     : !picks.length ? 'Chạm ô trống để chọn đá' : '';
-  return `${dlgFrame('NÂNG CẤP')}
-    ${petImg(p0) ? `<img class="${upUI.msg === 'fail' ? 'up-hurt' : ''}" style="left:184px;top:86px;width:112px;height:112px" src="${petImg(p0, 'portrait')}" alt="${p0.n}">` : `<span class="pc-emo" style="left:184px;top:86px;width:112px;height:112px">${p0.e}</span>`}
-    <img style="left:170px;top:72px;width:140px;height:140px" src="${uui('frame_upgrade')}" alt="">
-    ${upUI.msg === 'fail' ? `<div class="up-flash" style="left:142px;top:34px;width:560px;height:336px"></div>` : ''}
-    <div class="up-lvrow" style="left:166px;top:222px;width:148px;height:44px">${maxed ? `<span class="up-badge" style="background-image:url(${uui('badge_level_new')})">Lv ${lv}</span>`
+  return `${dlgFrame('NÂNG CẤP', 'calc(8px - (var(--sh, 390px) - 390px) / 2)', 40, true)}
+    ${petImg(p0) ? `<img class="${upUI.msg === 'fail' ? 'up-hurt' : ''}" style="left:172px;top:86px;width:124px;height:124px" src="${petImg(p0, 'portrait')}" alt="${p0.n}">` : `<span class="pc-emo" style="left:172px;top:86px;width:124px;height:124px">${p0.e}</span>`}
+    <img style="left:156px;top:70px;width:156px;height:156px" src="${uui('frame_upgrade')}" alt="">
+    ${upUI.msg === 'fail' ? `<div class="up-flash" style="left:112px;top:24px;width:620px;height:350px"></div>` : ''}
+    <div class="up-lvrow" style="left:156px;top:229px;width:156px;height:42px">${maxed ? `<span class="up-badge" style="background-image:url(${uui('badge_level_new')})">Lv ${lv}</span>`
       : `<span class="up-badge" style="background-image:url(${uui('badge_level')})">Lv ${lv}</span><img src="${uui('arrow_upgrade')}" alt="→"><span class="up-badge${upUI.msg === 'ok' ? ' pop' : ''}" style="background-image:url(${uui('badge_level_new')})">Lv ${lv + 1}</span>`}</div>
-    <button class="up-bagbtn" style="left:176px;top:272px;width:128px;height:36px" data-act="bagOpen"><img src="${uui('icon_bag_stone')}" alt="">Túi đồ</button>
-    ${coin(save.gold, 'left:176px;top:317px;width:128px;height:32px')}
-    <div class="up-rows" style="left:330px;top:80px;width:348px">${row('icon_stat_hp', 'HP', a.hp, b.hp)}${row('icon_stat_atk', 'ATK', a.atk, b.atk)}${row('icon_stat_def', 'DEF', a.def, b.def)}
+    <button class="up-bagbtn" style="left:156px;top:275px;width:156px;height:34px" data-act="bagOpen"><img src="${ART.icon_bag}" alt="">Túi đồ</button>
+    ${coin(save.gold, 'left:156px;top:315px;width:156px;height:29px')}
+    <div class="up-rows" style="left:330px;top:72px;width:364px">${row('icon_stat_hp', 'HP', a.hp, b.hp)}${row('icon_stat_atk', 'ATK', a.atk, b.atk)}${row('icon_stat_def', 'DEF', a.def, b.def)}
       ${p0.ult.k === 'nuke' ? row('icon_ult', 'ULT', nuke(a), nuke(b)) : `<div class="up-row up-row-note"><img src="${pui('icon_ult')}" alt=""><span class="up-l">ULT</span><span class="up-note">${ULT_TEXT[p0.ult.k](p0.ult.v)} · theo HP từng pet</span></div>`}</div>
-    ${maxed ? '' : `<div class="up-pick" style="left:330px;top:236px;width:348px;height:48px">${[0, 1, 2].map(slot).join('')}
+    ${maxed ? '' : `<div class="up-pick" style="left:330px;top:230px;width:364px;height:46px">${[0, 1, 2].map(slot).join('')}
       <span class="up-rate"><small>Đá ${ELEM[p0.el].n}</small><b>Tỉ lệ ${Math.round(100 * total)}%</b>${fails && picks.length && !full ? `<i>+${Math.round(CFG.up.pity * fails * 100)}% may mắn</i>` : ''}</span>
-      ${coin(gold, 'width:96px;height:30px;position:static;flex:none', save.gold < gold)}</div>`}
-    <div class="up-info" style="left:330px;top:290px;width:348px;height:16px">${info}</div>
-    <div class="up-actions" style="left:330px;top:310px;width:348px;height:46px">
+      ${coin(gold, 'width:96px;height:30px;position:relative;flex:none', save.gold < gold)}</div>`}
+    <div class="up-info" style="left:330px;top:280px;width:364px;height:16px">${info}</div>
+    <div class="up-actions" style="left:330px;top:301px;width:364px;height:42px">
       ${maxed ? `<div class="up-maxed" style="background-image:url(${uui('plate_maxed')})">Đạt cấp tối đa</div>`
-        : `<button class="rs-btn main up-go" data-act="upDo" ${!picks.length || save.gold < gold ? 'disabled' : ''}><img src="${uui('icon_upgrade')}" alt="">NÂNG CẤP</button>`}
+        : `<button class="rs-btn main up-go up-pet-go" data-act="upDo" ${!picks.length || save.gold < gold ? 'disabled' : ''}><span>NÂNG CẤP<img src="${uui('icon_upgrade')}" alt=""></span></button>`}
       <button class="rs-btn up-close" data-act="upClose">Đóng</button></div>`;
 }
 // Hộp thông báo nâng cấp thành công: quầng sáng xoay sau khung · Lv cũ → Lv mới · chỉ số tăng
@@ -453,10 +454,9 @@ function pickDialog(p0) {
   const before = upPct(p0, upPicks(k)), after = upPct(p0, [...upPicks(k), ...(n ? [{ t, n }] : [])]);
   const card = j => { const lock = used.includes(j), m = upMax(p0, k, j);
     return `<button class="pk-card${j === t ? ' on' : ''}" style="left:${260 + 112 * j}px" data-act="pkT" data-v="${j}" ${lock || !m ? 'disabled' : ''} aria-pressed="${j === t}">
-      <i style="background-image:url(${uui('slot_stone_' + (j + 1))})">${stoneImg(p0.el, j)}${j === t ? `<img class="up-sel" src="${uui('slot_stone_sel')}" alt="">` : ''}</i>
+      <i style="background-image:url(${stoneFrame(j)})">${stoneImg(p0.el, j)}${j === t ? `<img class="up-sel" src="${bui('slot_sel')}" alt="">` : ''}</i>
       <b>Có: ${fmtN(st[j])}</b><small>${lock ? 'Đang ở ô khác' : `+${Math.round(100 * upPer(p0, j))}% / viên`}</small></button>`; };
-  return `<div class="pk-dim"></div>
-    <div class="up-panel full pk" style="left:212px;top:92px;width:420px;height:252px"></div>
+  return `<div class="up-panel full pk" style="left:212px;top:92px;width:420px;height:252px"></div>
     <div class="pg-title pk" style="left:322px;top:72px;width:200px;height:40px">CHỌN ĐÁ</div>
     ${[0, 1, 2].map(card).join('')}
     <div class="cv-qty pk" style="left:250px;top:228px;width:344px;height:34px">
@@ -542,7 +542,7 @@ function mergeDialog(it) {
   // hàng trên căn giữa khung (tâm 422): thẻ đá gốc · mũi tên · 1–2 thẻ đá đích, cùng kiểu thẻ 104 px
   const tos = [it.t + 1, it.t + 2].filter(t => t <= 2), W = 104, G = 8, AR = 30, GAP = 20;
   const total = W + GAP + AR + GAP + tos.length * W + (tos.length - 1) * G, x0 = 422 - total / 2, xt = x0 + W + GAP + AR + GAP;
-  const cardBody = (t, sel) => `<i style="background-image:url(${uui('slot_stone_' + (t + 1))})">${stoneImg(it.el, t)}${sel ? `<img class="up-sel" src="${uui('slot_stone_sel')}" alt="">` : ''}</i>
+  const cardBody = (t, sel) => `<i style="background-image:url(${stoneFrame(t)})">${stoneImg(it.el, t)}${sel ? `<img class="up-sel" src="${bui('slot_sel')}" alt="">` : ''}</i>
       <b>Đá ${ELEM[it.el].n} ${TIER[t]}</b><small>Có: ${stonesOf(it.el)[t].toLocaleString('vi-VN')}</small>`;
   const card = (to, j) => `<button class="mg-card${to === mg.to ? ' on' : ''}" style="left:${xt + (W + G) * j}px" data-act="mgTo" data-v="${to}" aria-pressed="${to === mg.to}">${cardBody(to, to === mg.to && tos.length > 1)}</button>`;
   return `${dlgFrame('NÂNG CẤP ĐÁ')}
@@ -560,10 +560,10 @@ function convDialog(it) {
   const cv = bagUI.cv, mx = convMax(it, cv.to), k = Math.max(1, Math.min(cv.k, mx)), p = convPlan(it, cv.to, k), ok = mx >= 1;
   const card = (to, j) => { const [i, o] = CFG.up.conv[sinhStep(it.el, to) - 1];
     return `<button class="cv-card${to === cv.to ? ' on' : ''}" style="left:${362 + 78 * j}px" data-act="cvTo" data-v="${to}" aria-pressed="${to === cv.to}">
-      <span class="cv-rel">${REL[sinhStep(it.el, to) - 1]}</span><i style="background-image:url(${uui('slot_stone_' + (it.t + 1))})">${stoneImg(to, it.t)}${to === cv.to ? `<img class="up-sel" src="${uui('slot_stone_sel')}" alt="">` : ''}</i><b>${i} → ${o}</b></button>`; };
+      <span class="cv-rel">${REL[sinhStep(it.el, to) - 1]}</span><i style="background-image:url(${stoneFrame(it.t)})">${stoneImg(to, it.t)}${to === cv.to ? `<img class="up-sel" src="${bui('slot_sel')}" alt="">` : ''}</i><b>${i} → ${o}</b></button>`; };
   const why = !ok ? (itemCount(it) < p.i ? `Cần ít nhất ${p.i} đá` : `Thiếu ${p.gold - save.gold} vàng`) : '';
   return `${dlgFrame('CHUYỂN HOÁ ĐÁ')}
-    <span class="cv-src" style="left:182px;top:76px;width:132px;height:118px"><i style="background-image:url(${uui('slot_stone_' + (it.t + 1))})">${stoneImg(it.el, it.t)}</i><b>${it.n}</b><small>Có: ${itemCount(it).toLocaleString('vi-VN')}</small></span>
+    <span class="cv-src" style="left:182px;top:76px;width:132px;height:118px"><i style="background-image:url(${stoneFrame(it.t)})">${stoneImg(it.el, it.t)}</i><b>${it.n}</b><small>Có: ${itemCount(it).toLocaleString('vi-VN')}</small></span>
     <img class="cv-ar" style="left:322px;top:112px" src="${uui('arrow_upgrade')}" alt="→">
     ${EL_ORDER.filter(e => e !== it.el).map(card).join('')}
     <div class="cv-qty" style="left:182px;top:208px;width:484px;height:36px">

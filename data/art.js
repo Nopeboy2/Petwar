@@ -12,11 +12,11 @@ export const ART = {
 };
 
 // Bộ UI trang Pet (design/source/pet-ui-kit, đã chuyển WebP)
-export const pui = n => `assets/pet-ui/${n}.${n === 'pedestal_large' || n.startsWith('icon_el_') || n.startsWith('icon_role_') ? 'png' : 'webp'}`;
+export const pui = n => `assets/pet-ui/${n}.${n === 'pedestal_large' || n === 'btn_pose_stand' || n.startsWith('icon_el_') || n.startsWith('icon_role_') ? 'png' : 'webp'}`;
 // Bộ màn Chọn đảo (design/source/map-ui-kit.png, cắt bằng `node design/tools/extract.mjs map.html assets/map-ui`)
 export const mui = n => `assets/map-ui/${n}.webp`;
 // Bộ Nâng cấp + Túi đá (design/source/upgrade-ui-kit → `node design/tools/extract.mjs upgrade.html assets/upgrade-ui`). Đá: stone_<hệ>_<1|2|3>
-export const uui = n => `assets/upgrade-ui/${n}.webp`;
+export const uui = n => `assets/upgrade-ui/${n}.${n === 'frame_upgrade' ? 'png' : 'webp'}`;
 // Bộ Túi đồ (design/source/bag-ui-kit → `node design/tools/extract.mjs bag.html assets/bag-ui`)
 export const bui = n => `assets/bag-ui/${n}.webp`;
 // Ảnh boss (tư thế idle) lấy từ b.img; boss không có img dùng bóng "?". Đổi tư thế trong trận: ui/battle.js bpose()
