@@ -90,7 +90,7 @@ table.st td{padding:2px 10px;text-align:left}
 .h-empty{position:absolute;inset:20px 10px 10px;border:3px dashed #c9b8ff;border-radius:14px;background:#ffffff55;color:#8a6fd8;font-size:48px;display:grid;place-items:center}
 .h-pet:nth-child(odd) .h-pe{animation-delay:-1.2s}
 .h-team{color:#fff;font-size:13px;text-shadow:0 1px 2px #000,0 0 6px #000;background:#0004!important;border-radius:10px!important}
-.h-camp{background:url(assets/ui/btn_gold.webp) center/100% 100% no-repeat!important;display:flex;align-items:center;justify-content:center;gap:6px;padding:0 34px 4px!important;color:#5a2d00}
+.h-camp{background:url(assets/ui/btn_gold.webp) center/100% 100% no-repeat!important;display:flex;align-items:center;justify-content:center;gap:6px;padding:0 34px!important;color:#5a2d00}
 .h-camp img{width:32px;height:32px;flex:none;filter:drop-shadow(0 2px 2px #0005)}
 .h-ct{display:flex;flex-direction:column;align-items:center;text-align:center}
 .h-camp b{font-size:19px;line-height:1.05;text-shadow:0 1px 0 #fff8}
@@ -122,13 +122,8 @@ table.st td{padding:2px 10px;text-align:left}
 .pc.lock .pc-pet{filter:brightness(0) opacity(.55);animation:none}
 .pc-lock{left:8px;right:8px;top:152px;text-align:center;color:#5a2d00;font-size:12px;font-weight:800}
 .pc-emo{display:grid;place-items:center;font-size:64px;line-height:1}
-/* số ô đội viết lên chiếc khiên đã vẽ sẵn trong card_pet_selected (không chồng thêm huy hiệu) */
 .pc-lv{right:14px;top:6px;width:38px;height:33px;z-index:2;background:center/100% 100% no-repeat;display:grid;place-items:center;padding-bottom:4px;color:#fff;font-size:10px;font-weight:800;text-shadow:0 1px 2px #2a0a5a;white-space:nowrap}
-.pc-no{left:10px;top:5px;width:30px;height:30px;z-index:2;display:grid;place-items:center;color:#6b3a00;font-size:16px;line-height:1;text-shadow:0 1px 0 #ffe9a8}
 .pc-n{left:8px;right:8px;top:174px;height:26px;display:grid;place-items:center;color:#fff;font-size:15px;text-shadow:0 2px 2px #2a0a5a}
-/* khung "được chọn" có dải tên cao hơn + hẹp hơn khung thường */
-.pc.on .pc-pet{top:33px}
-.pc.on .pc-n{top:174px;height:26px;left:17px;right:16px}
 .pc-empty{width:100%;display:grid;place-items:center;color:#fff;font-size:16px;text-shadow:0 2px 3px #000;background:#0005;border-radius:14px}
 /* thanh lọc: kính mờ một dải, chỉ icon, nút chọn có vòng vàng sáng */
 .pf-bar{display:flex;align-items:center;justify-content:center;gap:2px;padding:0 10px;border-radius:19px;background:linear-gradient(#ffffff22,#ffffff0d);border:1px solid #ffffff33;box-shadow:0 4px 14px #0004,inset 0 1px 0 #ffffff33;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
@@ -430,8 +425,9 @@ table.st td{padding:2px 10px;text-align:left}
 .up-pick-dim{inset:0;background:#0007;z-index:22}
 .pick-dlg{z-index:23;transform:translateY(-23px)}
 .up-dlg>*{position:absolute}
-.up-dlg.pet-up .h-chip{justify-content:flex-start;padding-left:34px;padding-right:4px;font-size:13px;white-space:nowrap}
-.up-dlg.pet-up .h-chip img{width:28px;height:28px;left:0}
+.up-dlg.pet-up .h-chip{justify-content:flex-start;padding-left:40px;padding-right:4px;font-size:13px;white-space:nowrap}
+.up-dlg.pet-up .h-chip img{width:34px;height:34px;left:0}
+.up-dlg.pet-up .h-chip{box-sizing:border-box;align-items:center;line-height:1}
 .up-panel{box-sizing:border-box}
 .up-lvrow{display:flex;align-items:center;justify-content:center;gap:4px}
 .up-lvrow>img{width:28px;height:20px}
@@ -476,7 +472,7 @@ table.st td{padding:2px 10px;text-align:left}
 .pet-up .up-actions .up-go,.pet-up .up-actions .up-maxed{width:190px;height:42px}
 .pet-up .up-actions .up-close{width:158px;height:42px}
 .pg .rs-btn:disabled{filter:grayscale(.85) brightness(.9);opacity:1}
-.up-maxed{background:center/100% 100% no-repeat;display:grid;place-items:center;color:#fff;font-size:15px;text-shadow:0 1px 2px #000;padding-left:20px}
+.up-maxed{background:center/100% 100% no-repeat;display:grid;place-items:center;color:#fff;font-size:15px;text-shadow:0 1px 2px #000;padding:0}
 .up-fx{pointer-events:none;animation:up-burst .9s ease-out both}
 @keyframes up-burst{0%{opacity:0;transform:scale(.5)}30%{opacity:1}100%{opacity:0;transform:scale(1.4)}}
 .up-dlg.fail .up-pick{animation:shake .3s}
@@ -526,10 +522,10 @@ table.st td{padding:2px 10px;text-align:left}
 .bd-src{font-size:11px;color:#a0402a;display:flex;flex-direction:column;align-items:center;gap:3px;white-space:nowrap}.bd-src b{font-size:11px;color:#7a5a3a}.bd-src span{display:flex;align-items:center;gap:3px}
 .bd-src img{width:16px;height:16px}
 .bd-why{min-height:13px;font-size:10.5px;color:#d0302a;white-space:nowrap}
-.bd-btns{display:flex;gap:4px}
-.pg .bd-btn{width:87px;height:40px;font-size:11.5px;display:flex;align-items:center;justify-content:center;gap:1px;white-space:nowrap}
-.pg .bd-btn.wide{width:178px;font-size:14px}
-.bd-btn img{width:18px;height:18px}
+.bd-btns{display:flex;gap:4px;align-self:center;margin-bottom:9px}
+.pg .bd-btn{width:81px;height:34px;font-size:10.5px;display:flex;align-items:center;justify-content:center;gap:1px;white-space:nowrap}
+.pg .bd-btn.wide{width:166px;font-size:13px}
+.bd-btn img{width:15px;height:15px}
 /* Hộp thoại Chuyển hoá đá */
 .cv-src{display:flex;flex-direction:column;align-items:center;gap:2px}
 .cv-src i,.cv-card i{position:relative;width:72px;height:72px;background:center/100% 100% no-repeat;display:block}
@@ -602,11 +598,10 @@ table.st td{padding:2px 10px;text-align:left}
 .rs-chests img{filter:drop-shadow(0 0 6px #ffd24a) drop-shadow(0 0 3px #fff6);animation:rs-glow 1.4s ease-in-out infinite alternate}
 @keyframes rs-glow{to{filter:drop-shadow(0 0 12px #ffd24a) drop-shadow(0 0 5px #fff)}}
 /* cấp người chơi */
-.h-plv{display:flex;align-items:center;gap:4px;font-size:10px;color:#fff;text-shadow:0 1px 2px #000}
-.h-plv b{flex:none;padding:1px 8px 0;line-height:14px;background:url(assets/ui/badge_lv.webp) center/100% 100% no-repeat}
-.h-plv i{flex:1;height:9px;padding:1px 2px;background:url(assets/ui/bar_track.webp) center/100% 100% no-repeat}
-.h-plv s{display:block;height:100%;background:url(assets/ui/bar_fill.webp) center/100% 100% no-repeat}
-.h-plv small{flex:none;font-size:10px;color:#9ff0a0;font-weight:800}
+.h-plv{display:flex;align-items:center;gap:6px;font-size:12px;color:#fff;text-shadow:0 1px 2px #000}
+.h-plv b{flex:none;padding:1px 10px 0;line-height:18px;background:url(assets/ui/badge_lv.webp) center/100% 100% no-repeat}
+.h-plv i{flex:1;height:12px;padding:1px 1px 1px 0;background:url(assets/ui/bar_track.webp) center/100% 100% no-repeat}
+.h-plv s{display:block;min-width:6px;border-radius:6px 0 0 6px;height:100%;background:url(assets/ui/bar_fill.webp) center/100% 100% no-repeat}
 .rs-xp b{padding:2px 6px;border-radius:8px;background:linear-gradient(#7fe0ff,#2f9bd8);font-size:13px;color:#fff;text-shadow:0 1px 1px #0006}
 .rs-lvup{padding:2px 12px;border-radius:11px;background:#6a3aa8;border:1px solid #ffd24a;color:#ffd24a;font-size:12px;font-weight:800;white-space:nowrap;text-shadow:0 1px 2px #000;animation:rs-pop .4s 1.3s backwards cubic-bezier(.3,1.6,.6,1)}
 .rs-tags{gap:8px}

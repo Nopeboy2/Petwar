@@ -6,7 +6,7 @@ import { elemMods, KHAC, SINH, lvPet, upRate, upGold, upTotal, teamLv, lvBoss, p
 import { PETS, ROLE, ULT_TEXT } from '../data/pets.js';
 import { BOSSES, ISLANDS, ATK_NAME } from '../data/bosses.js';
 import { startBattle } from './battle.js';
-import { ART, petImg, petIcon, pui, mui, uui, bui, bossArt } from '../data/art.js';
+import { ART, petImg, petIcon, pui, mui, uui, bui, bossArt, PET_SCALE } from '../data/art.js';
 import { ITEMS, RARITY, TABS, EL_ORDER } from '../data/items.js';
 import { today, shopStock, shopLeft } from '../data/shop.js';
 import { unlock, setAudio, sfx } from './audio.js';
@@ -87,23 +87,24 @@ const screens = {
   // Trang chủ: toạ độ theo design/briefs/02-home.md (khung 844×390, phóng theo màn hình)
   home() {
     const next = BOSSES[Math.min(save.cleared, BOSSES.length - 1)], done = save.cleared >= BOSSES.length;
+    const pscale = p => { const s = PET_SCALE[p.id]; return s ? `width:${150 * s}px!important;height:${150 * s}px;left:${-15 + 75 * (1 - s)}px` : ''; };
     const slot = (k, x) => {
       const p = PETS[pick[k]];
       return `<button class="h-pet" style="${atM(x, 100, 120, 176)}" data-act="formation">
-        ${p ? `${petImg(p) ? `<img class="h-pimg" src="${petImg(p, 'idle', true)}" alt="">` : `<span class="h-pe">${p.e}</span>`}<img class="h-ped" src="${ART.pedestal}" alt=""><span class="h-pn${petImg(p) ? " hi" : ""}">${p.n}</span>` : '<span class="h-empty">+</span>'}</button>`;
+        ${p ? `${petImg(p) ? `<img class="h-pimg" style="${pscale(p)}" src="${petImg(p, 'idle', true)}" alt="">` : `<span class="h-pe">${p.e}</span>`}<img class="h-ped" src="${ART.pedestal}" alt=""><span class="h-pn${petImg(p) ? " hi" : ""}">${p.n}</span>` : '<span class="h-empty">+</span>'}</button>`;
     };
     const navBtn = (x, icon, label, act, dot = false) => `<button class="h-btn" style="${atBL(x, 20, 128, 56)}" data-act="${act}"><img src="${ART[icon]}" alt=""><span>${label}</span>${dot ? `<img class="h-dot" src="${pui('dot_notify')}" alt="Có hàng mới">` : ''}</button>`;
     view.innerHTML = `<div class="stage-wrap blur blur-soft" style="background-image:url(${ART.bg_sanh})"><div class="stage home">
       <div class="h-avatar" style="${atL(10, 4, 54, 54)}"><span>${PETS[pick[0]] ? petIcon(PETS[pick[0]], 34, 'portrait') : '🙂'}</span><img src="${ART.avatar_frame}" alt=""></div>
       <div class="h-name" style="${atL(68, 4, 160, 38)}" title="Cấp ${save.plv}: toàn đội +${(plBonus(CFG, save.plv) * 100).toFixed(1)}% HP/ATK/DEF"><span>Người chơi</span></div>
-      <div class="h-plv" style="${atL(76, 44, 146, 14)}"><b>Lv ${save.plv}</b><i><s style="width:${save.plv >= CFG.player.maxLv ? 100 : Math.round(100 * save.xp / xpNeed(CFG, save.plv))}%"></s></i><small>+${(plBonus(CFG, save.plv) * 100).toFixed(1)}%</small></div>
+      <div class="h-plv" style="${atL(78, 47, 134, 18)}"><b>Lv ${save.plv}</b><i><s style="width:${save.plv >= CFG.player.maxLv ? 100 : Math.round(100 * save.xp / xpNeed(CFG, save.plv))}%"></s></i></div>
       ${coin(save.gold, atR(184, 12, 112, 32))}
       ${gem(save.gem, atR(60, 12, 104, 32))}
       <button class="h-icon" style="${atR(12, 8, 40, 40)}" data-act="settings" aria-label="Cài đặt"><img src="${ART.icon_gear}" alt=""></button>
       ${slot(0, 80)}${slot(1, 216)}${slot(2, 352)}
       <button class="h-team" style="${atM(80, 282, 392, 20)}" data-act="formation">Đội hình hiện tại · chạm để sửa</button>
       <button class="h-camp" style="${atBR(12, 16, 240, 64)}" data-act="islands">
-        <img src="${ART.icon_swords}" alt=""><span class="h-ct"><b>CHIẾN DỊCH</b><small>${done ? 'Đã phá đảo · chơi lại màn bất kỳ' : 'Màn kế: ' + next.n}</small></span></button>
+        <img src="${ART.icon_swords}" alt=""><span class="h-ct"><b>CHINH PHỤC</b>${done ? '' : `<small>Màn kế: ${next.n}</small>`}</span></button>
       ${navBtn(12, 'icon_paw', 'Pet', 'pets')}${navBtn(148, 'icon_shield', 'Đội hình', 'formation')}
       ${navBtn(284, 'icon_bag', 'Túi đồ', 'bag')}${navBtn(420, 'icon_shop', 'Cửa hàng', 'shop', save.shop.seen !== today())}
     </div></div>`;
@@ -239,7 +240,6 @@ const screens = {
         ${img ? `<img class="pc-pet" src="${img}" alt="">` : `<span class="pc-pet pc-emo">${p.e}</span>`}<span class="pc-lock">🔒 3⭐ Boss ${p.cap + 1}</span><span class="pc-n">???</span></button>`;
       return `<button class="pc${k >= 0 ? ' on' : ''}" data-act="pet" data-i="${i}" aria-label="${p.n}">
         ${img ? `<img class="pc-pet" src="${img}" alt="">` : `<span class="pc-pet pc-emo">${p.e}</span>`}
-        ${k >= 0 ? `<span class="pc-no" aria-label="Ô ${k + 1}">${k + 1}</span>` : ''}
         <span class="pc-lv" style="background-image:url(${uui('badge_level')})" aria-label="Cấp ${lvOf(p)}">Lv ${lvOf(p)}</span><span class="pc-n">${p.n}</span></button>`;
     };
     const pill = (act, v, on, src, title) => `<button class="pf${on ? ' on' : ''}" data-act="${act}" data-v="${v}" title="${title}" aria-label="${title}" aria-pressed="${on}"><img src="${src}" alt=""></button>`;
@@ -513,10 +513,9 @@ screens.bag = () => {
 function bagDetail(it) {
   if (!it) return `<div class="bd"><span class="bd-desc bd-none">Chưa có vật phẩm<br>Thắng boss để nhận</span></div>`;
   const n = itemCount(it), R = RARITY[it.rar];
-  let btns, why = '';
+  let btns;
   if (it.cat === 'stone') {
     const { t } = it, M = CFG.up.merge, canM = t < 2 && n >= M;
-    why = !n ? '' : t === 2 ? 'Đá III là cấp cao nhất' : n < M ? `Cần ${M} đá để nâng cấp` : '';
     btns = `<button class="rs-btn bd-btn" data-act="mgOpen" ${canM ? '' : 'disabled'} title="${M} đá ${TIER[t]} → 1 đá ${TIER[Math.min(2, t + 1)]} cùng hệ"><img src="${uui('icon_merge')}" alt="">Nâng cấp</button>
       <button class="rs-btn main bd-btn" data-act="cvOpen" ${n ? '' : 'disabled'} title="Đổi sang đá hệ khác"><img src="${uui('icon_convert')}" alt="">Chuyển hoá</button>`;
   } else btns = `<button class="rs-btn bd-btn wide" disabled>Sắp có</button>`;
@@ -527,7 +526,6 @@ function bagDetail(it) {
     <span class="bd-n">Có: <b>${n.toLocaleString('vi-VN')}</b></span>
     <span class="bd-desc">${it.desc}</span>
     <span class="bd-src"><b>Nguồn</b>${[].concat(it.src).map(s => `<span><img src="${bui('icon_source')}" alt="">${s}</span>`).join('')}</span>
-    <span class="bd-why">${why}</span>
     <span class="bd-btns">${btns}</span></div>`;
 }
 // Hộp thoại Chuyển hoá đá — design/UPGRADE.md §4c. Tỉ lệ theo số bước vòng Sinh từ hệ nguồn → hệ đích (CFG.up.conv), vàng / viên nhận

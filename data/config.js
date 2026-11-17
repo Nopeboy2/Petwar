@@ -1,7 +1,7 @@
 // Số cân bằng toàn cục. Chỉ đổi sau khi chạy `node sim.js` để kiểm tra.
 export const CFG = {
   rows: 6, cols: 6,
-  weights: [24, 19, 19, 19, 19],      // tỉ lệ rơi: Kiếm, Tim, Xoắn(choáng), Khiên, Lửa(nộ)
+  weights: [30, 17.5, 17.5, 17.5, 17.5],      // tỉ lệ rơi: Kiếm, Tim, Xoắn(choáng), Khiên, Lửa(nộ)
   chain: [1, 1.3, 1.6, 1.9, 2.0],     // hệ số dây chuyền theo đợt (đợt cuối là trần)
   heartPct: 0.08,                     // mỗi tim hồi % maxHP cho pet yếu nhất
   shieldPct: 0.05, shieldCap: 0.30,   // mỗi khiên cho mỗi pet % maxHP, trần
@@ -14,7 +14,7 @@ export const CFG = {
   elem: { adv: 1.5, dis: 0.75, hurtUp: 1.3, hurtDown: 0.75, sinh: 0.15 },
   maxMoves: 50,                       // quá số lượt này = thua
   // Viên x2/x3: viên MỚI rơi xuống có hệ số (ăn = tính 2/3 viên). Tỉ lệ tăng theo lượt: x2 từ lượt from2, +step2/lượt, trần max2; x3 tương tự
-  mulGem: { from2: 8, step2: 0.006, max2: 0.15, from3: 20, step3: 0.004, max3: 0.08 },
+  mulGem: { from2: 4, step2: 0.006, max2: 0.15, from3: 12, step3: 0.004, max3: 0.08 },
   // Nâng cấp pet (design/UPGRADE.md; kiểm bằng `node sim.js --upgrade`). Mỗi lần thử tốn 1 đá cùng hệ pet; thành công mới trả vàng.
   // tỉ lệ = kẹp(base[cấp đá] − dec × (cấp pet − 1), floor[cấp đá], 1) + pity × số lần trượt liên tiếp
   // Cấp người chơi: XP thắng boss (lần đầu ×2, thua ×0.25); mỗi cấp +0.5% HP/ATK/DEF toàn đội, tối đa cấp 30 (= +14.5%). XP lên cấp L→L+1 = xpBase + xpStep·(L−1)
