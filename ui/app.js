@@ -161,7 +161,7 @@ const screens = {
         <div class="bsd-row">Đòn:${b.pat.map(t => `<img src="${boi('icon_atk_' + t)}" alt="${ATK_NAME[t]}" title="${ATK_NAME[t]}">`).join('<i>›</i>')}</div>
         <div class="bsd-row"><img src="${pui('icon_el_' + b.el)}" alt=""><b class="bsd-el" style="color:${ELEM[b.el].c}">${ELEM[b.el].n}</b><span class="bsd-dim">· Khắc bởi</span><img src="${pui('icon_el_' + ce)}" alt=""><b class="bsd-el" style="color:${ELEM[ce].c}">${ELEM[ce].n}</b></div>
         <div class="bsd-row"><img src="${boi('icon_spiral')}" alt=""><b>${b.stun}</b> viên Xoắn để choáng</div>
-        <div class="bsd-rw"><span class="bsd-lb">Thưởng</span><img src="${bui('item_gold')}" alt="Vàng"><b>${b.gold * (first ? 3 : 1)}</b><img src="${boi('icon_xp')}" alt="XP"><b>${Math.round((b.xp || 0) * (first ? CFG.player.first : 1))}</b>${first ? '<span class="bsd-first">Lần đầu</span>' : ''}</div>
+        <div class="bsd-rw"><span class="bsd-lb">Thưởng</span><img src="${ART.icon_coin}" alt="Vàng"><b>${b.gold * (first ? 3 : 1)}</b><img src="${boi('icon_xp')}" alt="XP"><b>${Math.round((b.xp || 0) * (first ? CFG.player.first : 1))}</b>${first ? '<span class="bsd-first">Lần đầu</span>' : ''}</div>
         ${cap ? `<div class="bsd-cap" title="${owned(cap) ? 'Đã thu phục' : 'Thắng 3⭐ để thu phục'}"><img class="bsd-capf" src="${boi('frame_capture')}" alt=""><img class="bsd-capp" src="${petImg(cap, 'portrait')}" alt="${cap.n}"><small>${owned(cap) ? '✓ Đã có' : '3⭐ thu phục'}</small></div>` : ''}`;
     }
     view.innerHTML = `<div class="stage-wrap blur" style="background-image:url(assets/battle/bg_${s.id}.webp)"><div class="stage pg bs">

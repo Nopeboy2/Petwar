@@ -228,8 +228,8 @@ table.st td{padding:2px 10px;text-align:left}
 .tp-n{left:8px;right:8px;top:88px;height:12px;display:grid;place-items:center;color:#fff;font-size:10px;line-height:1;white-space:nowrap;text-shadow:0 1px 1px #2a0a5a}
 .tp-none{color:#fff;align-self:center;text-shadow:0 1px 2px #000}
 .sug2{color:#a0660a;font-weight:800}
-.tm-auto{right:210px;top:336px;width:198px;height:44px;background:url(assets/team-ui/btn_auto.webp) center/100% 100% no-repeat!important;display:flex;align-items:center;justify-content:center;padding:0 10px 3px 58px!important;color:#fff;font-size:17px;text-shadow:0 1px 2px #2a0a5a}
-.tm-fight{right:0;top:336px;width:198px;height:44px;background:url(assets/team-ui/btn_fight.webp) center/100% 100% no-repeat!important;display:flex;align-items:center;justify-content:center;padding:0 10px 3px 55px!important;color:#5a2d00;font-size:17px}
+.tm-auto{right:210px;top:336px;width:198px;height:44px;background:url(assets/team-ui/btn_auto.webp) center/100% 100% no-repeat!important;display:flex;align-items:center;justify-content:center;padding:0!important;line-height:1;color:#fff;font-size:17px;text-shadow:0 1px 2px #2a0a5a}
+.tm-fight{right:0;top:336px;width:198px;height:44px;background:url(assets/team-ui/btn_fight.webp) center/100% 100% no-repeat!important;display:flex;align-items:center;justify-content:center;padding:0!important;line-height:1;color:#5a2d00;font-size:17px}
 .tm-fight:disabled{filter:grayscale(.7) brightness(.85)}
 .tp-pager{left:0;width:408px;top:314px;height:20px;display:flex;align-items:center;justify-content:center;gap:6px;color:#fff;font-size:12px;text-shadow:0 1px 2px #000}
 .tp-pager .pg-arrow{width:22px;height:20px}
@@ -321,6 +321,7 @@ table.st td{padding:2px 10px;text-align:left}
 .gem.sw{transition:transform .15s}
 .g0{background:#e8b923}.g1{background:#3fb950}.g2{background:#8a94a6}.g3{background:#8957e5}.g4{background:#e5484d}
 .g2 .em{filter:grayscale(1)}
+.gem.im{background:none;box-shadow:none;inset:0}.gem.im img{width:100%;height:100%;pointer-events:none;-webkit-user-drag:none} /* viên có ảnh (assets/battle/gem_*) */
 .gem.pop{animation:pop .2s forwards}
 .gem.fall{animation:fall .28s cubic-bezier(.3,0,.7,1)}
 .gem.hint{animation:hint .7s infinite}

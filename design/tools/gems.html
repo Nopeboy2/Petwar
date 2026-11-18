@@ -1,0 +1,37 @@
+<!doctype html><meta charset="utf-8">
+<!-- 5 viên bàn cờ (nền trắng) → WebP nền trong suốt, cắt sát viên, căn giữa khung vuông SIZE px. Cách tách nền giống stones.html.
+     Gốc: design/source/gems/gem_<loại>.webp · Chạy: node design/tools/extract.mjs gems.html assets/battle
+     Thứ tự loại trong code (ui/battle.js GEM_IMG): atk 0 · heal 1 · stun 2 · shield 3 · rage 4. Thêm viên: chép ảnh gốc rồi thêm tên vào LIST. -->
+<pre id="out"></pre>
+<script>
+const LIST = ['gem_atk', 'gem_heal', 'gem_stun', 'gem_shield', 'gem_rage'], SIZE = 160; // ô ~55px × màn hình 3x
+const load = n => new Promise(ok => { const i = new Image(); i.onload = () => ok(i); i.src = `../source/gems/${n}.webp`; });
+(async () => {
+  const out = {};
+  for (const name of LIST) {
+    const img = await load(name), w = img.width, h = img.height, c = document.createElement('canvas'); c.width = w; c.height = h;
+    const g = c.getContext('2d'); g.drawImage(img, 0, 0);
+    const d = g.getImageData(0, 0, w, h), p = d.data, seen = new Uint8Array(w * h), st = [];
+    const al = i => Math.max(255 - p[i * 4], 255 - p[i * 4 + 1], 255 - p[i * 4 + 2]) / 255;
+    for (let i = 0; i < w; i++) st.push(i, (h - 1) * w + i);
+    for (let j = 0; j < h; j++) st.push(j * w, j * w + w - 1);
+    while (st.length) { const i = st.pop(); if (seen[i] || al(i) > 0.75) continue; seen[i] = 1;
+      const x = i % w, y = (i / w) | 0; if (x > 0) st.push(i - 1); if (x < w - 1) st.push(i + 1); if (y > 0) st.push(i - w); if (y < h - 1) st.push(i + w); }
+    for (let i = 0; i < w * h; i++) {
+      if (!seen[i]) continue;
+      const k = i * 4, a = al(i);
+      if (a < 0.08 || Math.max(p[k], p[k + 1], p[k + 2]) - Math.min(p[k], p[k + 1], p[k + 2]) < 25) { p[k + 3] = 0; continue; } // nền trắng + bóng xám đổ dưới viên (viền đen chặn, không lan vào trong)
+      for (let j = 0; j < 3; j++) p[k + j] = Math.max(0, Math.min(255, Math.round((p[k + j] - 255 * (1 - a)) / a)));
+      p[k + 3] = Math.round(255 * a);
+    }
+    let x0 = w, y0 = h, x1 = 0, y1 = 0;
+    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) if (p[(y * w + x) * 4 + 3] > 40) { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
+    g.putImageData(d, 0, 0);
+    const bw = x1 - x0 + 1, bh = y1 - y0 + 1, s = SIZE / Math.max(bw, bh), o = document.createElement('canvas'); o.width = o.height = SIZE;
+    const og = o.getContext('2d'); og.imageSmoothingQuality = 'high';
+    og.drawImage(c, x0, y0, bw, bh, (SIZE - bw * s) / 2, (SIZE - bh * s) / 2, bw * s, bh * s);
+    out[name] = o.toDataURL('image/webp', 0.92);
+  }
+  document.getElementById('out').textContent = JSON.stringify(out);
+})();
+</script>

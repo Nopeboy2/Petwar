@@ -3,11 +3,13 @@ import { createGame, ready, step, useUlt, checkEnd, snapshot } from '../engine.j
 import { ATK_NAME } from '../data/bosses.js';
 const atkImg = t => `assets/boss-ui/icon_atk_${t}.webp`;
 import { sfx, vibrate } from './audio.js';
-import { petImg, bossArt, pui } from '../data/art.js';
+import { petImg, bossArt, pui, PET_SCALE } from '../data/art.js';
 import { ELEM } from '../data/elements.js';
 import { ROLE } from '../data/pets.js';
 
 const EMOJI = ['⚔️', '💗', '🌀', '🛡️', '🔥'];
+// Ảnh viên (design/tools/gems.html → assets/battle/gem_<loại>.webp); null = chưa có ảnh, dùng emoji trên ô màu
+const GEM_IMG = ['atk', 'heal', 'stun', 'shield', 'rage'].map(n => n && `assets/battle/gem_${n}.webp`);
 const FAST = new URLSearchParams(location.search).has('fast'); // bỏ chờ hoạt ảnh (dùng cho autotest)
 const sleep = ms => new Promise(r => setTimeout(r, FAST ? 0 : ms));
 
@@ -22,7 +24,7 @@ export function startBattle({ root, cfg, team, boss, onEnd, onExit, seedVal }) {
       <button id="b-pause" aria-label="Tạm dừng">⏸</button><span id="b-moves"></span><span id="b-sum"></span>
       ${team.map((p, i) => `
       <div class="pet p${i}" data-i="${i}">
-        <div class="pe">${petImg(p) ? `<img src="${petImg(p, 'idle', true)}" alt="${p.n}">` : p.e}<button class="ult" aria-label="ULT ${p.n}">ULT</button><span class="ag" title="Tỉ lệ bị boss nhắm"></span></div>
+        <div class="pe">${petImg(p) ? `<img src="${petImg(p, 'idle', true)}" alt="${p.n}"${PET_SCALE[p.id] ? ` style="width:${100 * PET_SCALE[p.id]}px;height:${100 * PET_SCALE[p.id]}px"` : ''}>` : p.e}<button class="ult" aria-label="ULT ${p.n}">ULT</button><span class="ag" title="Tỉ lệ bị boss nhắm"></span></div>
         <div class="pi"><div class="pn">${p.el ? `<img src="${pui('icon_el_' + p.el)}" alt="${ELEM[p.el].n}" title="Hệ ${ELEM[p.el].n}">` : ''}${p.r ? `<img src="${pui('icon_role_' + p.r.toLowerCase() + '_round')}" alt="${ROLE[p.r]}" title="${ROLE[p.r]}">` : ''}<span class="nm">${p.n}</span><span class="tg">${s.pets[i].adv ? '<b class="up" title="Khắc boss">▲</b>' : s.pets[i].dis ? '<b class="down" title="Bị boss khắc">▼</b>' : ''}${s.pets[i].sinh ? '<i title="Được pet cạnh tương sinh">🌱</i>' : ''}</span></div>
           <div class="bar hp" title="Máu"><i></i><span class="hpv"></span></div>
           <div class="bar sh" title="Khiên: chặn sát thương trước khi trừ máu"><i></i><span class="shv"></span></div>
@@ -43,8 +45,9 @@ export function startBattle({ root, cfg, team, boss, onEnd, onExit, seedVal }) {
   function renderBoard(grid, fall) {
     cells.forEach((c, i) => {
       const gem = c.firstChild, t = grid[i], k = vmul[i] || 1, key = t + ':' + k; // k = hệ số viên (x2/x3)
-      if (gem.dataset.t !== key) { gem.dataset.t = key; gem.className = 'gem g' + t; gem.innerHTML = `<span class="em">${EMOJI[t]}</span>${k > 1 ? `<b class="mx m${k}">x${k}</b>` : ''}`; }
-      else gem.className = 'gem g' + t;
+      const cls = 'gem g' + t + (GEM_IMG[t] ? ' im' : '');
+      if (gem.dataset.t !== key) { gem.dataset.t = key; gem.className = cls; gem.innerHTML = `${GEM_IMG[t] ? `<img src="${GEM_IMG[t]}" alt="">` : `<span class="em">${EMOJI[t]}</span>`}${k > 1 ? `<b class="mx m${k}">x${k}</b>` : ''}`; }
+      else gem.className = cls;
       if (fall && fall.has(i)) { void gem.offsetWidth; gem.classList.add('fall'); }
     });
   }
