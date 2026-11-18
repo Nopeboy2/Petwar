@@ -5,45 +5,45 @@ export const SUGGEST = [
     "ids": [
       "blazefang",
       "rockmane",
-      "steelclaw"
+      "magmaw"
     ],
     "win": 1,
-    "moves": 10.4
+    "moves": 7.3
+  },
+  {
+    "ids": [
+      "magmaw",
+      "steelclaw",
+      "gearhorn"
+    ],
+    "win": 1,
+    "moves": 8.3
   },
   {
     "ids": [
       "steelclaw",
-      "leafkit",
-      "rockmane"
+      "duneshell",
+      "elderoot"
     ],
-    "win": 0.975,
-    "moves": 21.1
+    "win": 1,
+    "moves": 13.1
   },
   {
     "ids": [
-      "rockmane",
-      "leafkit",
-      "steelclaw"
+      "magmaw",
+      "pearlwyrm",
+      "tidewisp"
     ],
-    "win": 0.82,
-    "moves": 35.1
+    "win": 0.995,
+    "moves": 9.9
   },
   {
     "ids": [
-      "leafkit",
-      "tidewisp",
-      "rockmane"
-    ],
-    "win": 0.56,
-    "moves": 43.4
-  },
-  {
-    "ids": [
-      "steelclaw",
-      "rockmane",
+      "elderoot",
+      "magmaw",
       "leafkit"
     ],
-    "win": 0.485,
-    "moves": 45.1
+    "win": 1,
+    "moves": 10.9
   }
 ];

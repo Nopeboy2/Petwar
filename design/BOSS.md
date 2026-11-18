@@ -4,7 +4,19 @@ Số liệu: `node sim.js --curve 100`. Đã tính viên x2/x3 (`CFG.mulGem`): k
 Thử boss mới không cần sửa code: `CAND='[{"n":"thử","el":"hoa","hp":14000,"atk":810,"stun":7,"pat":["blast","aoe"]}]' node sim.js --curve 80`.
 Mô phỏng nhiễu khoảng ±8% ở 80–100 trận/đội, nên chốt số bằng ≥ 80 trận.
 
-## 1. Đường cong mục tiêu
+> **Cập nhật 2026-11-18:** 5 boss hiện có giờ là **boss đầu** của 5 đảo, cùng mức dễ. Đảo không chia độ khó; độ khó chỉ tăng giữa boss 1 → 2 → 3 trong cùng một đảo (boss 2–3 chưa làm). Số mới (`node sim.js --curve 15`, đội mặc định thắng):
+>
+> | Boss | Hệ | HP | ATK | Choáng | Đội mặc định |
+> |---|---|---|---|---|---|
+> | 1 | Kim | 7 000 | 580 | 6 | 100% |
+> | 2 | Mộc | 7 500 | 560 | 7 | 96% |
+> | 3 | Thủy | 8 000 | 520 | 8 | 98% |
+> | 4 | Hỏa | 7 000 | 620 | 6 | 100% |
+> | 5 | Thổ | 9 500 | 540 | 9 | 84% (Tidewisp bị Thổ khắc) |
+>
+> Mỗi boss vẫn giữ lối chơi riêng (mẫu đòn, ATK/HP/choáng tương đối). Phần dưới là đường cong cũ, giữ để tham khảo khi làm boss 2–3 của mỗi đảo.
+
+## 1. Đường cong mục tiêu (cũ)
 
 Mỗi boss khó hơn boss trước khoảng 10–20 điểm % (đội tốt nhất). Từ boss 3 trở đi, đội mặc định thua nhiều: người chơi phải **đổi đội theo hệ**.
 
