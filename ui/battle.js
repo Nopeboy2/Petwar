@@ -17,6 +17,10 @@ export function startBattle({ root, cfg, team, boss, onEnd, onExit, seedVal }) {
   const R = cfg.rows, C = cfg.cols;
   const s = createGame(cfg, team, boss, seedVal ?? Date.now());
   let view = Int8Array.from(s.g), vmul = Uint8Array.from(s.mu), legal = ready(s), busy = false, paused = false, sel = null, down = null, hintT = 0, dead = false;
+  // Hướng dẫn (ui/tutorial.js): allow(a,b) = chỉ nhận nước này · ultAllow = chỉ pet này được ULT (-1 = không ai) · waiters = chờ xong lượt
+  let allow = null, ultAllow = null, waiters = [], accW = [];
+  const notify = () => { const w = waiters; waiters = []; w.forEach(f => f()); };
+  const accepted = () => { const w = accW; accW = []; w.forEach(f => f()); }; // nước/ULT vừa được nhận (trước hoạt ảnh)
 
   // Bố cục: design/briefs/06-battle.md — khung 844×390 (phóng theo màn như các màn khác): trái = 3 pet, giữa = bàn cờ, phải = boss. Chạm pet khi nộ đầy = ULT.
   root.innerHTML = `
@@ -154,30 +158,30 @@ export function startBattle({ root, cfg, team, boss, onEnd, onExit, seedVal }) {
   async function play(a, b) {
     if (busy || paused || s.over || dead) return false;
     clearSel(); clearHint(); setBusy(true);
-    const ok = legal.some(m => (m[0] === a && m[1] === b) || (m[0] === b && m[1] === a));
+    const ok = (!allow || allow(a, b)) && legal.some(m => (m[0] === a && m[1] === b) || (m[0] === b && m[1] === a));
     if (!ok) { sfx('bad'); await swapAnim(a, b, false); setBusy(false); armHint(); return false; }
-    const ev = []; step(s, [a, b], ev);
+    accepted(); const ev = []; step(s, [a, b], ev);
     await playEvents(ev);
     if (s.over) { finish(); return true; }
     const ev2 = []; s.ev = ev2; legal = ready(s); s.ev = null;
     if (ev2.length) { toast('Xáo bàn'); view = Int8Array.from(s.g); vmul = Uint8Array.from(s.mu); renderBoard(view); }
-    setBusy(false); armHint(); return true;
+    setBusy(false); armHint(); notify(); return true;
   }
   async function ult(i) {
     const p = s.pets[i];
-    if (busy || paused || s.over || p.hp <= 0 || p.rage < cfg.rageMax) return;
-    clearHint(); setBusy(true);
+    if (busy || paused || s.over || p.hp <= 0 || p.rage < cfg.rageMax || (ultAllow != null && ultAllow !== i)) return;
+    clearHint(); setBusy(true); accepted();
     const ev = []; s.ev = ev; useUlt(s, p); s.ev = null; checkEnd(s);
     for (const e of ev) {
       if (e.t === 'ult') {
         sfx('ult'); pose(e.i, 'ult', 800);
         if (e.k === 'nuke') { float(bossEl, '-' + Math.round(e.dmg), 'crit'); bossEl.classList.add('hurt'); setTimeout(() => bossEl.classList.remove('hurt'), 260); bpose('hurt', 400); }
         else petEls.forEach((el, k) => s.pets[k].hp > 0 && float(el, e.k === 'heal' ? '💚' : '🛡️', e.k === 'heal' ? 'heal' : 'info'));
-        toast(p.e + ' ' + p.n + '!'); await sleep(500);
+        await sleep(500);
       } else if (e.t === 'snap') hud(e.snap);
     }
     if (s.over) { finish(); return; }
-    setBusy(false); armHint();
+    setBusy(false); armHint(); notify();
   }
   function finish() {
     const win = s.over === 'win';
@@ -189,7 +193,7 @@ export function startBattle({ root, cfg, team, boss, onEnd, onExit, seedVal }) {
 
   // ── gợi ý & chọn ô ──
   function clearHint() { clearTimeout(hintT); cells.forEach(c => c.firstChild.classList.remove('hint')); }
-  function armHint() { clearHint(); hintT = setTimeout(() => { if (busy || paused || s.over || !legal.length) return; const m = legal[(Math.random() * legal.length) | 0]; m.forEach(i => cells[i].firstChild.classList.add('hint')); }, 5000); }
+  function armHint() { clearHint(); hintT = setTimeout(() => { if (busy || paused || s.over || !legal.length || allow) return; const m = legal[(Math.random() * legal.length) | 0]; m.forEach(i => cells[i].firstChild.classList.add('hint')); }, 5000); }
   function clearSel() { if (sel != null) cells[sel].classList.remove('sel'); sel = null; }
   const adj = (a, b) => Math.abs((a % C) - (b % C)) + Math.abs(Math.floor(a / C) - Math.floor(b / C)) === 1;
 
@@ -233,5 +237,11 @@ export function startBattle({ root, cfg, team, boss, onEnd, onExit, seedVal }) {
   });
 
   renderBoard(view); hud(snapshot(s)); armHint();
-  return { s, play, ult, getLegal: () => legal, isBusy: () => busy, destroy() { dead = true; clearHint(); } };
+  return { s, play, ult, getLegal: () => legal, isBusy: () => busy, destroy() { dead = true; clearHint(); },
+    // ── dùng cho hướng dẫn ──
+    setBoard(str) { s.g = Int8Array.from(str, Number); s.mu.fill(1); legal = ready(s); view = Int8Array.from(s.g); vmul = Uint8Array.from(s.mu); renderBoard(view, new Set(cells.keys())); },
+    setAllow(f) { allow = f; if (f) clearHint(); else armHint(); },
+    setUltAllow(i) { ultAllow = i; },
+    mutate(f) { f(s); hud(snapshot(s)); },
+    waitTurn: () => new Promise(r => waiters.push(r)), waitAccept: () => new Promise(r => accW.push(r)) };
 }

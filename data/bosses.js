@@ -2,11 +2,11 @@
 export const ATK_NAME = { single: 'Đơn mục tiêu', blast: 'Đòn lan', aoe: 'Toàn đội' };
 export const BOSSES = [
   // Boss hiện có = boss ĐẦU của mỗi đảo, cùng mức dễ (đội mặc định thắng ~85–100%). Đảo không chia độ khó; boss 2–3 trong cùng đảo mới mạnh dần. Số mô phỏng: design/BOSS.md (node sim.js --curve)
-  { n: 'Boss 1', img: 'assets/bosses/boss_gearhorn_idle.webp',  el: 'kim',  e: '👹', gold: 100, xp: 40, hp: 7000, atk: 580, stun: 6, pat: ['single', 'single', 'blast'] },
-  { n: 'Boss 2', img: 'assets/bosses/boss_elderoot_idle.webp', el: 'moc',  e: '🐲', gold: 150, xp: 60, hp: 7500, atk: 560, stun: 7, pat: ['single', 'blast', 'aoe'] },
-  { n: 'Boss 3', img: 'assets/bosses/boss_pearlwyrm_idle.webp', el: 'thuy', e: '💀', gold: 200, xp: 80, hp: 8000, atk: 520, stun: 8, pat: ['aoe', 'blast', 'single', 'aoe'] },
-  { n: 'Boss 4', img: 'assets/bosses/boss_magmaw_idle.webp', el: 'hoa', e: '🌋', gold: 250, xp: 100, hp: 7000, atk: 620, stun: 6, pat: ['blast', 'aoe', 'blast', 'aoe'] }, // Bùng nổ: ATK cao nhất, đánh lan liên tục, dễ choáng
-  { n: 'Boss 5', img: 'assets/bosses/boss_duneshell_idle.webp', el: 'tho', e: '🗿', gold: 300, xp: 120, hp: 9500, atk: 540, stun: 9, pat: ['single', 'single', 'aoe'] },        // Pháo đài: máu trâu nhất, khó choáng nhất, dồn đòn vào ô đầu
+  { n: 'Ferrox', img: 'assets/bosses/boss_gearhorn_idle.webp',  el: 'kim',  e: '👹', gold: 100, xp: 40, hp: 7000, atk: 580, stun: 6, pat: ['single', 'single', 'blast'] },
+  { n: 'Ylvar', img: 'assets/bosses/boss_elderoot_idle.webp', el: 'moc',  e: '🐲', gold: 150, xp: 60, hp: 7500, atk: 560, stun: 7, pat: ['single', 'blast', 'aoe'] },
+  { n: 'Maeris', img: 'assets/bosses/boss_pearlwyrm_idle.webp', el: 'thuy', e: '💀', gold: 200, xp: 80, hp: 8000, atk: 520, stun: 8, pat: ['aoe', 'blast', 'single', 'aoe'] },
+  { n: 'Pyrrak', img: 'assets/bosses/boss_magmaw_idle.webp', el: 'hoa', e: '🌋', gold: 250, xp: 100, hp: 7000, atk: 620, stun: 6, pat: ['blast', 'aoe', 'blast', 'aoe'] }, // Bùng nổ: ATK cao nhất, đánh lan liên tục, dễ choáng
+  { n: 'Sahrun', img: 'assets/bosses/boss_duneshell_idle.webp', el: 'tho', e: '🗿', gold: 300, xp: 120, hp: 9500, atk: 540, stun: 9, pat: ['single', 'single', 'aoe'] },        // Pháo đài: máu trâu nhất, khó choáng nhất, dồn đòn vào ô đầu
 ];
 // Đảo = khu vực đánh boss (màn 03, design/briefs/03-islands.md). id = hệ của đảo; bosses = chỉ số trong BOSSES, [] = sắp ra mắt.
 // ponytail: thứ tự đảo đi theo thứ tự mở khoá boss hiện có (Kim→Mộc→Thủy); chuyển sang vòng Sinh khi đủ 3 boss/đảo.

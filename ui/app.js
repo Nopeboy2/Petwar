@@ -10,15 +10,17 @@ import { ART, petImg, petIcon, pui, mui, uui, bui, bossArt, PET_SCALE } from '..
 import { ITEMS, RARITY, TABS, EL_ORDER } from '../data/items.js';
 import { today, shopStock, shopLeft } from '../data/shop.js';
 import { unlock, setAudio, sfx } from './audio.js';
+import { tip, battleTour, clearTips } from './tutorial.js';
+import { FLOW, BATTLE_TOUR } from '../data/tutorial.js';
 
 // ───────────── lưu dữ liệu (localStorage có thể bị chặn/xoá → luôn try/catch) ─────────────
 const KEY = 'pokiwar-lite-v1';
-const DEF = { version: 1, cleared: 0, plv: 1, xp: 0, gold: 0, gem: 0, stars: {}, lv: {}, fail: {}, stones: {}, items: {}, seen: {}, shop: { day: '', bought: {}, seen: '' }, lastTeam: [PETS[0].n, PETS[1].n, PETS[3].n], settings: { sfx: 1, vibrate: true }, stats: { battles: 0, wins: 0 } };
+const DEF = { version: 1, cleared: 0, plv: 1, xp: 0, gold: 0, gem: 0, stars: {}, lv: {}, fail: {}, stones: {}, items: {}, seen: {}, shop: { day: '', bought: {}, seen: '' }, lastTeam: [PETS[0].id, PETS[1].id, PETS[3].id], settings: { sfx: 1, vibrate: true }, stats: { battles: 0, wins: 0 }, tut: {} };
 let save = load();
 function load() {
   try {
     const o = JSON.parse(localStorage.getItem(KEY));
-    if (o && o.version === 1) return { ...DEF, ...o, stars: { ...o.stars }, lv: { ...o.lv }, fail: { ...o.fail }, stones: { ...o.stones }, items: { ...o.items }, seen: { ...o.seen }, shop: { ...DEF.shop, ...o.shop, bought: { ...(o.shop || {}).bought } }, settings: { ...DEF.settings, ...o.settings }, stats: { ...DEF.stats, ...o.stats } };
+    if (o && o.version === 1) return { ...DEF, ...o, stars: { ...o.stars }, lv: { ...o.lv }, fail: { ...o.fail }, stones: { ...o.stones }, items: { ...o.items }, seen: { ...o.seen }, shop: { ...DEF.shop, ...o.shop, bought: { ...(o.shop || {}).bought } }, settings: { ...DEF.settings, ...o.settings }, stats: { ...DEF.stats, ...o.stats }, tut: { ...o.tut } };
   } catch { /* dùng mặc định */ }
   return JSON.parse(JSON.stringify(DEF));
 }
@@ -64,7 +66,7 @@ const backBtn = (style = atL(12, 10, 48, 34)) => `<button class="bk"${style ? ` 
 const PAGE = 5; const flt = { el: '', r: '', page: 0 }; // bộ lọc + trang của Bộ sưu tập
 const BLOCK = 'left:calc(50% - 422px);top:calc((var(--sh, 390px) - 390px) / 2);width:844px;height:390px'; // toạ độ bên trong = layout 844×390
 const params = new URLSearchParams(location.search);
-let bossIdx = 0, islIdx = 0, bossSel = null, pick = save.lastTeam.map(n => PETS.findIndex(p => p.n === n)).filter(i => i >= 0 && owned(PETS[i])).slice(0, 3);
+let bossIdx = 0, islIdx = 0, bossSel = null, pick = save.lastTeam.map(n => PETS.findIndex(p => p.id === String(n).toLowerCase())) /* lưu theo id; bản cũ lưu tên = id viết hoa */.filter(i => i >= 0 && owned(PETS[i])).slice(0, 3);
 if (pick.length < 3) pick = [0, 1, 3]; // dữ liệu lưu cũ (tên pet cũ) → đội mặc định
 let battle = null;
 
@@ -149,7 +151,7 @@ const screens = {
       const b = lvBoss(CFG, BOSSES[i], lv), lock = i > save.cleared, done = i < save.cleared;
       if (lock) return `<div class="bsc lock" style="left:${164 * k}px"><img class="bsc-art" src="${mui('boss_unknown')}" alt=""><img class="bsc-lock" src="${mui('icon_lock_gold')}" alt=""><span class="bsc-n">???</span><span class="bsc-sub">Hạ boss trước để mở</span></div>`;
       return `<button class="bsc${i === bossSel ? ' on' : ''}${done ? '' : ' cur'}" style="left:${164 * k}px" data-act="bSel" data-i="${i}" aria-label="${b.n}">
-        <img class="bsc-el" src="${pui('icon_el_' + b.el)}" alt="Hệ ${ELEM[b.el].n}"><span class="bsc-lv">Lv ${b.lv}</span>
+        <img class="bsc-el" src="${pui('icon_el_' + b.el)}" alt="Hệ ${ELEM[b.el].n}">
         <img class="bsc-art${b.img ? ' face-r' : ''}" src="${b.img || mui('boss_unknown')}" alt=""><span class="bsc-n">${b.n}</span>
         ${done ? `<img class="bsc-stamp" src="${boi('stamp_cleared')}" alt="Đã hạ">` : ''}<span class="bsc-stars">${stars(done ? save.stars[i] || 1 : 0)}</span></button>`;
     };
@@ -162,7 +164,7 @@ const screens = {
         <div class="bsd-row"><img src="${pui('icon_el_' + b.el)}" alt=""><b class="bsd-el" style="color:${ELEM[b.el].c}">${ELEM[b.el].n}</b><span class="bsd-dim">· Khắc bởi</span><img src="${pui('icon_el_' + ce)}" alt=""><b class="bsd-el" style="color:${ELEM[ce].c}">${ELEM[ce].n}</b></div>
         <div class="bsd-row"><img src="${boi('icon_spiral')}" alt=""><b>${b.stun}</b> viên Xoắn để choáng</div>
         <div class="bsd-rw"><span class="bsd-lb">Thưởng</span><img src="${ART.icon_coin}" alt="Vàng"><b>${b.gold * (first ? 3 : 1)}</b><img src="${boi('icon_xp')}" alt="XP"><b>${Math.round((b.xp || 0) * (first ? CFG.player.first : 1))}</b>${first ? '<span class="bsd-first">Lần đầu</span>' : ''}</div>
-        ${cap ? `<div class="bsd-cap" title="${owned(cap) ? 'Đã thu phục' : 'Thắng 3⭐ để thu phục'}"><img class="bsd-capf" src="${boi('frame_capture')}" alt=""><img class="bsd-capp" src="${petImg(cap, 'portrait')}" alt="${cap.n}"><small>${owned(cap) ? '✓ Đã có' : '3⭐ thu phục'}</small></div>` : ''}`;
+        ${cap ? `<div class="bsd-cap" title="${owned(cap) ? 'Đã thu phục' : 'Thắng 3⭐ để thu phục'}"><img class="bsd-capp" src="${petImg(cap, 'portrait')}" alt="${cap.n}"><img class="bsd-capf" src="assets/boss-ui/frame_capture.png" alt=""><small>${owned(cap) ? '✓ Đã có' : '3⭐ thu phục'}</small></div>` : ''}`;
     }
     view.innerHTML = `<div class="stage-wrap blur" style="background-image:url(assets/battle/bg_${s.id}.webp)"><div class="stage pg bs">
       ${backBtn()}
@@ -193,7 +195,7 @@ const screens = {
       const p = PETS[i], m = mods[k];
       return `<button class="ts${teamSel === k ? ' on' : ''}" style="top:${y}px" data-act="tSlot" data-k="${k}" aria-label="Ô ${k + 1}: ${p.n}">
         <span class="ts-art">${petIcon(p, 54, 'portrait')}</span><b class="ts-no">${k + 1}</b>
-        <span class="ts-info"><span class="ts-name">${p.n}</span>
+        <span class="ts-info"><span class="ts-name">${p.n}<small>Lv ${lvOf(p)}</small></span>
           ${m.adv ? `<b class="ts-tag up"><img src="${tui('tag_adv')}" alt="">Khắc chế boss</b>` : m.dis ? `<b class="ts-tag down"><img src="${tui('tag_dis')}" alt="">Boss khắc chế</b>` : ''}
           ${m.adv || m.dis || m.sinh ? `<span class="ts-mod">${modLine(m)}</span>` : ''}</span>
         <span class="ts-ic"><img src="${pui('icon_el_' + p.el)}" alt="${ELEM[p.el].n}" title="Hệ ${ELEM[p.el].n}"><img src="${pui('icon_role_' + p.r.toLowerCase() + '_round')}" alt="${ROLE[p.r]}" title="${ROLE[p.r]}"></span></button>`;
@@ -290,6 +292,7 @@ const screens = {
       <div class="set-list">
         <label class="set-row"><span class="set-lb">Âm thanh</span><input type="range" min="0" max="1" step="0.1" value="${save.settings.sfx}" id="s-sfx"></label>
         <label class="set-row"><span class="set-lb">Rung khi bị đánh</span><input type="checkbox" id="s-vib" ${save.settings.vibrate ? 'checked' : ''}><span class="dim small">(Android)</span></label>
+        <button class="primary set-tut" data-act="tutReplay">📖 Xem lại hướng dẫn</button>
       </div>
       <button class="set-reset" data-act="reset">Xoá dữ liệu</button></div>`;
     document.getElementById('s-sfx').oninput = e => { save.settings.sfx = +e.target.value; applySettings(); persist(); sfx('swap'); };
@@ -320,7 +323,7 @@ const screens = {
   },
 };
 
-const saveTeam = () => { save.lastTeam = pick.map(i => PETS[i].n); persist(); };
+const saveTeam = () => { save.lastTeam = pick.map(i => PETS[i].id); persist(); };
 // Lịch sử: mỗi lần sang màn KHÁC thì lưu màn hiện tại; về Trang chủ thì xoá lịch sử (gốc).
 // Màn Kết quả không vào lịch sử; sang màn đã có trong lịch sử thì cắt lịch sử về đó (không vòng lặp ←).
 let cur = null; const hist = [];
@@ -330,18 +333,54 @@ function go(name, arg, push = true) {
   if (name === 'home' || name === 'start') hist.length = 0;
   else if (seen >= 0) hist.length = seen;
   else if (push && cur && cur.name !== 'result' && (cur.name !== name || cur.arg !== arg)) hist.push(cur);
+  clearTips();
   cur = { name, arg }; screens[name](arg);
+  tutHook(name);
+}
+
+// ───────────── hướng dẫn lần đầu (data/tutorial.js, ui/tutorial.js) ─────────────
+// Đi theo đường bấm thật: Sảnh → Chinh phục → Đảo → Boss → Đội hình → trận THẬT với boss 1 (dẫn từng nước) → tự chơi đến hết.
+// save.tut: home = xong phần giới thiệu Sảnh · battle = xong (hoặc bỏ qua) hướng dẫn. tutI = bước FLOW đang tới (không lưu).
+// Người mới = chưa có tiến độ nào (không chỉ đếm trận: Bỏ cuộc không tính trận, dữ liệu cũ có thể thiếu bộ đếm).
+// replay = bấm Xem lại ở Cài đặt: chỉ trong lần mở game này, KHÔNG lưu → tải lại trang giữa chừng thì không tự hiện lại.
+const newPlayer = () => save.cleared === 0 && save.plv === 1 && save.stats.battles === 0 && !Object.keys(save.stars).length;
+let replay = false, tutI = 0;
+const tutOn = () => replay || (!save.tut.battle && newPlayer());
+const tutDone = () => { replay = false; tutI = 0; save.tut = { home: 1, battle: 1 }; persist(); };
+async function tutHook(name) {
+  if (!tutOn()) return;
+  const firstForce = FLOW.findIndex(s => s.force);
+  if (name === 'home' && tutI < firstForce) { if (save.tut.home && !replay) tutI = firstForce; } // đã xem giới thiệu Sảnh → vào thẳng bước Chinh phục
+  else if (name === 'home') tutI = firstForce; // quay về Sảnh giữa chừng (vd tải lại) → bắt đầu lại từ Chinh phục
+  const q = sel => [...view.querySelectorAll(sel)];
+  while (tutI < FLOW.length && FLOW[tutI].scr === name) {
+    const s = FLOW[tutI], els = q(s.sel);
+    if (!els.length) { tutI++; continue; } // phần tử không có trên màn (vd boss không có pet thu phục) → bỏ bước
+    if (s.force) { // bấm thật vào vùng sáng → chuyển màn → bước kế chạy ở màn mới
+      if (s.scr === 'home') { save.tut.home = 1; persist(); }
+      tutI++;
+      if (await tip({ target: els, text: s.text, force: true }).wait === 'skip') tutDone();
+      return;
+    }
+    const v = await tip({ target: els, text: s.text }).wait;
+    if (v === 'skip') { tutDone(); return; }
+    if (v !== 'next') return; // bị đóng do chuyển màn
+    tutI++;
+  }
 }
 function back() { const p = hist.pop(); if (p) go(p.name, p.arg, false); else go('home'); }
 
 function fight() {
-  save.lastTeam = pick.map(i => PETS[i].n); persist();
+  const tut = tutOn(); // đang hướng dẫn → trận này có dẫn từng nước
+  clearTips(); // vào trận không qua go() → tự dọn bong bóng "Bấm ĐÁNH!"
+  save.lastTeam = pick.map(i => PETS[i].id); persist();
   view.innerHTML = '';
   const run = () => {
     battle = startBattle({
       root: view, cfg: CFG, team: pick.map(i => buffPet(lvPet(CFG, PETS[i], lvOf(PETS[i])), plBonus(CFG, save.plv))), boss: lvBoss(CFG, BOSSES[bossIdx], bossLv()), seedVal: params.has('seed') ? +params.get('seed') : undefined,
-      onExit: () => cur && cur.name === 'result' ? back() : go(cur ? cur.name : 'team', cur && cur.arg, false), // bỏ cuộc → về màn trước trận (Đội hình; "Chơi lại" từ Kết quả cũng về Đội hình)
+      onExit: () => (tut && tutDone(), cur && cur.name === 'result') ? back() : go(cur ? cur.name : 'team', cur && cur.arg, false), // bỏ cuộc → về màn trước trận (Đội hình; "Chơi lại" từ Kết quả cũng về Đội hình)
       onEnd: r => {
+        if (tut) tutDone();
         r.bossLv = bossLv();
         // thưởng (PLAN-V2 §3): sao = thắng + ≤STAR_MOVES nước + không pet chết; vàng lần đầu ×3; lưu sao cao nhất mỗi boss
         const first = r.win && bossIdx >= save.cleared, best = save.stars[bossIdx] || 0;
@@ -365,6 +404,7 @@ function fight() {
       },
     });
     window.__battle = battle; // phục vụ autotest
+    if (tut) battleTour(battle, view, BATTLE_TOUR).then(v => v === 'skip' && tutDone()); // xong / bỏ qua → tự chơi tiếp đến hết trận
   };
   run();
 }
@@ -623,7 +663,8 @@ function shopDetail(s) {
 const acts = {
   begin() { unlock(); try { document.documentElement.requestFullscreen && document.documentElement.requestFullscreen().catch(() => {}); } catch { /* iOS không hỗ trợ */ } go('home'); },
   back,
-  home: () => go('home'), islands: () => go('islands'), pets: () => go('pets'), settings: () => go('settings'),
+  home: () => go('home'), islands: () => go('islands'),
+  tutReplay() { replay = true; tutI = 0; go('home'); }, pets: () => go('pets'), settings: () => go('settings'),
   team(d) { bossIdx = d.i != null ? +d.i : Math.min(save.cleared, BOSSES.length - 1); teamSel = null; go('team', 'battle'); }, // từ Chọn boss
   formation() { teamSel = null; go('team'); }, // từ sảnh
   isl(d) { islIdx = +d.i; bossSel = null; go('boss'); },
@@ -651,7 +692,7 @@ const acts = {
   tfRole(d) { tflt.r = tflt.r === d.v ? '' : d.v; tflt.page = 0; go('team', cur && cur.arg); },
   tPg(d) { tflt.page = Math.max(0, tflt.page + +d.v); go('team', cur && cur.arg); },
   fight,
-  autoTeam() { teamSel = null; const s = SUGGEST[bossIdx]; if (!s) return; pick = s.ids.map(id => PETS.findIndex(p => p.id === id)).filter(i => i >= 0); save.lastTeam = pick.map(i => PETS[i].n); persist(); go('team', 'battle'); },
+  autoTeam() { teamSel = null; const s = SUGGEST[bossIdx]; if (!s) return; pick = [...s.ids.map(id => PETS.findIndex(p => p.id === id)), ...pick, ...PETS.keys()].filter((i, k, a) => i >= 0 && owned(PETS[i]) && a.indexOf(i) === k).slice(0, 3); save.lastTeam = pick.map(i => PETS[i].id); persist(); go('team', 'battle'); }, // chỉ pet đã có (đội gợi ý có thể gồm pet thu phục chưa có), thiếu thì bù
   pet(d) { upUI.open = false; go('pet', +d.i); },
   upOpen(d) { Object.assign(upUI, { open: true, msg: '', slots: [null, null, null], pick: null }); go('pet', +d.i); },
   upClose() { Object.assign(upUI, { open: false, pick: null }); go('pet', cur.arg); },
@@ -715,7 +756,7 @@ const acts = {
     const i = +d.i; if (pick.includes(i)) return;
     const same = pick.findIndex(j => PETS[j].r === PETS[i].r);
     if (same >= 0) pick[same] = i; else if (pick.length < 3) pick.push(i); else pick[2] = i;
-    save.lastTeam = pick.map(j => PETS[j].n); persist(); go('pet', i);
+    save.lastTeam = pick.map(j => PETS[j].id); persist(); go('pet', i);
   },
   reset() { if (confirm('Xoá toàn bộ tiến độ?')) { try { localStorage.removeItem(KEY); } catch { /* bỏ qua */ } save = load(); go('home'); } },
 };
