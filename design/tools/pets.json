@@ -112,7 +112,7 @@
     {
       "id": "gearhorn",
       "role": "T",
-      "scale": 1,
+      "scale": 1.09,
       "portrait": "222,210,220",
       "files": {
         "idle": "design/source/boss_concepts/bosses/boss_gearhorn_idle.png",
@@ -125,19 +125,19 @@
       "id": "elderoot",
       "role": "S",
       "scale": 1.25,
-      "portrait": "212,180,170",
+      "portrait": "470,170,560",
       "files": {
-        "idle": "design/source/boss_concepts/bosses/boss_elderoot_idle.png",
-        "attack": "design/source/boss_concepts/bosses/boss_elderoot_attack.png",
-        "hurt": "design/source/boss_concepts/bosses/boss_elderoot_hurt.png",
-        "down": "design/source/boss_concepts/bosses/boss_elderoot_down.png"
+        "idle": "design/source/pet_elderoot_idle.png",
+        "attack": "design/source/pet_elderoot_attack.png",
+        "hurt": "design/source/pet_elderoot_hurt.png",
+        "down": "design/source/pet_elderoot_down.png"
       }
     },
     {
       "id": "pearlwyrm",
       "role": "S",
       "scale": 1,
-      "portrait": "232,115,200",
+      "portrait": "250,130,200",
       "files": {
         "idle": "design/source/boss_concepts/bosses/boss_pearlwyrm_idle.png",
         "attack": "design/source/boss_concepts/bosses/boss_pearlwyrm_attack.png",
@@ -161,7 +161,7 @@
       "id": "duneshell",
       "role": "T",
       "scale": 1,
-      "portrait": "297,225,160",
+      "portrait": "690,280,340",
       "files": {
         "idle": "design/source/boss_concepts/bosses/boss_duneshell_idle.png",
         "attack": "design/source/boss_concepts/bosses/boss_duneshell_attack.png",
