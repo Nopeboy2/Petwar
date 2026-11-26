@@ -1,5 +1,5 @@
 ﻿// Cache các file tĩnh để chơi được khi mất mạng. Ưu tiên mạng, rơi về cache (sửa code không bị kẹt bản cũ).
-const CACHE = 'pokiwar-lite-v27';
+const CACHE = 'petwars-v28';
 const FILES = ['./', 'index.html', 'style.css', 'engine.js', 'data/config.js', 'data/pets.js', 'data/bosses.js',
   'ui/app.js', 'ui/battle.js', 'ui/audio.js', 'ui/tutorial.js', 'data/tutorial.js', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png', 'data/art.js', 'data/elements.js', 'data/suggest.js', 'data/items.js', 'data/shop.js',
   'assets/ui/avatar_frame.webp', 'assets/ui/bg_sanh.webp', 'assets/ui/btn_gold.webp', 'assets/ui/btn_purple.webp', 'assets/ui/badge_lv.webp', 'assets/ui/bar_track.webp', 'assets/ui/bar_fill.webp', 'assets/ui/chip_bar.webp', 'assets/ui/icon_coin.webp', 'assets/upgrade-ui/icon_gem.webp', 'assets/ui/icon_bag.png', 'assets/ui/icon_gear.webp', 'assets/ui/icon_paw.png', 'assets/ui/icon_shield.png', 'assets/ui/icon_shop.webp', 'assets/ui/icon_swords.png', 'assets/ui/panel_leaf.webp', 'assets/ui/pedestal.png',

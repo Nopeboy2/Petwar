@@ -128,7 +128,7 @@ Với Stable Diffusion có thể dùng `06-battle.svg` (xuất PNG) làm ảnh C
 Khung giao diện (bố cục, nút, thanh, chữ) làm bằng AI code chính xác hơn AI ảnh. Mẫu lệnh:
 
 ```
-Dựng màn {MÃ MÀN, ví dụ 02-home} cho game Pokiwar Lite.
+Dựng màn {MÃ MÀN, ví dụ 02-home} cho game PetWars.
 - Đọc design/UI-SPEC.md (quy chuẩn) và mục {MÃ MÀN} trong design/LAYOUT.md (toạ độ).
 - Dùng đúng toạ độ trong LAYOUT.md ở khung 844×390; co giãn theo UI-SPEC mục 10.
 - Ảnh lấy qua data/art.js; chưa có ảnh thì dùng emoji hiện tại.
@@ -179,7 +179,7 @@ Plan V2 có ~10 quái thường + 3 boss nhưng **chưa có danh sách**. Cần:
 ### 7.3 Các thứ khác còn thiếu
 | Thiếu | Vì sao cần |
 |---|---|
-| Tên chính thức + logo | "Pokiwar Lite" là tên tạm; logo nên vẽ tay/Figma vì AI viết chữ kém |
+| Tên chính thức + logo | "PetWars" là tên chính thức; logo nên vẽ tay/Figma vì AI viết chữ kém |
 | Chủ đề & màu chủ đạo từng chương | Để nền, quái, bản đồ cùng tông |
 | Ảnh tham chiếu phong cách đã chốt | Không có thì 50 ảnh sẽ lệch phong cách |
 | Quyết định hoạt ảnh | AI không làm sprite sheet tốt → chọn: (a) ảnh tĩnh 4 tư thế + hoạt ảnh CSS (rẻ, đủ dùng) hoặc (b) thuê làm hoạt ảnh |

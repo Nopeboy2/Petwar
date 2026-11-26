@@ -1,4 +1,4 @@
-// Mô phỏng cân bằng Pokiwar-lite.  Chạy: node sim.js [N=200]   (N = số trận / ô thống kê)
+// Mô phỏng cân bằng PetWars.  Chạy: node sim.js [N=200]   (N = số trận / ô thống kê)
 // Luật ở engine.js, số cân bằng ở data/*. File này chỉ có bot + báo cáo.
 import fs from 'node:fs';
 import { CFG, GEM } from './data/config.js';

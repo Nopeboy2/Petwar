@@ -1,6 +1,6 @@
 {
-  "name": "Pokiwar Lite",
-  "short_name": "Pokiwar",
+  "name": "PetWars",
+  "short_name": "PetWars",
   "start_url": "./index.html",
   "display": "standalone",
   "orientation": "landscape",

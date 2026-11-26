@@ -256,6 +256,6 @@ for (const sc of SCREENS) {
 fs.writeFileSync(new URL('./LAYOUT.md', import.meta.url), md.join('\n'));
 fs.writeFileSync(new URL('./index.html', import.meta.url), `<!doctype html><meta charset="utf-8"><title>Wireframes</title>
 <style>body{background:#1b1230;color:#fff;font-family:sans-serif;margin:16px}img{display:block;max-width:100%;margin:0 0 24px;box-shadow:0 2px 12px #0008}</style>
-<h1>Pokiwar Lite — Wireframes</h1><p>Mở từng file SVG trong Figma/Illustrator/Photoshop để vẽ đè. Quy chuẩn: UI-SPEC.md · Toạ độ: LAYOUT.md</p>
+<h1>PetWars — Wireframes</h1><p>Mở từng file SVG trong Figma/Illustrator/Photoshop để vẽ đè. Quy chuẩn: UI-SPEC.md · Toạ độ: LAYOUT.md</p>
 ${SCREENS.map(s => `<img src="wireframes/${s.id}.svg" alt="${s.id}">`).join('\n')}`);
 console.log(SCREENS.length + ' màn → design/wireframes/*.svg, design/LAYOUT.md, design/index.html');

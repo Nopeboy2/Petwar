@@ -83,7 +83,7 @@ const markOf = m => m.adv ? '<span class="up">▲</span>' : m.dis ? '<span class
 // ───────────── điều hướng ─────────────
 const screens = {
   start() {
-    view.innerHTML = `<div class="screen"><div class="logo">POKIWAR LITE</div><p class="dim">Ghép viên · Hạ boss</p><button class="primary" data-act="begin">Chạm để chơi</button></div>`;
+    view.innerHTML = `<div class="screen"><div class="logo">PETWARS</div><p class="dim">Ghép viên · Hạ boss</p><button class="primary" data-act="begin">Chạm để chơi</button></div>`;
   },
   // Trang chủ: toạ độ theo design/briefs/02-home.md (khung 844×390, phóng theo màn hình)
   home() {

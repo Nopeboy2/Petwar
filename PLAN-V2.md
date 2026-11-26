@@ -1,4 +1,4 @@
-# Pokiwar-lite — Kế hoạch giai đoạn 2: Trang chủ, Nuôi pet, Chiến dịch, Đồ hoạ 2D
+# PetWars — Kế hoạch giai đoạn 2: Trang chủ, Nuôi pet, Chiến dịch, Đồ hoạ 2D
 
 Tiếp nối `PLAN.md` (MVP đã chạy được: 3 boss, chọn đội, chiến đấu, kết quả).
 Nguyên tắc giữ nguyên: **luật và số chỉ nằm ở `engine.js` + `data/*`**; mọi số mới (cấp pet, độ khó màn) phải được kiểm bằng `sim.js` trước khi đưa vào game.

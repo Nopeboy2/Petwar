@@ -1,4 +1,4 @@
-# Pokiwar-lite — Kế hoạch triển khai bản mobile web (MVP)
+# PetWars — Kế hoạch triển khai bản mobile web (MVP)
 
 Đọc cùng: `sim.js` (luật + số cân bằng đã mô phỏng), `balance-report.txt` (kết quả).
 Nguyên tắc: **luật game chỉ có một nơi duy nhất** (`engine.js`), cả bản web lẫn `sim.js` dùng chung. Không viết lại luật trong code giao diện.

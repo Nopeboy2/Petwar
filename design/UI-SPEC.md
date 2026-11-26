@@ -1,4 +1,4 @@
-# Pokiwar Lite — Quy chuẩn thiết kế giao diện mobile
+# PetWars — Quy chuẩn thiết kế giao diện mobile
 
 Tài liệu này là **khung để bạn thiết kế**: kích thước, vị trí, lưới, cỡ chữ, cỡ nút, cách xuất ảnh.
 Phần **phong cách** (màu cụ thể, font, hình khối, chất liệu) là của bạn — mục 6–7 chỉ quy định *vai trò* và *giới hạn*, kèm giá trị hiện tại để tham khảo.
