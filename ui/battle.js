@@ -182,7 +182,7 @@ export function startBattle({ root, cfg, team, boss, onEnd, onExit, seedVal, ult
     o.className = 'ultfx' + (short ? ' short' : ''); o.style.setProperty('--c', p.el ? ELEM[p.el].c : '#c58bff'); o.style.setProperty('--d', ms + 'ms');
     const src = petImg(p, 'ult', true);
     o.innerHTML = `${src ? `<img src="${src}" alt="">` : `<span class="ufx-e">${p.e}</span>`}<div class="ufx-t"><small>${p.n}</small><b>${ULT_NAME[p.ult.k]}</b></div>`;
-    root.querySelector('.battle').appendChild(o);
+    root.querySelector('.stage').appendChild(o);
     return new Promise(res => {
       const done = () => { clearTimeout(t); o.onclick = null; o.classList.add('out'); setTimeout(() => o.remove(), 150); res(); };
       const t = setTimeout(done, ms); o.onclick = done;
@@ -256,7 +256,7 @@ export function startBattle({ root, cfg, team, boss, onEnd, onExit, seedVal, ult
     m.innerHTML = `<div class="box"><h3>Tạm dừng</h3><button class="primary" data-r>Tiếp tục</button><button data-q>Bỏ cuộc</button></div>`;
     m.querySelector('[data-r]').onclick = () => { m.remove(); paused = false; updateUlt(); armHint(); };
     m.querySelector('[data-q]').onclick = () => { dead = true; clearHint(); onExit(); };
-    root.querySelector('.battle').appendChild(m);
+    root.querySelector('.stage').appendChild(m);
   });
 
   renderBoard(view); hud(snapshot(s)); armHint();
