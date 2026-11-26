@@ -14,7 +14,19 @@ h1,h2,h3{margin:0}
 .screen.top{justify-content:flex-start;padding:calc(8px + env(safe-area-inset-top)) calc(12px + env(safe-area-inset-right)) calc(12px + env(safe-area-inset-bottom)) calc(12px + env(safe-area-inset-left))}
 .screen.top>.fill{margin:auto 0}  /* nội dung chính nằm giữa phần còn lại dưới đầu trang */
 .row{display:flex;gap:10px;align-items:stretch;justify-content:center;flex-wrap:wrap}
-.logo{font-size:min(9vh,44px);font-weight:900;color:var(--gold);text-shadow:0 3px 0 #7a4a00}
+/* màn đăng nhập (design/briefs/01-login.md). Khối .st-box dựng ở khung 844×390 rồi phóng theo --k như các màn khác */
+.login{position:relative;font-family:'Baloo 2',system-ui,sans-serif;font-weight:800;background:linear-gradient(transparent 60%,rgba(27,18,48,.5)),url(assets/ui/bg_login.webp) center/cover #1b1230}
+.st-box{flex:none;width:844px;display:flex;flex-direction:column;align-items:center;transform:scale(min(var(--k,1),1.25))}
+.st-logo{margin:0;line-height:0}
+.st-logo img{width:480px;height:auto;filter:drop-shadow(0 8px 14px rgba(0,0,0,.35))}
+.st-play{margin-top:30px;width:250px;height:60px;font-size:24px;font-weight:800;letter-spacing:1px;color:#5a2d00;text-shadow:0 1px 0 #ffe9a0;background:url(assets/ui/btn_gold.webp) center/100% 100% no-repeat;filter:drop-shadow(0 4px 8px rgba(0,0,0,.35));animation:st-breath 1.8s ease-in-out infinite}
+.st-alt{display:flex;gap:16px;margin-top:16px}
+.st-alt button{width:44px;height:44px;padding:10px;border-radius:50%;background:#fff;box-shadow:0 3px 0 rgba(27,18,48,.35),0 4px 10px rgba(0,0,0,.25)}
+.st-alt button:disabled{opacity:.7}
+.st-alt svg{display:block;width:100%;height:100%}
+.st-soon{margin:6px 0 0;font-size:12px;font-weight:700;color:#fff;text-shadow:0 1px 3px #000;opacity:.9}
+@keyframes st-breath{50%{transform:scale(1.05)}}
+@media (prefers-reduced-motion:reduce){.st-play{animation:none}}
 .dim{color:var(--dim)}
 .small{font-size:12px}
 .head{display:flex;gap:10px;align-items:center;width:100%}
