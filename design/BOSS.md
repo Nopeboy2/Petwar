@@ -4,7 +4,23 @@ Số liệu: `node sim.js --curve 100`. Đã tính viên x2/x3 (`CFG.mulGem`): k
 Thử boss mới không cần sửa code: `CAND='[{"n":"thử","el":"hoa","hp":14000,"atk":810,"stun":7,"pat":["blast","aoe"]}]' node sim.js --curve 80`.
 Mô phỏng nhiễu khoảng ±8% ở 80–100 trận/đội, nên chốt số bằng ≥ 80 trận.
 
-> **Cập nhật 2026-11-18:** 5 boss hiện có giờ là **boss đầu** của 5 đảo, cùng mức dễ. Đảo không chia độ khó; độ khó chỉ tăng giữa boss 1 → 2 → 3 trong cùng một đảo (boss 2–3 chưa làm). Số mới (`node sim.js --curve 15`, đội mặc định thắng):
+> **Cập nhật 2026-11-25 — boss 2–3 mỗi đảo** (`data/bosses.js` chỉ số 5–14; số = mục 4 của `node sim.js 200`, đội mặc định, Lv1, chưa tính thưởng cấp):
+> - Thứ tự mở: hạ hết boss 1 của 5 đảo → boss 2 của 5 đảo → boss 3. Boss mới thêm vào **cuối** mảng nên dữ liệu lưu cũ (`cleared`) vẫn đúng.
+> - Mục tiêu đội mặc định: **boss 1 ~85–100% · boss 2 ~70–85% · boss 3 ~30–45%** (boss 3 bắt buộc đổi đội theo hệ). Người chơi tới boss 2–3 đã lên cấp (pet +2%/cấp so với boss, cấp người chơi +0,5%/cấp), nên thực tế dễ hơn số dưới.
+> - Pet khởi đầu được tăng ~10% chỉ số ngày 2026-11-20 nên boss 1 giờ ~97–100% (bảng 2026-11-18 bên dưới đã cũ). Xem `balance-report.txt`.
+>
+> | Đảo | Boss 2 | HP | ATK | Choáng | Smart | Ngẫu nhiên | Boss 3 | HP | ATK | Choáng | Smart |
+> |---|---|---|---|---|---|---|---|---|---|---|---|
+> | Kim | Ironvex | 21 000 | 760 | 7 | 85% | 16% | Chromaul | 25 000 | 920 | 8 | 34% |
+> | Mộc | Thornwarden | 15 000 | 680 | 8 | 75% | 6% | Verdaxis | 17 000 | 740 | 9 | 40% |
+> | Thủy | Abyssia | 14 000 | 620 | 9 | 88% | 21% | Tidecrown | 20 000 | 720 | 10 | 33% |
+> | Hỏa | Cindrax | 16 500 | 810 | 7 | 82% | 9% | Infernox | 22 000 | 880 | 7 | 46% |
+> | Thổ | Quarrok | 15 000 | 610 | 10 | 78% | 18% | Terragon | 21 000 | 700 | 12 | 42% |
+>
+> Ironvex cần HP cao hơn hẳn vì Ignar (Hỏa) trong đội mặc định khắc Kim. Boss 3 với bot ngẫu nhiên chỉ thắng ~1%, tức phải ghép viên có tính toán. HP ít ảnh hưởng tỉ lệ thắng hơn ATK (Cindrax, Chromaul chỉnh bằng ATK). Boss 2–3 chưa có ảnh và chưa có pet thu phục.
+
+
+> **Cập nhật 2026-11-18:** 5 boss hiện có giờ là **boss đầu** của 5 đảo, cùng mức dễ. Đảo không chia độ khó; độ khó chỉ tăng giữa boss 1 → 2 → 3 trong cùng một đảo (boss 2–3: xem cập nhật 2026-11-25 ở trên). Số mới (`node sim.js --curve 15`, đội mặc định thắng):
 >
 > | Boss | Hệ | HP | ATK | Choáng | Đội mặc định |
 > |---|---|---|---|---|---|

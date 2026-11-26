@@ -3,7 +3,7 @@ import { CFG } from '../data/config.js';
 import { ELEM } from '../data/elements.js';
 import { SUGGEST } from '../data/suggest.js';
 import { elemMods, KHAC, SINH, lvPet, upRate, upGold, upTotal, teamLv, lvBoss, plBonus, xpNeed, buffPet } from '../engine.js';
-import { PETS, ROLE, ULT_TEXT } from '../data/pets.js';
+import { PETS, ROLE, ULT_TEXT, ULT_NAME } from '../data/pets.js';
 import { BOSSES, ISLANDS, ATK_NAME } from '../data/bosses.js';
 import { startBattle } from './battle.js';
 import { ART, petImg, petIcon, pui, mui, uui, bui, bossArt, PET_SCALE } from '../data/art.js';
@@ -15,7 +15,7 @@ import { FLOW, BATTLE_TOUR } from '../data/tutorial.js';
 
 // ───────────── lưu dữ liệu (localStorage có thể bị chặn/xoá → luôn try/catch) ─────────────
 const KEY = 'pokiwar-lite-v1';
-const DEF = { version: 1, cleared: 0, plv: 1, xp: 0, gold: 0, gem: 0, stars: {}, lv: {}, fail: {}, stones: {}, items: {}, seen: {}, shop: { day: '', bought: {}, seen: '' }, lastTeam: [PETS[0].id, PETS[1].id, PETS[3].id], settings: { sfx: 1, vibrate: true }, stats: { battles: 0, wins: 0 }, tut: {} };
+const DEF = { version: 1, cleared: 0, plv: 1, xp: 0, gold: 0, gem: 0, stars: {}, lv: {}, fail: {}, stones: {}, items: {}, seen: {}, shop: { day: '', bought: {}, seen: '' }, lastTeam: [PETS[0].id, PETS[1].id, PETS[3].id], settings: { sfx: 1, vibrate: true, ultShort: false }, stats: { battles: 0, wins: 0 }, tut: {} };
 let save = load();
 function load() {
   try {
@@ -78,7 +78,6 @@ const counterOf = el => Object.keys(KHAC).find(e => KHAC[e] === el);
 const modText = m => [m.adv ? `<span class="up">▲ Khắc boss: gây ×${CFG.elem.adv}, nhận ×${CFG.elem.hurtDown}</span>` : '', m.dis ? `<span class="down">▼ Bị khắc: gây ×${CFG.elem.dis}, nhận ×${CFG.elem.hurtUp}</span>` : '',
   m.sinh ? `<span class="up">🌱 Được sinh: +${Math.round(CFG.elem.sinh * m.sinh * 100)}% ATK</span>` : ''].filter(Boolean).join(' · ');
 const elChip = el => `<span class="pc-el" style="--c:${ELEM[el].c}"><img src="${pui('icon_el_' + el)}" alt="">${ELEM[el].n}</span>`;
-const ULT_NAME = { shield: 'Khiên hộ đội', heal: 'Hồi phục đội', nuke: 'Đòn huỷ diệt' };
 const markOf = m => m.adv ? '<span class="up">▲</span>' : m.dis ? '<span class="down">▼</span>' : '';
 
 // ───────────── điều hướng ─────────────
@@ -118,7 +117,7 @@ const screens = {
       const open = s.bosses.length > 0 && s.bosses[0] <= save.cleared;
       return { open, done: open && s.bosses.every(i => i < save.cleared), got: s.bosses.reduce((a, i) => a + (i < save.cleared ? save.stars[i] || 1 : 0), 0) }; // tổng sao (mỗi boss tối đa 3)
     });
-    const curI = st.findIndex(t => t.open && !t.done);
+    const curI = ISLANDS.findIndex(s => s.bosses.includes(save.cleared)); // đảo chứa boss kế tiếp
     const route = k => { // đường biển đảo k → k+1: ảnh route_* kéo dài và xoay nối tâm 2 đảo
       const [x0, y0] = POS[k], [x1, y1] = POS[k + 1], ax = x0 + 75, ay = y0 + 60, bx = x1 + 75, by = y1 + 60, len = Math.hypot(bx - ax, by - ay);
       return `<img class="il-route" src="${mui(st[k + 1].open ? 'route_on' : 'route_off')}" alt="" style="left:${(ax + bx - len) / 2}px;top:${(ay + by) / 2 - 12}px;width:${len}px;transform:rotate(${Math.atan2(by - ay, bx - ax)}rad)">`;
@@ -292,11 +291,13 @@ const screens = {
       <div class="set-list">
         <label class="set-row"><span class="set-lb">Âm thanh</span><input type="range" min="0" max="1" step="0.1" value="${save.settings.sfx}" id="s-sfx"></label>
         <label class="set-row"><span class="set-lb">Rung khi bị đánh</span><input type="checkbox" id="s-vib" ${save.settings.vibrate ? 'checked' : ''}><span class="dim small">(Android)</span></label>
+        <label class="set-row"><span class="set-lb">Hoạt ảnh ULT rút gọn</span><input type="checkbox" id="s-ult" ${save.settings.ultShort ? 'checked' : ''}><span class="dim small">(mặc định: lần đầu mỗi pet đầy đủ)</span></label>
         <button class="primary set-tut" data-act="tutReplay">📖 Xem lại hướng dẫn</button>
       </div>
       <button class="set-reset" data-act="reset">Xoá dữ liệu</button></div>`;
     document.getElementById('s-sfx').oninput = e => { save.settings.sfx = +e.target.value; applySettings(); persist(); sfx('swap'); };
     document.getElementById('s-vib').onchange = e => { save.settings.vibrate = e.target.checked; applySettings(); persist(); };
+    document.getElementById('s-ult').onchange = e => { save.settings.ultShort = e.target.checked; persist(); };
   },
   // 07 Kết quả / Thưởng — toạ độ theo design/LAYOUT.md mục 07-result (khối 844×390). r: kết quả trận + thưởng (tính ở fight → onEnd)
   result(r) {
@@ -377,7 +378,7 @@ function fight() {
   view.innerHTML = '';
   const run = () => {
     battle = startBattle({
-      root: view, cfg: CFG, team: pick.map(i => buffPet(lvPet(CFG, PETS[i], lvOf(PETS[i])), plBonus(CFG, save.plv))), boss: lvBoss(CFG, BOSSES[bossIdx], bossLv()), seedVal: params.has('seed') ? +params.get('seed') : undefined,
+      root: view, cfg: CFG, team: pick.map(i => buffPet(lvPet(CFG, PETS[i], lvOf(PETS[i])), plBonus(CFG, save.plv))), boss: lvBoss(CFG, BOSSES[bossIdx], bossLv()), seedVal: params.has('seed') ? +params.get('seed') : undefined, ultShort: save.settings.ultShort,
       onExit: () => (tut && tutDone(), cur && cur.name === 'result') ? back() : go(cur ? cur.name : 'team', cur && cur.arg, false), // bỏ cuộc → về màn trước trận (Đội hình; "Chơi lại" từ Kết quả cũng về Đội hình)
       onEnd: r => {
         if (tut) tutDone();

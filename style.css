@@ -308,7 +308,19 @@ table.st td{padding:2px 10px;text-align:left}
 .bar i{display:block;height:100%;width:0;transition:width .3s}
 .bar.hp{height:12px}.bar.hp i{background:var(--hp)}.bar.sh{height:10px}.bar.sh i{background:var(--shield)}.bar.rg{height:10px}.bar.rg i{background:var(--rage)}
 .hpv,.shv,.rgv,#b-hp{position:absolute;inset:0;font-size:9px;line-height:12px;text-align:center;font-weight:800;text-shadow:0 0 2px #000,0 0 2px #000}.shv,.rgv{font-size:8px;line-height:10px}
-.ult{position:absolute;right:-2px;top:6px;padding:1px 6px;font-size:10px;font-weight:800;pointer-events:none;display:none}
+.ult{position:absolute;right:-4px;top:4px;padding:2px 8px;font-size:13px;font-weight:800;border-radius:8px;pointer-events:none;display:none}
+/* Hoạt cảnh ULT (ui/battle.js cutIn): phủ tối cả màn trận, bàn vẫn còn bên dưới; --c = màu hệ pet, --d = thời lượng */
+.ultfx{position:absolute;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;gap:8px;background:#000b;cursor:pointer;animation:ufx-in .15s ease-out;transition:opacity .15s}
+.ultfx::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 42% 50%,var(--c),transparent 55%);opacity:.45;animation:ufx-glow var(--d) ease-out forwards}
+.ultfx.out{opacity:0}
+.ultfx img,.ultfx .ufx-e{position:relative;width:220px;height:220px;object-fit:contain;font-size:140px;line-height:220px;text-align:center;filter:drop-shadow(0 0 16px var(--c)) drop-shadow(0 0 4px #fff);animation:ufx-pet var(--d) cubic-bezier(.2,.9,.3,1.2) forwards}
+.ultfx .ufx-t{position:relative;display:flex;flex-direction:column;color:#fff;text-shadow:0 0 10px var(--c),0 2px 3px #000;animation:ufx-name var(--d) ease-out forwards}
+.ultfx .ufx-t small{font-size:16px;font-weight:700;opacity:.85}.ultfx .ufx-t b{font-size:32px;font-weight:800;letter-spacing:1px}
+.ultfx.short img,.ultfx.short .ufx-e{width:150px;height:150px;font-size:96px;line-height:150px}.ultfx.short .ufx-t b{font-size:24px}
+@keyframes ufx-in{from{opacity:0}}
+@keyframes ufx-glow{0%{transform:scale(.4);opacity:0}30%{opacity:.6}100%{transform:scale(1.2);opacity:.35}}
+@keyframes ufx-pet{0%{transform:translateX(-140px) scale(.6);opacity:0}30%{transform:none;opacity:1}100%{transform:scale(1.06)}}
+@keyframes ufx-name{0%,15%{transform:translateX(60px);opacity:0}40%{transform:none;opacity:1}}
 .ult.ready{display:block;background:linear-gradient(#c58bff,#7b3fe0);color:#fff;border:1px solid #fff8;animation:glow-ult 1s infinite} /* ULT sẵn sàng: tím (dễ nhìn trên mọi nền đảo) */
 .pet.rdy{cursor:pointer}.pet.rdy .pe img{filter:drop-shadow(0 0 3px #fff) drop-shadow(0 0 7px #a55bff) drop-shadow(0 0 4px #c58bff)}
 .pet.shake .pe{animation:shake .3s}

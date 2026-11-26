@@ -6,7 +6,7 @@ import { PETS } from './data/pets.js';
 import { BOSSES } from './data/bosses.js';
 import { lvPet, upRate, upGold, elemMods, seed, rnd, matches, legalMoves as validMoves, newBoard, evalMove, chainAt, alive, createGame, ready, step, useUlt, checkEnd } from './engine.js';
 const N = +process.argv[2] || 200;
-const DEFAULT_TEAM = [PETS[0], PETS[1], PETS[3]]; // thứ tự cột: Tanker, Hỗ trợ, AD (Rockmane, Tidewisp, Blazefang)
+const DEFAULT_TEAM = [PETS[0], PETS[1], PETS[3]]; // thứ tự cột: Tanker, Hỗ trợ, AD (Gorran, Nerys, Ignar) = đội mặc định trong game
 
 // Một trận do bot chơi, dùng đúng hàm của engine như giao diện web.
 function play(cfg, team, boss, pol, sd) {
@@ -344,7 +344,7 @@ H('2. XÁC SUẤT BỊ NHẮM (đội Tanker+Hỗ trợ+AD)');
   console.log('Trúng đòn lan:', t.map((p, i) => `${p.r}=${pct(hitsTank[i])}`).join('  '), ' (pet giữa dễ trúng lan nhất)');
 }
 
-H('3. BÀN CỜ: số viên ăn được MỖI NƯỚC ĐI (đội mặc định vs Boss 2)');
+H(`3. BÀN CỜ: số viên ăn được MỖI NƯỚC ĐI (đội mặc định vs ${BOSSES[1].n})`);
 for (const k of ['random', 'greedy', 'smart']) {
   const r = runMany(CFG, DEFAULT_TEAM, BOSSES[1], POL[k], Math.max(40, N / 4), 11);
   console.log(`${k.padEnd(7)}`, GEM.map((g, i) => `${g} ${r.gpm[i].toFixed(2)}`).join(' | '), ` | tổng ${r.gpm.reduce((a, b) => a + b, 0).toFixed(2)}`);
@@ -356,9 +356,9 @@ for (const b of BOSSES) for (const k of ['random', 'greedy', 'smart']) {
   const r = runMany(CFG, DEFAULT_TEAM, b, POL[k], N, 21);
   console.log(`${b.n.padEnd(13)} ${k.padEnd(7)} ${pct(r.win)}  ${f1(r.moves)}   ${pct(r.hpLeft)}     ${r.dead.toFixed(2)}    ${r.ults.toFixed(1)}  ${r.stuns.toFixed(1)}`);
 }
-console.log('Mục tiêu gợi ý (smart): Boss1 ~90%, Boss2 ~70%, Boss3 ~50%; greedy thấp hơn smart 10-25 điểm để "chọn viên khôn" có giá trị.');
+console.log('Mục tiêu (design/BOSS.md), đội mặc định, smart: boss 1 mỗi đảo ~85–100% · boss 2 ~70–85% · boss 3 ~30–45%; greedy thấp hơn smart để "chọn viên khôn" có giá trị.');
 
-H('5. CÂN BẰNG PET & NGŨ HÀNH (smart bot, đủ 10 đội 3 pet, thứ tự cột theo danh sách)');
+H('5. CÂN BẰNG PET & NGŨ HÀNH (smart bot, mọi tổ hợp 3 pet, thứ tự cột theo danh sách)');
 {
   const TEAMS = []; for (let i = 0; i < PETS.length; i++) for (let j = i + 1; j < PETS.length; j++) for (let k = j + 1; k < PETS.length; k++) TEAMS.push([PETS[i], PETS[j], PETS[k]]);
   const g = Math.max(10, Math.round(N / 8)), per = {}, byBoss = BOSSES.map(() => []);
@@ -376,11 +376,12 @@ H('5. CÂN BẰNG PET & NGŨ HÀNH (smart bot, đủ 10 đội 3 pet, thứ tự
   BOSSES.forEach((b, bix) => {
     const rows = byBoss[bix].sort((x, y) => y.win - x.win);
     console.log(`\n${b.n} (hệ ${b.el})  — ▲ khắc boss · ▼ bị boss khắc · +s được sinh`);
-    rows.forEach(x => console.log('  ' + pct(x.win) + '  ' + x.t.map((p, i) => (p.n + tag(x.mods[i]) + (x.mods[i].sinh ? '+s' : '')).padEnd(14)).join(' ')));
+    console.log(`  (${rows.length} đội: 5 tốt nhất · 3 kém nhất)`);
+    [...rows.slice(0, 5), ...rows.slice(-3)].forEach(x => console.log('  ' + pct(x.win) + '  ' + x.t.map((p, i) => (p.n + tag(x.mods[i]) + (x.mods[i].sinh ? '+s' : '')).padEnd(14)).join(' ')));
   });
 }
 
-H('6. THỨ TỰ CỘT (đội mặc định, smart, Boss 2) — đòn lan phụ thuộc vị trí');
+H(`6. THỨ TỰ CỘT (đội mặc định, smart, ${BOSSES[1].n}) — đòn lan phụ thuộc vị trí`);
 {
   const [T, S, D] = DEFAULT_TEAM, perms = [[T, S, D], [T, D, S], [S, T, D], [D, T, S], [S, D, T], [D, S, T]];
   perms.forEach((t, i) => { const r = runMany(CFG, t, BOSSES[1], POL.smart, N, 41); console.log(t.map(p => p.r).join('-'), ` thắng ${pct(r.win)}  máu còn ${pct(r.hpLeft)}  pet chết ${r.dead.toFixed(2)}`); });
@@ -388,13 +389,13 @@ H('6. THỨ TỰ CỘT (đội mặc định, smart, Boss 2) — đòn lan phụ
 
 H('7. GIÁ TRỊ TỪNG LOẠI VIÊN: vô hiệu hoá hiệu ứng viên đó (smart, đội mặc định)');
 {
-  console.log('Viên tắt     Boss1   Boss2   Boss3   (thắng; càng tụt nhiều = viên càng đáng giá)');
+  console.log('Viên tắt    ', BOSSES.map(b => b.n.padEnd(7)).join(' '), ' (thắng; càng tụt nhiều = viên càng đáng giá)');
   const row = (lab, cfg) => console.log(lab.padEnd(12), BOSSES.map(b => pct(runMany(cfg, DEFAULT_TEAM, b, POL.smart, N, 51).win).padStart(5) + '  ').join(' '));
   row('(không tắt)', CFG);
   [1, 2, 3, 4].forEach(k => row(GEM[k], { ...CFG, off: [k] }));
 }
 
-H('8. ĐỘ NHẠY THAM SỐ (smart, đội mặc định, Boss 2): thắng% | nước TB');
+H(`8. ĐỘ NHẠY THAM SỐ (smart, đội mặc định, ${BOSSES[1].n}): thắng% | nước TB`);
 {
   const sw = (lab, vals, mk) => console.log(lab.padEnd(22), vals.map(v => { const [cfg, boss] = mk(v); const r = runMany(cfg, DEFAULT_TEAM, boss, POL.smart, N, 61); return `${String(v).padStart(5)}: ${pct(r.win)}|${r.moves.toFixed(0).padStart(2)}`; }).join('   '));
   const b2 = BOSSES[1];
@@ -405,6 +406,7 @@ H('8. ĐỘ NHẠY THAM SỐ (smart, đội mặc định, Boss 2): thắng% | n
   sw('Nộ mỗi viên lửa', [0, 3, 5, 8, 12], v => [{ ...CFG, firePerGem: v }, b2]);
   sw('Nộ mỗi lần trúng đòn', [10, 15, 20, 25, 30], v => [{ ...CFG, ragePerHit: v }, b2]);
   sw('Tỉ lệ rơi Kiếm', [16, 20, 24, 28, 32], v => [{ ...CFG, weights: [v, ...[1, 2, 3, 4].map(() => (100 - v) / 4)] }, b2]);
-  sw('ATK boss', [500, 560, 620, 680, 740], v => [CFG, { ...b2, atk: v }]);
-  sw('HP boss', [8000, 9000, 10000, 11000, 12000], v => [CFG, { ...b2, hp: v }]);
+  const around = (x, d) => [-2, -1, 0, 1, 2].map(k => Math.round(x * (1 + d * k) / 10) * 10); // ±2 bước quanh số hiện tại
+  sw('ATK boss', around(b2.atk, 0.1), v => [CFG, { ...b2, atk: v }]);
+  sw('HP boss', around(b2.hp, 0.15), v => [CFG, { ...b2, hp: v }]);
 }

@@ -99,7 +99,7 @@ Lên cấp cần **vàng + đá nâng cấp theo hệ**, không có EXP (lý do 
 
 **Kiếm đá từ đâu:**
 - **Thắng boss → đá hệ của boss** (đảo nào rơi đá hệ đảo đó).
-- **Cấp đá = vị trí boss trong đảo:** boss 1 rơi I, boss 2 rơi II, boss 3 rơi III. Hiện mỗi đảo có 1 boss nên đều rơi cấp I.
+- **Cấp đá = vị trí boss trong đảo:** boss 1 rơi I, boss 2 rơi II, boss 3 rơi III. Mỗi đảo có 3 boss (data/bosses.js), nên boss 2 rơi đá II và boss 3 rơi đá III.
 - **Số viên:** lần đầu hạ boss 3 viên, đánh lại 2 viên, đạt 3★ thêm 1 viên.
 - Có vòng lặp chéo thú vị: muốn nâng pet Hỏa thì phải đi đảo Hỏa, mà boss Hỏa bị **Thủy** khắc. Vậy phải nuôi pet Thủy trước.
 

@@ -2,6 +2,7 @@
 // id = tên file ảnh (assets/pets/pet_<id>_*.webp)
 // cap = chỉ số boss (BOSSES): pet chỉ có sau khi thắng boss đó 3⭐ (thu phục). Không có cap = có sẵn từ đầu.
 export const ROLE = { T: 'Tanker', S: 'Hỗ trợ', D: 'Sát thương' };
+export const ULT_NAME = { shield: 'Khiên hộ đội', heal: 'Hồi phục đội', nuke: 'Đòn huỷ diệt' };
 export const ULT_TEXT = {
   shield: v => `Khiên cả đội +${Math.round(v * 100)}% HP`,
   heal: v => `Hồi cả đội ${Math.round(v * 100)}% HP`,

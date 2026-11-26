@@ -3,16 +3,33 @@
 1. BẢNG CHỈ SỐ
 ════════════════════════════════════════════════════════════════════════
 Pet        vai hệ     HP   ATK DEF Aggro  Ult
-Rockmane   T   tho   1600   30  50   200  shield 0.25
-Tidewisp   S   thuy   900   35  20   100  heal 0.35
-Leafkit    S   moc   1050   45  20   100  heal 0.35
-Blazefang  D   hoa    800   70  15    75  nuke 12
-Steelclaw  D   kim    900   56  20    75  nuke 12
+Gorran     T   tho   1760   33  55   200  shield 0.25
+Nerys      S   thuy  1080   42  22   100  heal 0.35
+Sylfi      S   moc   1260   54  22   100  heal 0.35
+Ignar      D   hoa    960   84  17    75  nuke 12
+Kaelor     D   kim   1080   67  22    75  nuke 12
+Ferrox     T   kim   1930   36  60   200  shield 0.28
+Ylvar      S   moc   1380   58  24   100  heal 0.38
+Maeris     S   thuy  1200   48  24   100  heal 0.38
+Pyrrak     D   hoa   1060   92  19    75  nuke 13
+Sahrun     T   tho   1980   33  64   200  shield 0.28
 
 Boss          hệ      HP     ATK  Ngưỡng choáng  Mẫu đòn
-Boss 1 (dễ)   kim    7000   580        6      single→single→blast
-Boss 2 (vừa)  moc   11000   620        8      single→blast→aoe
-Boss 3 (khó)  thuy  12000   650       10      aoe→blast→single→aoe
+Ferrox        kim    7000   580        6      single→single→blast
+Ylvar         moc    7500   560        7      single→blast→aoe
+Maeris        thuy   8000   520        8      aoe→blast→single→aoe
+Pyrrak        hoa    7000   620        6      blast→aoe→blast→aoe
+Sahrun        tho    9500   540        9      single→single→aoe
+Ironvex       kim   21000   760        7      single→blast→aoe
+Thornwarden   moc   15000   680        8      single→blast→aoe
+Abyssia       thuy  14000   620        9      aoe→blast→single→aoe
+Cindrax       hoa   16500   810        7      blast→aoe→blast→aoe
+Quarrok       tho   15000   610       10      single→single→aoe
+Chromaul      kim   25000   920        8      single→blast→aoe→single
+Verdaxis      moc   17000   740        9      blast→aoe→single→aoe
+Tidecrown     thuy  20000   720       10      aoe→aoe→blast→single
+Infernox      hoa   22000   880        7      blast→aoe→blast→aoe
+Terragon      tho   21000   700       12      single→single→aoe→blast
 
 ════════════════════════════════════════════════════════════════════════
 2. XÁC SUẤT BỊ NHẮM (đội Tanker+Hỗ trợ+AD)
@@ -22,102 +39,272 @@ Tanker chết: S= 57%  D= 43%
 Trúng đòn lan: T= 80%  S=100%  D= 47%  (pet giữa dễ trúng lan nhất)
 
 ════════════════════════════════════════════════════════════════════════
-3. BÀN CỜ: số viên ăn được MỖI NƯỚC ĐI (đội mặc định vs Boss 2)
+3. BÀN CỜ: số viên ăn được MỖI NƯỚC ĐI (đội mặc định vs Ylvar)
 ════════════════════════════════════════════════════════════════════════
-random  Kiếm 1.32 | Tim 0.94 | Xoắn 1.01 | Khiên 1.05 | Lửa 1.01  | tổng 5.34
-greedy  Kiếm 1.98 | Tim 1.47 | Xoắn 1.47 | Khiên 1.50 | Lửa 1.49  | tổng 7.91
-smart   Kiếm 1.89 | Tim 1.40 | Xoắn 1.38 | Khiên 1.41 | Lửa 1.43  | tổng 7.51
+random  Kiếm 1.87 | Tim 0.96 | Xoắn 0.96 | Khiên 1.00 | Lửa 1.00  | tổng 5.79
+greedy  Kiếm 2.73 | Tim 1.31 | Xoắn 1.37 | Khiên 1.35 | Lửa 1.35  | tổng 8.12
+smart   Kiếm 2.75 | Tim 1.42 | Xoắn 1.30 | Khiên 1.31 | Lửa 1.32  | tổng 8.10
 
 ════════════════════════════════════════════════════════════════════════
 4. TỈ LỆ THẮNG theo bot (đội mặc định)  — random=sàn, smart≈trần
 ════════════════════════════════════════════════════════════════════════
 Boss          bot      thắng  nước TB  máu còn  pet chết  ult  choáng
-Boss 1 (dễ)   random   78%   23.0    66%     1.02    5.2  3.0
-Boss 1 (dễ)   greedy   97%   14.7    87%     0.26    4.1  2.4
-Boss 1 (dễ)   smart    99%   13.3    87%     0.14    3.2  2.5
-Boss 2 (vừa)  random    3%   20.2    38%     2.94    4.7  1.7
-Boss 2 (vừa)  greedy   38%   31.8    60%     1.90    9.8  3.9
-Boss 2 (vừa)  smart    54%   32.1    67%     1.27    10.2  4.4
-Boss 3 (khó)  random    0%   49.9     0%     2.01    10.8  3.6
-Boss 3 (khó)  greedy   16%   48.0    59%     1.83    13.0  4.9
-Boss 3 (khó)  smart    23%   47.0    61%     1.74    12.6  5.2
-Mục tiêu gợi ý (smart): Boss1 ~90%, Boss2 ~70%, Boss3 ~50%; greedy thấp hơn smart 10-25 điểm để "chọn viên khôn" có giá trị.
+Ferrox        random   98%   15.0    77%     0.30    3.3  1.6
+Ferrox        greedy  100%    9.8    90%     0.08    2.2  1.3
+Ferrox        smart   100%    9.3    89%     0.04    1.8  1.5
+Ylvar         random   77%   23.4    67%     0.94    6.9  2.0
+Ylvar         greedy   97%   13.7    86%     0.20    4.8  1.4
+Ylvar         smart    99%   13.5    85%     0.13    4.2  1.6
+Maeris        random   95%   27.1    73%     0.76    9.2  2.2
+Maeris        greedy  100%   16.0    85%     0.32    6.1  1.6
+Maeris        smart   100%   14.8    87%     0.21    4.8  1.6
+Pyrrak        random  100%   16.6    79%     0.29    6.5  1.9
+Pyrrak        greedy   99%   11.3    90%     0.13    4.3  1.5
+Pyrrak        smart   100%    9.6    88%     0.04    3.1  1.6
+Sahrun        random   68%   32.0    64%     1.15    8.1  2.7
+Sahrun        greedy   95%   18.8    83%     0.38    5.8  1.9
+Sahrun        smart    99%   17.9    84%     0.28    5.1  2.0
+Ironvex       random   16%   30.3    44%     2.49    7.5  2.8
+Ironvex       greedy   74%   29.1    70%     1.02    9.6  3.7
+Ironvex       smart    85%   27.4    74%     0.69    9.2  3.8
+Thornwarden   random    6%   22.0    60%     2.80    5.5  1.7
+Thornwarden   greedy   55%   28.3    73%     1.41    9.3  3.3
+Thornwarden   smart    75%   27.5    75%     0.92    9.1  3.6
+Abyssia       random   21%   47.3    68%     1.60    13.6  4.2
+Abyssia       greedy   83%   33.5    74%     0.94    12.0  3.8
+Abyssia       smart    88%   29.6    80%     0.69    9.5  3.7
+Cindrax       random    9%   38.5    67%     2.13    10.8  3.8
+Cindrax       greedy   71%   33.6    74%     1.05    12.6  4.4
+Cindrax       smart    82%   30.5    74%     0.80    10.6  4.5
+Quarrok       random   18%   39.7    52%     2.12    9.3  2.9
+Quarrok       greedy   72%   31.9    74%     0.95    9.7  3.2
+Quarrok       smart    78%   31.0    76%     0.79    8.9  3.3
+Chromaul      random    1%   14.2    43%     2.98    2.4  0.9
+Chromaul      greedy   22%   26.1    52%     2.44    6.7  3.1
+Chromaul      smart    34%   29.5    59%     2.06    7.9  3.8
+Verdaxis      random    1%   16.6    59%     2.95    3.9  1.2
+Verdaxis      greedy   28%   31.2    60%     2.04    9.9  3.6
+Verdaxis      smart    40%   30.9    67%     1.63    9.8  3.9
+Tidecrown     random    1%   49.7    44%     1.98    11.6  4.0
+Tidecrown     greedy   20%   47.7    63%     1.74    13.9  5.2
+Tidecrown     smart    33%   45.8    68%     1.49    13.1  5.2
+Infernox      random    1%   28.9    41%     2.68    7.1  2.6
+Infernox      greedy   30%   40.2    71%     1.61    13.5  5.5
+Infernox      smart    46%   41.1    71%     1.31    13.2  6.3
+Terragon      random    1%   26.7    51%     2.85    5.4  1.5
+Terragon      greedy   25%   41.9    53%     1.90    11.2  3.9
+Terragon      smart    42%   40.9    63%     1.58    11.2  4.0
+Mục tiêu (design/BOSS.md), đội mặc định, smart: boss 1 mỗi đảo ~85–100% · boss 2 ~70–85% · boss 3 ~30–45%; greedy thấp hơn smart để "chọn viên khôn" có giá trị.
 
 ════════════════════════════════════════════════════════════════════════
-5. CÂN BẰNG PET & NGŨ HÀNH (smart bot, đủ 10 đội 3 pet, thứ tự cột theo danh sách)
+5. CÂN BẰNG PET & NGŨ HÀNH (smart bot, mọi tổ hợp 3 pet, thứ tự cột theo danh sách)
 ════════════════════════════════════════════════════════════════════════
 Pet        vai hệ    thắng TB  lệch
-Rockmane   T   tho    76%    +12đ ⚠
-Tidewisp   S   thuy   59%    -5đ
-Leafkit    S   moc    63%    -1đ
-Blazefang  D   hoa    55%    -9đ ⚠
-Steelclaw  D   kim    67%    +2đ
+Gorran     T   tho    80%    +4đ
+Nerys      S   thuy   73%    -3đ
+Sylfi      S   moc    78%    +1đ
+Ignar      D   hoa    69%    -8đ
+Kaelor     D   kim    71%    -6đ
+Ferrox     T   kim    82%    +5đ
+Ylvar      S   moc    81%    +4đ
+Maeris     S   thuy   78%    +1đ
+Pyrrak     D   hoa    73%    -4đ
+Sahrun     T   tho    82%    +5đ
 
-Boss 1 (dễ) (hệ kim)  — ▲ khắc boss · ▼ bị boss khắc · +s được sinh
-  100%  Rockmane·      Tidewisp·      Blazefang▲    
-  100%  Rockmane·      Tidewisp·+s    Steelclaw·    
-  100%  Rockmane·      Leafkit▼       Steelclaw·    
-   95%  Rockmane·      Leafkit▼       Blazefang▲+s  
-   95%  Rockmane·+s    Blazefang▲     Steelclaw·    
-   90%  Tidewisp·      Blazefang▲     Steelclaw·    
-   85%  Tidewisp·      Leafkit▼+s     Blazefang▲+s  
-   80%  Rockmane·      Tidewisp·      Leafkit▼+s    
-   70%  Leafkit▼       Blazefang▲+s   Steelclaw·    
-   50%  Tidewisp·      Leafkit▼+s     Steelclaw·    
+Ferrox (hệ kim)  — ▲ khắc boss · ▼ bị boss khắc · +s được sinh
+  (120 đội: 5 tốt nhất · 3 kém nhất)
+  100%  Gorran·        Nerys·         Sylfi▼+s      
+  100%  Gorran·        Nerys·         Ignar▲        
+  100%  Gorran·        Nerys·+s       Kaelor·       
+  100%  Gorran·        Nerys·+s       Ferrox·       
+  100%  Gorran·        Nerys·         Ylvar▼+s      
+   88%  Nerys·         Sylfi▼+s       Ylvar▼        
+   80%  Nerys·         Sylfi▼+s       Kaelor·       
+   80%  Sylfi▼         Ylvar▼+s       Maeris·       
 
-Boss 2 (vừa) (hệ moc)  — ▲ khắc boss · ▼ bị boss khắc · +s được sinh
-   95%  Rockmane▼      Tidewisp·+s    Steelclaw▲    
-   95%  Rockmane▼      Leafkit·       Steelclaw▲    
-   95%  Tidewisp·      Leafkit·+s     Steelclaw▲    
-   90%  Rockmane▼+s    Blazefang·     Steelclaw▲    
-   80%  Rockmane▼      Tidewisp·      Leafkit·+s    
-   75%  Rockmane▼      Leafkit·       Blazefang·+s  
-   55%  Leafkit·       Blazefang·+s   Steelclaw▲    
-   45%  Rockmane▼      Tidewisp·      Blazefang·    
-   45%  Tidewisp·      Blazefang·     Steelclaw▲    
-   40%  Tidewisp·      Leafkit·+s     Blazefang·+s  
+Ylvar (hệ moc)  — ▲ khắc boss · ▼ bị boss khắc · +s được sinh
+  (120 đội: 5 tốt nhất · 3 kém nhất)
+  100%  Gorran▼        Nerys·         Sylfi·+s      
+  100%  Gorran▼        Nerys·+s       Kaelor▲       
+  100%  Gorran▼        Nerys·+s       Ferrox▲       
+  100%  Gorran▼        Nerys·         Ylvar·+s      
+  100%  Gorran▼        Nerys·         Maeris·       
+   96%  Sylfi·+s       Maeris·        Pyrrak·       
+   92%  Nerys·         Ignar·         Pyrrak·       
+   92%  Ignar·         Maeris·        Pyrrak·       
 
-Boss 3 (khó) (hệ thuy)  — ▲ khắc boss · ▼ bị boss khắc · +s được sinh
-   80%  Rockmane▲      Leafkit·       Steelclaw·    
-   70%  Rockmane▲      Tidewisp·      Leafkit·+s    
-   65%  Rockmane▲      Tidewisp·+s    Steelclaw·    
-   50%  Rockmane▲+s    Blazefang▼     Steelclaw·    
-   45%  Rockmane▲      Leafkit·       Blazefang▼+s  
-   20%  Tidewisp·      Leafkit·+s     Steelclaw·    
-   10%  Rockmane▲      Tidewisp·      Blazefang▼    
-    5%  Leafkit·       Blazefang▼+s   Steelclaw·    
-    0%  Tidewisp·      Leafkit·+s     Blazefang▼+s  
-    0%  Tidewisp·      Blazefang▼     Steelclaw·    
+Maeris (hệ thuy)  — ▲ khắc boss · ▼ bị boss khắc · +s được sinh
+  (120 đội: 5 tốt nhất · 3 kém nhất)
+  100%  Gorran▲        Nerys·         Sylfi·+s      
+  100%  Gorran▲        Nerys·         Ignar▼        
+  100%  Gorran▲        Nerys·+s       Kaelor·       
+  100%  Gorran▲        Nerys·+s       Ferrox·       
+  100%  Gorran▲        Nerys·         Ylvar·+s      
+   88%  Nerys·         Ignar▼         Kaelor·       
+   80%  Nerys·         Ignar▼         Pyrrak▼       
+   76%  Ignar▼         Kaelor·        Pyrrak▼       
+
+Pyrrak (hệ hoa)  — ▲ khắc boss · ▼ bị boss khắc · +s được sinh
+  (120 đội: 5 tốt nhất · 3 kém nhất)
+  100%  Gorran·        Nerys▲         Sylfi·+s      
+  100%  Gorran·        Nerys▲         Ignar·        
+  100%  Gorran·        Nerys▲+s       Kaelor▼       
+  100%  Gorran·        Nerys▲+s       Ferrox▼       
+  100%  Gorran·        Nerys▲         Ylvar·+s      
+   96%  Kaelor▼        Ylvar·         Pyrrak·+s     
+   92%  Sylfi·         Kaelor▼        Pyrrak·       
+   76%  Ignar·         Kaelor▼        Pyrrak·       
+
+Sahrun (hệ tho)  — ▲ khắc boss · ▼ bị boss khắc · +s được sinh
+  (120 đội: 5 tốt nhất · 3 kém nhất)
+  100%  Gorran·        Nerys▼         Sylfi▲+s      
+  100%  Gorran·        Nerys▼         Ignar·        
+  100%  Gorran·        Nerys▼+s       Ferrox·       
+  100%  Gorran·        Nerys▼         Ylvar▲+s      
+  100%  Gorran·        Nerys▼         Maeris▼       
+   76%  Nerys▼         Ignar·         Pyrrak·       
+   68%  Nerys▼         Ignar·         Maeris▼       
+   64%  Nerys▼         Ignar·         Kaelor·       
+
+Ironvex (hệ kim)  — ▲ khắc boss · ▼ bị boss khắc · +s được sinh
+  (120 đội: 5 tốt nhất · 3 kém nhất)
+  100%  Gorran·        Sylfi▼         Pyrrak▲+s     
+  100%  Nerys·+s       Ferrox·        Pyrrak▲       
+  100%  Ignar▲         Pyrrak▲        Sahrun·+s     
+  100%  Ferrox·        Maeris·+s      Pyrrak▲       
+  100%  Ferrox·        Pyrrak▲        Sahrun·+s     
+    4%  Sylfi▼         Kaelor·        Ylvar▼        
+    0%  Nerys·         Sylfi▼+s       Kaelor·       
+    0%  Nerys·+s       Kaelor·        Ylvar▼        
+
+Thornwarden (hệ moc)  — ▲ khắc boss · ▼ bị boss khắc · +s được sinh
+  (120 đội: 5 tốt nhất · 3 kém nhất)
+  100%  Gorran▼        Nerys·         Sylfi·+s      
+  100%  Gorran▼        Nerys·         Ylvar·+s      
+  100%  Gorran▼        Sylfi·         Kaelor▲       
+  100%  Gorran▼        Sylfi·         Ferrox▲       
+  100%  Gorran▼        Sylfi·         Ylvar·        
+   44%  Nerys·         Ignar·         Maeris·       
+   40%  Ignar·         Kaelor▲        Pyrrak·       
+   28%  Nerys·         Ignar·         Pyrrak·       
+
+Abyssia (hệ thuy)  — ▲ khắc boss · ▼ bị boss khắc · +s được sinh
+  (120 đội: 5 tốt nhất · 3 kém nhất)
+  100%  Gorran▲        Nerys·         Ylvar·+s      
+  100%  Gorran▲        Nerys·         Maeris·       
+  100%  Gorran▲        Nerys·         Sahrun▲       
+  100%  Gorran▲        Sylfi·         Kaelor·       
+  100%  Gorran▲        Sylfi·         Ferrox·       
+   32%  Ignar▼         Maeris·        Pyrrak▼       
+   16%  Nerys·         Ignar▼         Pyrrak▼       
+    4%  Ignar▼         Kaelor·        Pyrrak▼       
+
+Cindrax (hệ hoa)  — ▲ khắc boss · ▼ bị boss khắc · +s được sinh
+  (120 đội: 5 tốt nhất · 3 kém nhất)
+  100%  Gorran·        Nerys▲         Sylfi·+s      
+  100%  Gorran·        Nerys▲+s       Ferrox▼       
+  100%  Gorran·        Nerys▲         Maeris▲       
+  100%  Gorran·        Kaelor▼+s      Maeris▲+s     
+  100%  Gorran·        Ferrox▼+s      Maeris▲+s     
+    4%  Sylfi·         Ignar·+s       Pyrrak·       
+    0%  Sylfi·         Ignar·+s       Kaelor▼       
+    0%  Ignar·         Kaelor▼        Pyrrak·       
+
+Quarrok (hệ tho)  — ▲ khắc boss · ▼ bị boss khắc · +s được sinh
+  (120 đội: 5 tốt nhất · 3 kém nhất)
+  100%  Gorran·        Nerys▼         Sylfi▲+s      
+  100%  Gorran·        Nerys▼         Ylvar▲+s      
+  100%  Gorran·        Sylfi▲         Ignar·+s      
+  100%  Gorran·        Sylfi▲         Kaelor·       
+  100%  Gorran·        Sylfi▲         Ylvar▲        
+   24%  Nerys▼         Ignar·         Pyrrak·       
+   16%  Nerys▼         Ignar·         Kaelor·       
+   12%  Nerys▼         Ignar·         Maeris▼       
+
+Chromaul (hệ kim)  — ▲ khắc boss · ▼ bị boss khắc · +s được sinh
+  (120 đội: 5 tốt nhất · 3 kém nhất)
+  100%  Ferrox·        Pyrrak▲        Sahrun·+s     
+   88%  Gorran·        Ferrox·+s      Pyrrak▲       
+   88%  Gorran·+s      Pyrrak▲        Sahrun·+s     
+   76%  Ferrox·        Ylvar▼         Pyrrak▲+s     
+   68%  Gorran·+s      Ignar▲         Ferrox·       
+    0%  Ignar▲+s       Ylvar▼+s       Maeris·       
+    0%  Kaelor·        Ylvar▼+s       Maeris·       
+    0%  Kaelor·        Ylvar▼         Pyrrak▲+s     
+
+Verdaxis (hệ moc)  — ▲ khắc boss · ▼ bị boss khắc · +s được sinh
+  (120 đội: 5 tốt nhất · 3 kém nhất)
+  100%  Gorran▼        Sylfi·         Ferrox▲       
+  100%  Gorran▼        Ferrox▲+s      Ylvar·        
+  100%  Gorran▼        Ylvar·+s       Maeris·       
+  100%  Nerys·+s       Ferrox▲        Ylvar·        
+  100%  Sylfi·         Ferrox▲        Maeris·+s     
+   24%  Sylfi·         Ignar·+s       Pyrrak·       
+   20%  Ignar·         Maeris·        Pyrrak·       
+   12%  Nerys·         Ignar·         Pyrrak·       
+
+Tidecrown (hệ thuy)  — ▲ khắc boss · ▼ bị boss khắc · +s được sinh
+  (120 đội: 5 tốt nhất · 3 kém nhất)
+  100%  Gorran▲        Nerys·         Ylvar·+s      
+  100%  Gorran▲        Ylvar·+s       Maeris·       
+  100%  Gorran▲        Maeris·        Sahrun▲       
+  100%  Sylfi·         Ferrox·        Ylvar·        
+  100%  Sylfi·         Ylvar·         Sahrun▲       
+    0%  Ignar▼         Ferrox·        Pyrrak▼       
+    0%  Ignar▼         Maeris·        Pyrrak▼       
+    0%  Kaelor·        Maeris·+s      Pyrrak▼       
+
+Infernox (hệ hoa)  — ▲ khắc boss · ▼ bị boss khắc · +s được sinh
+  (120 đội: 5 tốt nhất · 3 kém nhất)
+  100%  Gorran·        Nerys▲         Maeris▲       
+   96%  Nerys▲+s       Ferrox▼        Maeris▲+s     
+   96%  Ylvar·+s       Maeris▲        Sahrun·       
+   92%  Gorran·        Ylvar·+s       Maeris▲       
+   92%  Nerys▲         Ylvar·+s       Maeris▲       
+    0%  Ignar·         Ferrox▼        Pyrrak·       
+    0%  Kaelor▼        Ferrox▼        Pyrrak·       
+    0%  Kaelor▼        Pyrrak·        Sahrun·+s     
+
+Terragon (hệ tho)  — ▲ khắc boss · ▼ bị boss khắc · +s được sinh
+  (120 đội: 5 tốt nhất · 3 kém nhất)
+  100%  Nerys▼         Sylfi▲+s       Ylvar▲        
+  100%  Sylfi▲         Kaelor·        Ylvar▲        
+  100%  Sylfi▲         Kaelor·+s      Sahrun·       
+  100%  Sylfi▲         Ferrox·        Ylvar▲        
+  100%  Sylfi▲         Ylvar▲+s       Maeris▼       
+    0%  Nerys▼         Maeris▼        Pyrrak·       
+    0%  Ignar·         Kaelor·        Maeris▼+s     
+    0%  Ignar·         Kaelor·        Pyrrak·       
 
 ════════════════════════════════════════════════════════════════════════
-6. THỨ TỰ CỘT (đội mặc định, smart, Boss 2) — đòn lan phụ thuộc vị trí
+6. THỨ TỰ CỘT (đội mặc định, smart, Ylvar) — đòn lan phụ thuộc vị trí
 ════════════════════════════════════════════════════════════════════════
-T-S-D  thắng  49%  máu còn  71%  pet chết 1.41
-T-D-S  thắng  41%  máu còn  67%  pet chết 1.53
-S-T-D  thắng  41%  máu còn  70%  pet chết 1.64
-D-T-S  thắng  47%  máu còn  70%  pet chết 1.43
-S-D-T  thắng  43%  máu còn  73%  pet chết 1.44
-D-S-T  thắng  54%  máu còn  69%  pet chết 1.36
+T-S-D  thắng  99%  máu còn  84%  pet chết 0.14
+T-D-S  thắng  99%  máu còn  83%  pet chết 0.20
+S-T-D  thắng 100%  máu còn  81%  pet chết 0.17
+D-T-S  thắng  99%  máu còn  83%  pet chết 0.10
+S-D-T  thắng 100%  máu còn  81%  pet chết 0.16
+D-S-T  thắng 100%  máu còn  86%  pet chết 0.09
 
 ════════════════════════════════════════════════════════════════════════
 7. GIÁ TRỊ TỪNG LOẠI VIÊN: vô hiệu hoá hiệu ứng viên đó (smart, đội mặc định)
 ════════════════════════════════════════════════════════════════════════
-Viên tắt     Boss1   Boss2   Boss3   (thắng; càng tụt nhiều = viên càng đáng giá)
-(không tắt)   100%     48%     21%  
-Tim            84%      6%      2%  
-Xoắn           96%     22%      8%  
-Khiên          88%      3%      3%  
-Lửa            99%     24%     15%  
+Viên tắt     Ferrox  Ylvar   Maeris  Pyrrak  Sahrun  Ironvex Thornwarden Abyssia Cindrax Quarrok Chromaul Verdaxis Tidecrown Infernox Terragon  (thắng; càng tụt nhiều = viên càng đáng giá)
+(không tắt)   100%    100%    100%    100%     98%     84%     70%     87%     76%     84%     24%     38%     28%     39%     35%  
+Tim            98%     86%    100%    100%     78%     26%     13%     53%     18%     27%      1%      5%      4%      3%      2%  
+Xoắn          100%     99%    100%    100%     98%     71%     48%     83%     62%     73%      8%     19%     17%     16%     22%  
+Khiên         100%     88%    100%    100%     89%     22%     13%     59%     21%     33%      2%      4%      8%      4%      2%  
+Lửa           100%     99%    100%    100%     97%     71%     51%     77%     68%     72%     11%     18%     18%     30%     18%  
 
 ════════════════════════════════════════════════════════════════════════
-8. ĐỘ NHẠY THAM SỐ (smart, đội mặc định, Boss 2): thắng% | nước TB
+8. ĐỘ NHẠY THAM SỐ (smart, đội mặc định, Ylvar): thắng% | nước TB
 ════════════════════════════════════════════════════════════════════════
-Tim hồi %HP/viên        0.04:  26%|26    0.06:  41%|29    0.08:  53%|32     0.1:  63%|32    0.12:  69%|33
-Khiên %HP/viên          0.03:  34%|27    0.04:  40%|30    0.05:  53%|32    0.06:  56%|32    0.08:  67%|31
-Trần khiên              0.15:  28%|30     0.2:  39%|30     0.3:  53%|32     0.4:  58%|33     0.5:  63%|33
-Ngưỡng choáng (viên)       4:  57%|33       6:  57%|33       8:  53%|32      10:  38%|33      12:  38%|32
-Nộ mỗi viên lửa            0:  26%|32       3:  34%|34       5:  53%|32       8:  67%|30      12:  73%|28
-Nộ mỗi lần trúng đòn      10:  23%|30      15:  33%|32      20:  53%|32      25:  65%|32      30:  74%|31
-Tỉ lệ rơi Kiếm            16:  50%|40      20:  49%|35      24:  53%|32      28:  47%|29      32:  43%|27
-ATK boss                 500:  91%|28     560:  73%|32     620:  53%|32     680:  27%|27     740:  12%|23
-HP boss                 8000:  69%|25    9000:  64%|28   10000:  58%|30   11000:  53%|32   12000:  49%|33
+Tim hồi %HP/viên        0.04:  96%|15    0.06:  97%|15    0.08:  97%|14     0.1:  98%|14    0.12:  99%|13
+Khiên %HP/viên          0.03:  97%|15    0.04:  98%|14    0.05:  97%|14    0.06:  98%|14    0.08:  98%|14
+Trần khiên              0.15:  96%|15     0.2:  98%|14     0.3:  97%|14     0.4:  97%|14     0.5:  97%|14
+Ngưỡng choáng (viên)       4:  98%|14       6:  98%|14       8:  98%|14      10:  98%|14      12:  97%|15
+Nộ mỗi viên lửa            0:  99%|16       3:  98%|15       5:  97%|14       8: 100%|13      12: 100%|12
+Nộ mỗi lần trúng đòn      10:  93%|16      15:  98%|15      20:  97%|14      25: 100%|13      30: 100%|13
+Tỉ lệ rơi Kiếm            16: 100%|20      20: 100%|18      24:  98%|16      28: 100%|14      32:  99%|13
+ATK boss                 450: 100%|13     500:  99%|14     560:  97%|14     620:  96%|15     670:  90%|16
+HP boss                 5250:  99%|10    6380:  99%|13    7500:  97%|14    8630:  97%|16    9750:  96%|18

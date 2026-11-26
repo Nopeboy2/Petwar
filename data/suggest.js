@@ -3,47 +3,137 @@
 export const SUGGEST = [
   {
     "ids": [
+      "magmaw",
+      "elderoot",
+      "blazefang"
+    ],
+    "win": 1,
+    "moves": 5.6
+  },
+  {
+    "ids": [
       "blazefang",
+      "magmaw",
+      "steelclaw"
+    ],
+    "win": 0.995,
+    "moves": 6.2
+  },
+  {
+    "ids": [
+      "steelclaw",
       "rockmane",
       "magmaw"
     ],
     "win": 1,
-    "moves": 7.3
+    "moves": 9.4
+  },
+  {
+    "ids": [
+      "blazefang",
+      "pearlwyrm",
+      "magmaw"
+    ],
+    "win": 1,
+    "moves": 7
   },
   {
     "ids": [
       "magmaw",
-      "steelclaw",
-      "gearhorn"
+      "elderoot",
+      "blazefang"
     ],
     "win": 1,
     "moves": 8.3
   },
   {
     "ids": [
-      "steelclaw",
       "duneshell",
+      "magmaw",
+      "gearhorn"
+    ],
+    "win": 0.965,
+    "moves": 23.1
+  },
+  {
+    "ids": [
+      "steelclaw",
+      "magmaw",
+      "gearhorn"
+    ],
+    "win": 0.995,
+    "moves": 15.6
+  },
+  {
+    "ids": [
+      "duneshell",
+      "steelclaw",
       "elderoot"
     ],
     "win": 1,
-    "moves": 13.1
+    "moves": 19.6
+  },
+  {
+    "ids": [
+      "tidewisp",
+      "elderoot",
+      "pearlwyrm"
+    ],
+    "win": 0.99,
+    "moves": 22.9
   },
   {
     "ids": [
       "magmaw",
-      "pearlwyrm",
-      "tidewisp"
+      "elderoot",
+      "blazefang"
     ],
-    "win": 0.995,
-    "moves": 9.9
+    "win": 1,
+    "moves": 15.2
+  },
+  {
+    "ids": [
+      "gearhorn",
+      "duneshell",
+      "magmaw"
+    ],
+    "win": 0.88,
+    "moves": 30.2
   },
   {
     "ids": [
       "elderoot",
-      "magmaw",
-      "leafkit"
+      "duneshell",
+      "steelclaw"
     ],
-    "win": 1,
-    "moves": 10.9
+    "win": 0.99,
+    "moves": 19.9
+  },
+  {
+    "ids": [
+      "pearlwyrm",
+      "elderoot",
+      "duneshell"
+    ],
+    "win": 0.955,
+    "moves": 35.9
+  },
+  {
+    "ids": [
+      "tidewisp",
+      "pearlwyrm",
+      "gearhorn"
+    ],
+    "win": 0.96,
+    "moves": 35
+  },
+  {
+    "ids": [
+      "elderoot",
+      "leafkit",
+      "steelclaw"
+    ],
+    "win": 0.995,
+    "moves": 25.5
   }
 ];

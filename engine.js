@@ -142,10 +142,14 @@ function bossAttack(s) {
 }
 export function useUlt(s, p) {
   const { k, v } = p.ult; p.rage = 0; s.ults++;
-  let dmg = 0;
+  let dmg = 0; const add = []; // add = [{ i, amount }] lượng hồi/khiên từng pet (để hiện số)
   if (k === 'nuke') { dmg = p.atk * p.atkM * v * (s.vuln ? 1 + s.cfg.stunBonus : 1); s.hp -= dmg; }
-  else for (const q of alive(s)) { if (k === 'heal') q.hp = Math.min(q.max, q.hp + v * q.max); else q.sh += v * q.max; }
-  if (s.ev) s.ev.push({ t: 'ult', i: s.pets.indexOf(p), k, v, dmg }, { t: 'snap', snap: snapshot(s) });
+  else for (const q of alive(s)) {
+    const b = k === 'heal' ? q.hp : q.sh;
+    if (k === 'heal') q.hp = Math.min(q.max, q.hp + v * q.max); else q.sh += v * q.max;
+    add.push({ i: s.pets.indexOf(q), amount: (k === 'heal' ? q.hp : q.sh) - b });
+  }
+  if (s.ev) s.ev.push({ t: 'ult', i: s.pets.indexOf(p), k, v, dmg, add, vuln: s.vuln }, { t: 'snap', snap: snapshot(s) });
 }
 
 // Một nước đi của người chơi + phản ứng của boss. ev (tuỳ chọn) nhận danh sách sự kiện.

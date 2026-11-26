@@ -5,7 +5,7 @@ const atkImg = t => `assets/boss-ui/icon_atk_${t}.webp`;
 import { sfx, vibrate } from './audio.js';
 import { petImg, bossArt, pui, PET_SCALE } from '../data/art.js';
 import { ELEM } from '../data/elements.js';
-import { ROLE } from '../data/pets.js';
+import { ROLE, ULT_NAME } from '../data/pets.js';
 
 const EMOJI = ['⚔️', '💗', '🌀', '🛡️', '🔥'];
 // Ảnh viên (design/tools/gems.html → assets/battle/gem_<loại>.webp); null = chưa có ảnh, dùng emoji trên ô màu
@@ -13,7 +13,7 @@ const GEM_IMG = ['atk', 'heal', 'stun', 'shield', 'rage'].map(n => n && `assets/
 const FAST = new URLSearchParams(location.search).has('fast'); // bỏ chờ hoạt ảnh (dùng cho autotest)
 const sleep = ms => new Promise(r => setTimeout(r, FAST ? 0 : ms));
 
-export function startBattle({ root, cfg, team, boss, onEnd, onExit, seedVal }) {
+export function startBattle({ root, cfg, team, boss, onEnd, onExit, seedVal, ultShort = false }) {
   const R = cfg.rows, C = cfg.cols;
   const s = createGame(cfg, team, boss, seedVal ?? Date.now());
   let view = Int8Array.from(s.g), vmul = Uint8Array.from(s.mu), legal = ready(s), busy = false, paused = false, sel = null, down = null, hintT = 0, dead = false;
@@ -78,8 +78,14 @@ export function startBattle({ root, cfg, team, boss, onEnd, onExit, seedVal }) {
     $('#b-moves').textContent = `Lượt ${sn.moves}/${cfg.maxMoves}`;
     updateUlt(sn);
   }
+  const fullPrev = [];
   function updateUlt(sn = snapshot(s)) {
-    sn.pets.forEach((p, i) => { const r = p.hp > 0 && p.rage >= cfg.rageMax && !busy && !s.over && !paused; petEls[i].querySelector('.ult').className = 'ult' + (r ? ' ready' : ''); petEls[i].classList.toggle('rdy', r); });
+    sn.pets.forEach((p, i) => {
+      const full = p.hp > 0 && p.rage >= cfg.rageMax;
+      if (full && !fullPrev[i] && !s.over) { sfx('ready'); vibrate(30); float(petEls[i], 'ULT sẵn sàng!', 'rage'); }
+      fullPrev[i] = full;
+      const r = p.hp > 0 && p.rage >= cfg.rageMax && !busy && !s.over && !paused; petEls[i].querySelector('.ult').className = 'ult' + (r ? ' ready' : ''); petEls[i].classList.toggle('rdy', r);
+    });
   }
   // số bay lên; nhiều số cùng lúc trên một ô thì xếp chồng xuống dưới để không đè nhau
   // tư thế pet (ảnh): đổi ảnh + hiệu ứng CSS, tự về đứng/gục sau ms. Pet chưa có ảnh thì bỏ qua.
@@ -167,6 +173,21 @@ export function startBattle({ root, cfg, team, boss, onEnd, onExit, seedVal }) {
     if (ev2.length) { toast('Xáo bàn'); view = Int8Array.from(s.g); vmul = Uint8Array.from(s.mu); renderBoard(view); }
     setBusy(false); armHint(); notify(); return true;
   }
+  // Hoạt cảnh ULT: lần đầu mỗi pet trong trận chạy đầy đủ, các lần sau (hoặc bật "rút gọn") chạy ngắn. Chạm để bỏ qua.
+  const ultSeen = new Set();
+  function cutIn(i) {
+    if (FAST) return Promise.resolve();
+    const p = team[i], short = ultShort || ultSeen.has(i), ms = short ? 380 : 900; ultSeen.add(i);
+    const o = document.createElement('div');
+    o.className = 'ultfx' + (short ? ' short' : ''); o.style.setProperty('--c', p.el ? ELEM[p.el].c : '#c58bff'); o.style.setProperty('--d', ms + 'ms');
+    const src = petImg(p, 'ult', true);
+    o.innerHTML = `${src ? `<img src="${src}" alt="">` : `<span class="ufx-e">${p.e}</span>`}<div class="ufx-t"><small>${p.n}</small><b>${ULT_NAME[p.ult.k]}</b></div>`;
+    root.querySelector('.battle').appendChild(o);
+    return new Promise(res => {
+      const done = () => { clearTimeout(t); o.onclick = null; o.classList.add('out'); setTimeout(() => o.remove(), 150); res(); };
+      const t = setTimeout(done, ms); o.onclick = done;
+    });
+  }
   async function ult(i) {
     const p = s.pets[i];
     if (busy || paused || s.over || p.hp <= 0 || p.rage < cfg.rageMax || (ultAllow != null && ultAllow !== i)) return;
@@ -174,9 +195,11 @@ export function startBattle({ root, cfg, team, boss, onEnd, onExit, seedVal }) {
     const ev = []; s.ev = ev; useUlt(s, p); s.ev = null; checkEnd(s);
     for (const e of ev) {
       if (e.t === 'ult') {
-        sfx('ult'); pose(e.i, 'ult', 800);
-        if (e.k === 'nuke') { float(bossEl, '-' + Math.round(e.dmg), 'crit'); bossEl.classList.add('hurt'); setTimeout(() => bossEl.classList.remove('hurt'), 260); bpose('hurt', 400); }
-        else petEls.forEach((el, k) => s.pets[k].hp > 0 && float(el, e.k === 'heal' ? '💚' : '🛡️', e.k === 'heal' ? 'heal' : 'info'));
+        sfx('ult'); await cutIn(e.i); pose(e.i, 'ult', 800);
+        if (e.k === 'nuke') {
+          float(bossEl, '-' + Math.round(e.dmg), 'crit'); bossEl.classList.add('hurt'); setTimeout(() => bossEl.classList.remove('hurt'), 260); bpose('hurt', 400);
+          if (e.vuln) float(bossEl, `💫 CHOÁNG ×${1 + cfg.stunBonus}`, 'stunf');
+        } else e.add.filter(a => a.amount >= 1).forEach(a => float(petEls[a.i], (e.k === 'heal' ? '💗+' : '🛡️+') + Math.round(a.amount), e.k === 'heal' ? 'heal' : 'info'));
         await sleep(500);
       } else if (e.t === 'snap') hud(e.snap);
     }
